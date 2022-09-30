@@ -1,34 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Test
 
-## Getting Started
+기능 구현에 중점을 둔 프로젝트
 
-First, run the development server:
+기능 구현 목록
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. 로그인 ( 연계는 네이버, 카카오만 )
+2. ironsession 사용
+3. SWR
+4. 페이지 단 한개( 어차피 디자인하고 그런건 다 똑같음 한 페이지에 품목 보여주고 값을 DB에서 처리하는 방식. 새로 추가됬을 때 즉시 보여주도록 하는 게 중요함 디자인도 simple.css 사용)
+5. 구매했을 경우 이를 관리자 탭에서 확인할 수 있는 관리자 페이지 분리
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+그러면 총 페이지는 3개
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. 로그인 페이지
+2. 메인 & 상품 볼 수 있는 페이지
+3. 상품 상세 페이지
+4. 관리자 페이지
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### 로그인 페이지
 
-## Learn More
+연계로 로그인되고 로그인 유지를 연계쪽한테 맡길 예정  
+reactForm 써서 빨리 구현하는게 목적
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 메인 & 상품 목록 페이지
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+그냥 쫙 나열해서 이미지 하나 / 가격 / 장바구니 끝  
+이미지 - Image 사용하는 거  
+장바구니는 쿠키 저장하는거
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 상품 상세 페이지
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+이미지 하나 그냥 크게 보여주고 가격 / 장바구니 / 구매하기 끝  
+설명 필요없어 안적어
+
+---
+
+### 관리자 페이지
+
+상품 구매한 사람 정보 보여주고 무슨 물건이 얼만큼 팔렸는지 그래프로 그려서 보여줌 ( 라이브러리 씀 )  
+끝
+
+서버로 돌아야하는데 이거 express 써서 REST API 간단하게 돌아가게만 할거임
+
+ERD 구성
+
+- 유저
+- 관리자
+- 상품
+- 주문내역
+
+유저 상품 = many to zero  
+유저 주문내역 = many to one  
+주문했을 때 주문내역 추가할 때 상품에 대한 키값을 전부 넘겨준다.  
+주문내역 상품 = many to zero

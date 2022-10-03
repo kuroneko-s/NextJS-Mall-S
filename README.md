@@ -7,22 +7,25 @@
 1. 로그인 ( 연계는 네이버, 카카오만 )
 2. ironsession 사용
 3. SWR
-4. 페이지 단 한개( 어차피 디자인하고 그런건 다 똑같음 한 페이지에 품목 보여주고 값을 DB에서 처리하는 방식. 새로 추가됬을 때 즉시 보여주도록 하는 게 중요함 디자인도 simple.css 사용)
+4. 페이지 최소한으로( 어차피 디자인하고 그런건 다 똑같음 한 페이지에 품목 보여주고 값을 DB에서 처리하는 방식. 새로 추가됬을 때 즉시 보여주도록 하는 게 중요함 디자인도 simple.css 사용)
 5. 구매했을 경우 이를 관리자 탭에서 확인할 수 있는 관리자 페이지 분리
 
-그러면 총 페이지는 3개
+그러면 총 페이지는 4개
 
-1. 로그인 페이지
-2. 메인 & 상품 볼 수 있는 페이지
-3. 상품 상세 페이지
-4. 관리자 페이지 // 미들웨어 써서 걸러내는 작업 필요
+- [x] 로그인 페이지
+  - 네이버, 카카오 로그인 (DB저장은 안함)
+- [ ] 메인 & 상품 볼 수 있는 페이지
+  - 메인에다가 상품정보만 띄워주면 끝
+- [ ] 상품 상세 페이지
+- [ ] 관리자 페이지 (관리자만 걸러내는 작업 필요)
 
 ---
 
 ### 로그인 페이지
 
 연계로 로그인되고 로그인 유지를 연계쪽한테 맡길 예정  
-reactForm 써서 빨리 구현하는게 목적
+reactForm 써서 빨리 구현하는게 목적  
+-> fetch 써서 API쪽한테 그냥 완전히 맡기느라 SWR & ironSession 만 사용함
 
 ---
 
@@ -64,4 +67,6 @@ ERD 구성
 
 라이브러리 링크  
 github = https://github.com/kuroneko-s/TS-Small-PJ-S  
-simple.css = https://github.com/kevquirk/simple.css/wiki/Getting-Started-With-Simple.css
+simple.css = https://github.com/kevquirk/simple.css/wiki/Getting-Started-With-Simple.css  
+ironSession = https://github.com/vvo/iron-session  
+SWR = https://swr.vercel.app/docs/getting-started

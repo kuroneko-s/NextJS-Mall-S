@@ -15,7 +15,7 @@
 1. 로그인 페이지
 2. 메인 & 상품 볼 수 있는 페이지
 3. 상품 상세 페이지
-4. 관리자 페이지
+4. 관리자 페이지 // 미들웨어 써서 걸러내는 작업 필요
 
 ---
 
@@ -59,3 +59,9 @@ ERD 구성
 유저 주문내역 = many to one  
 주문했을 때 주문내역 추가할 때 상품에 대한 키값을 전부 넘겨준다.  
 주문내역 상품 = many to zero
+
+---
+
+라이브러리 링크  
+github = https://github.com/kuroneko-s/TS-Small-PJ-S  
+simple.css = https://github.com/kevquirk/simple.css/wiki/Getting-Started-With-Simple.css

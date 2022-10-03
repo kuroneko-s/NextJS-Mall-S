@@ -1,13 +1,34 @@
 import useUser from "@lib/client/useUser";
 import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
-import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { SWRConfig } from "swr";
+import type { NextPage } from "next";
+import Item from "components/Item";
+import { itemArr } from "./../lib/itemSample";
+import CookiesProvider from "react-cookie/cjs/CookiesProvider";
+import { useCookies } from "react-cookie";
+import { useEffect } from "react";
+import { setCookie } from "@lib/cookies";
+import { appendCookie } from "./../lib/cookies";
 
 const Home: NextPage = () => {
   console.log("index component");
   const { user, isLoading, error, mutate } = useUser();
+
+  const [cookies, _, removeCookie] = useCookies(["checked-item"]);
+
+  var date = new Date();
+  date.setDate(date.getDate() + 1);
+
+  useEffect(() => {
+    setCookie({
+      cookieName: "checked-item",
+      values: ["test", "values"],
+      path: "*", // 적용 범위
+      expires: date, // 적용 시간
+    });
+  }, []);
 
   return (
     <div>
@@ -19,15 +40,24 @@ const Home: NextPage = () => {
         <p>you need Login</p>
       )}
 
+      <h1>품목 리스트</h1>
       <div>
-        품목 리스트
-        <ul>
-          <li>품목1</li>
-          <li>품목2</li>
-          <li>품목3</li>
-          <li>품목4</li>
-          <li>품목5</li>
-        </ul>
+        {itemArr.map((item, i) => (
+          <Link key={item.id} href={`/item/${item.id}`}>
+            <a>
+              <Item
+                index={i}
+                item={item}
+                btnHandler={() =>
+                  appendCookie({
+                    cookieName: "checked-item",
+                    value: item.id + "",
+                  })
+                }
+              />
+            </a>
+          </Link>
+        ))}
       </div>
       <Link href={"/login"}>
         <a style={{ marginRight: "5px" }}>
@@ -59,7 +89,9 @@ export default function Page({ defaultUser }: any) {
         },
       }}
     >
-      <Home />
+      <CookiesProvider>
+        <Home />
+      </CookiesProvider>
     </SWRConfig>
   );
 }

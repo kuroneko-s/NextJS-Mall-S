@@ -3,27 +3,21 @@ import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
+import { SWRConfig } from "swr";
 
-const Home: NextPage = ({ defaultUser }: any) => {
-  const { user, isLoading, error } = useUser();
-
-  // console.log("defaultUser - ", defaultUser);
-  // console.log("user - ", user);
-  // console.log("error - ", error);
+const Home: NextPage = () => {
+  console.log("index component");
+  const { user, isLoading, error, mutate } = useUser();
 
   return (
     <div>
       <h1>Hello</h1>
 
-      {/* Suspense가 동작을 안함. 이유를 모르겟음 */}
-      <Suspense fallback={<p>user: {defaultUser.name}</p>}>
-        {!isLoading && user?.ok ? (
-          <p>user: {user?.data?.name}</p>
-        ) : (
-          <p>you need Login</p>
-        )}
-      </Suspense>
+      {!isLoading && user && user?.ok ? (
+        <p>user: {user?.data?.name}</p>
+      ) : (
+        <p>you need Login</p>
+      )}
 
       <div>
         품목 리스트
@@ -49,7 +43,29 @@ const Home: NextPage = ({ defaultUser }: any) => {
   );
 };
 
+export default function Page({ defaultUser }: any) {
+  console.log("SWR");
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          "/api/user/info": {
+            user: {
+              ...defaultUser,
+              ok: true,
+            },
+            isLoading: false,
+          },
+        },
+      }}
+    >
+      <Home />
+    </SWRConfig>
+  );
+}
+
 export async function getServerSideProps({ req, res }: any) {
+  console.log("SSR RUn");
   const cookieOptions = {
     cookieName: "shop-user-info",
     password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long
@@ -62,15 +78,13 @@ export async function getServerSideProps({ req, res }: any) {
   if (!objectIsEmpty(result)) {
     defaultUser = {
       id: result?.user?.id,
-      name: result?.user?.name?.nickname,
+      name: result?.user?.name,
     };
   }
 
   return {
     props: {
-      defaultUser: defaultUser,
+      defaultUser,
     },
   };
 }
-
-export default Home;

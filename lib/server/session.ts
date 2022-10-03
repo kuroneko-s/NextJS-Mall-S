@@ -1,5 +1,14 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 
+declare module "iron-session" {
+  interface IronSessionData {
+    user?: {
+      id: number;
+      name: string;
+    };
+  }
+}
+
 const cookieOptions = {
   cookieName: "shop-user-info",
   password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long

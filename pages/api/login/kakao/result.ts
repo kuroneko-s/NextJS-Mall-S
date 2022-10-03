@@ -56,8 +56,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     req.session.user = {
       id: info.id,
-      name: info.kakao_account.profile,
+      name: info.kakao_account.profile.nickname,
     };
+
+    console.log("kakao login - ", req.session.user);
 
     await req.session.save();
 

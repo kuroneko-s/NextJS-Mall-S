@@ -13,7 +13,9 @@ export interface UserInfoResult {
 }
 
 export default function useUser() {
-  const { data, error } = useSWR<UserInfoResult>(`${server}/api/user/info`);
+  const { data, error, mutate } = useSWR<UserInfoResult>(
+    `${server}/api/user/info`
+  );
 
-  return { user: data, error, isLoading: !data && !error };
+  return { user: data, error, isLoading: !data && !error, mutate };
 }

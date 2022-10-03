@@ -12,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ok: true,
     data: {
       id: user?.id,
-      name: user?.name?.nickname,
+      name: user?.name,
     },
   });
 }

@@ -28,8 +28,11 @@ export const getCookie = (name: string) => {
 };
 
 export function appendCookie({ cookieName, value }: CookieProps) {
-  const cookie = getCookie(cookieName);
+  let cookie = getCookie(cookieName);
   console.log("appendCookie - ", cookie);
+  if (cookie == undefined) {
+    cookie = [];
+  }
 
   const set = new Set([...cookie, value]);
 
@@ -39,14 +42,17 @@ export function appendCookie({ cookieName, value }: CookieProps) {
   setCookie({
     cookieName: cookieName,
     values: Array.from(set),
-    path: "/*", // 적용 범위
+    path: "/", // 적용 범위
     expires: date, // 적용 시간
   });
 }
 
 export function removeCookieValue({ cookieName, value }: CookieProps) {
-  const cookie = getCookie(cookieName);
+  let cookie = getCookie(cookieName);
   console.log("removeCookieValue - ", cookie);
+  if (cookie == undefined) {
+    cookie = [];
+  }
 
   let date = new Date();
   date.setDate(date.getDate() + 1);
@@ -54,7 +60,11 @@ export function removeCookieValue({ cookieName, value }: CookieProps) {
   setCookie({
     cookieName: cookieName,
     values: cookie.filter((str) => str !== value),
-    path: "*", // 적용 범위
+    path: "/", // 적용 범위
     expires: date, // 적용 시간
   });
+}
+
+export function removeCookieAll(cookieName: string) {
+  cookies.remove(cookieName);
 }

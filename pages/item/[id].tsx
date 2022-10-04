@@ -1,5 +1,5 @@
 import { appendCookie } from "@lib/cookies";
-import { Item, itemArr } from "@lib/itemSample";
+import useItem, { Item } from "@lib/itemSample";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,12 +10,13 @@ const Item: NextPage = () => {
   const route = useRouter();
   const { id } = route?.query;
   const [item, setItem] = useState<Item>();
+  const itemArr = useItem();
 
   useEffect(() => {
     // @ts-ignore
-    const item = itemArr[+id?.toString()];
+    const item = itemArr && itemArr[+id?.toString()];
     setItem(item);
-  }, [setItem, id]);
+  }, [setItem, id, itemArr]);
 
   let idx;
   let image = "";

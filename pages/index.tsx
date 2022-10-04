@@ -1,38 +1,42 @@
 import useUser from "@lib/client/useUser";
-import { objectIsEmpty } from "@lib/common";
+import { COOKIE_NAME, objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import Link from "next/link";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import Item from "components/Item";
-import { itemArr } from "./../lib/itemSample";
+import useItem from "@lib/itemSample";
 import CookiesProvider from "react-cookie/cjs/CookiesProvider";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
-import { setCookie } from "@lib/cookies";
-import { appendCookie } from "./../lib/cookies";
+import { appendCookie, removeCookieAll } from "@lib/cookies";
 
 const Home: NextPage = () => {
   console.log("index component");
   const { user, isLoading, error, mutate } = useUser();
-
-  const [cookies, _, removeCookie] = useCookies(["checked-item"]);
+  const itemArr = useItem();
 
   var date = new Date();
   date.setDate(date.getDate() + 1);
 
-  useEffect(() => {
-    setCookie({
-      cookieName: "checked-item",
-      values: ["test", "values"],
-      path: "*", // 적용 범위
-      expires: date, // 적용 시간
-    });
-  }, []);
-
   return (
     <div>
       <h1>Hello</h1>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            removeCookieAll(COOKIE_NAME);
+          }}
+        >
+          REMOVE_COOKIE_ALL
+        </button>
+      </div>
+      <div>
+        <Link href={"/buy"}>
+          <a>
+            <button>구매</button>
+          </a>
+        </Link>
+      </div>
 
       {!isLoading && user && user?.ok ? (
         <p>user: {user?.data?.name}</p>
@@ -42,22 +46,20 @@ const Home: NextPage = () => {
 
       <h1>품목 리스트</h1>
       <div>
-        {itemArr.map((item, i) => (
-          <Link key={item.id} href={`/item/${item.id}`}>
-            <a>
-              <Item
-                index={i}
-                item={item}
-                btnHandler={() =>
-                  appendCookie({
-                    cookieName: "checked-item",
-                    value: item.id + "",
-                  })
-                }
-              />
-            </a>
-          </Link>
-        ))}
+        {itemArr &&
+          itemArr.map((item, i) => (
+            <Item
+              key={item.id}
+              index={i}
+              item={item}
+              btnHandler={() =>
+                appendCookie({
+                  cookieName: COOKIE_NAME,
+                  value: item.id + "",
+                })
+              }
+            />
+          ))}
       </div>
       <Link href={"/login"}>
         <a style={{ marginRight: "5px" }}>

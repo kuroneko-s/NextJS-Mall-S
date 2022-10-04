@@ -11,3 +11,5 @@ export function objectIsEmpty(obj: any): boolean {
     (obj.constructor === Object && Object.keys(obj).length === 0)
   );
 }
+
+export const COOKIE_NAME = "checked-item";

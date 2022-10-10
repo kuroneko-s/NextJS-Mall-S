@@ -1,18 +1,20 @@
 import useUser from "@lib/client/useUser";
-import { COOKIE_NAME, objectIsEmpty } from "@lib/common";
+import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import Link from "next/link";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import Item from "components/Item";
 import useItem from "@lib/itemSample";
-import CookiesProvider from "react-cookie/cjs/CookiesProvider";
-import { appendCookie, removeCookieAll } from "@lib/cookies";
+import useSelects from "@lib/useItems";
+import { useContext } from "react";
+import { GlobalContext } from "./_app";
 
 const Home: NextPage = () => {
   console.log("index component");
+  const { appendItems, removeAll } = useContext(GlobalContext);
   const { user, isLoading, error, mutate } = useUser();
-  const itemArr = useItem();
+  const sampleItemArr = useItem();
 
   var date = new Date();
   date.setDate(date.getDate() + 1);
@@ -24,7 +26,7 @@ const Home: NextPage = () => {
         <button
           type="button"
           onClick={() => {
-            removeCookieAll(COOKIE_NAME);
+            removeAll && removeAll();
           }}
         >
           REMOVE_COOKIE_ALL
@@ -46,18 +48,13 @@ const Home: NextPage = () => {
 
       <h1>품목 리스트</h1>
       <div>
-        {itemArr &&
-          itemArr.map((item, i) => (
+        {sampleItemArr &&
+          sampleItemArr.map((item, i) => (
             <Item
               key={item.id}
               index={i}
               item={item}
-              btnHandler={() =>
-                appendCookie({
-                  cookieName: COOKIE_NAME,
-                  value: item.id + "",
-                })
-              }
+              btnHandler={() => appendItems && appendItems(item.id + "")}
             />
           ))}
       </div>
@@ -91,9 +88,7 @@ export default function Page({ defaultUser }: any) {
         },
       }}
     >
-      <CookiesProvider>
-        <Home />
-      </CookiesProvider>
+      <Home />
     </SWRConfig>
   );
 }

@@ -1,22 +1,24 @@
-import { appendCookie } from "@lib/cookies";
 import useItem, { Item } from "@lib/itemSample";
+import useBaskets from "@lib/useItems";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { GlobalContext } from "pages/_app";
+import { useState, useEffect, useContext } from "react";
 
 const Item: NextPage = () => {
   const route = useRouter();
+  const { appendItems } = useContext(GlobalContext);
   const { id } = route?.query;
   const [item, setItem] = useState<Item>();
-  const itemArr = useItem();
+  const sampleItemArr = useItem();
 
   useEffect(() => {
     // @ts-ignore
-    const item = itemArr && itemArr[+id?.toString()];
+    const item = sampleItemArr && sampleItemArr[+id?.toString()];
     setItem(item);
-  }, [setItem, id, itemArr]);
+  }, [setItem, id, sampleItemArr]);
 
   let idx;
   let image = "";
@@ -45,12 +47,7 @@ const Item: NextPage = () => {
           <p>description: {item?.description}</p>
           <button
             type="button"
-            onClick={() =>
-              appendCookie({
-                cookieName: "checked-item",
-                value: item?.id + "",
-              })
-            }
+            onClick={() => appendItems && appendItems(item?.id + "")}
             style={{ backgroundColor: "purple", color: "white" }}
           >
             장바구니

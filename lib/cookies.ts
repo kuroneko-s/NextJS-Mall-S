@@ -1,4 +1,5 @@
 import { Cookies } from "react-cookie";
+import { COOKIE_NAME } from "./common";
 
 interface CookieProps {
   cookieName: string;
@@ -18,7 +19,7 @@ export const setCookie = ({
   values,
   ...options
 }: SetCookieProps) => {
-  cookies.set("checked-item", values, {
+  cookies.set(COOKIE_NAME, values, {
     ...options,
   });
 };

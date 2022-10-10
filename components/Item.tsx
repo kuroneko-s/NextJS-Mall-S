@@ -1,7 +1,8 @@
 import { COOKIE_NAME } from "@lib/common";
-import { removeCookieValue } from "@lib/cookies";
 import Image from "next/image";
 import Link from "next/link";
+import { GlobalContext } from "pages/_app";
+import { useContext } from "react";
 import type { Item } from "../lib/itemSample";
 
 interface ItemProps {
@@ -12,6 +13,8 @@ interface ItemProps {
 }
 
 export default function Item({ index = 1, item, btnHandler, type }: ItemProps) {
+  const { removeItem } = useContext(GlobalContext);
+
   const i = index % 4;
   const image = require(`../images/cat${i}.jpg`);
 
@@ -43,9 +46,7 @@ export default function Item({ index = 1, item, btnHandler, type }: ItemProps) {
       {type === "buy" ? (
         <button
           type="button"
-          onClick={() =>
-            removeCookieValue({ cookieName: COOKIE_NAME, value: item.id + "" })
-          }
+          onClick={() => removeItem && removeItem(item.id + "")}
           style={{
             backgroundColor: "orange",
             color: "white",

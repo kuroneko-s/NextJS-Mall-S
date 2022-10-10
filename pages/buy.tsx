@@ -1,18 +1,26 @@
-import { COOKIE_NAME } from "@lib/common";
-import { getCookie, removeCookieAll } from "@lib/cookies";
 import useItem from "@lib/itemSample";
+import { getCookie } from "@lib/cookies";
 import { NextPage } from "next";
 import Item from "components/Item";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "./_app";
+import { COOKIE_NAME } from "@lib/common";
 
 const Buy: NextPage = () => {
-  const cookie = getCookie(COOKIE_NAME);
-  const itemArr = useItem();
-  const newArr =
-    itemArr && itemArr.filter((v) => cookie && cookie.includes(v.id + ""));
+  const { baskets, appendItems, removeAll } = useContext(GlobalContext);
+  // cookie 적용
+  useEffect(() => {
+    const cookie = getCookie(COOKIE_NAME);
+    if (!baskets || (baskets && baskets.length <= 0)) {
+      appendItems && appendItems(...cookie);
+    }
+  }, []);
 
-  useEffect(() => {}, [cookie]);
+  const sampelItems = useItem();
+  const newArr =
+    sampelItems &&
+    sampelItems.filter((v) => baskets && baskets.includes(v.id + ""));
 
   return (
     <div>
@@ -21,7 +29,7 @@ const Buy: NextPage = () => {
         <button
           type="button"
           onClick={() => {
-            removeCookieAll(COOKIE_NAME);
+            removeAll && removeAll();
           }}
         >
           전체 비우기
@@ -30,14 +38,7 @@ const Buy: NextPage = () => {
       <Link href="/">
         <a>
           <div>
-            <button
-              type="button"
-              onClick={() => {
-                removeCookieAll(COOKIE_NAME);
-              }}
-            >
-              Home
-            </button>
+            <button type="button">Home</button>
           </div>
         </a>
       </Link>

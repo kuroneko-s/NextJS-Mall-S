@@ -6,24 +6,48 @@ import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import Item from "components/Item";
 import useItem from "@lib/itemSample";
-import useSelects from "@lib/useItems";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { GlobalContext } from "./_app";
+import Modal from "components/modal";
 
 const Home: NextPage = () => {
   console.log("index component");
+  const [modalFlag, setModalFlag] = useState(false);
   const { appendItems, removeAll } = useContext(GlobalContext);
   const { user, isLoading, error, mutate } = useUser();
   const sampleItemArr = useItem();
+  const modalRef = useRef<any>();
 
   var date = new Date();
   date.setDate(date.getDate() + 1);
 
+  const modalActive = (name: string) => {
+    if (modalRef == undefined) return;
+
+    setModalFlag(true);
+    console.log("modalRef.current - ", modalRef.current);
+    modalRef.current?.classList.add("modal-active");
+    const node = modalRef.current?.children[0];
+    console.log(node);
+    node.innerText = name;
+
+    setTimeout(() => {
+      modalRef.current?.classList.remove("modal-active");
+    }, 1500);
+
+    setModalFlag(false);
+    // if
+    // clearTimeout(timeout);
+  };
+
   return (
     <div>
-      <h1>Hello</h1>
+      {modalFlag ? <Modal title="" modalRef={modalRef} /> : null}
+
+      <h1 className="mt-12">쇼핑몰</h1>
       <div>
         <button
+          className="bg-yellow-500"
           type="button"
           onClick={() => {
             removeAll && removeAll();
@@ -40,6 +64,17 @@ const Home: NextPage = () => {
         </Link>
       </div>
 
+      <Link href={"/login"}>
+        <a style={{ marginRight: "5px" }}>
+          <button>Login</button>
+        </a>
+      </Link>
+      <Link href={"/api/login/logout"}>
+        <a>
+          <button type="button">logout</button>
+        </a>
+      </Link>
+
       {!isLoading && user && user?.ok ? (
         <p>user: {user?.data?.name}</p>
       ) : (
@@ -54,20 +89,13 @@ const Home: NextPage = () => {
               key={item.id}
               index={i}
               item={item}
-              btnHandler={() => appendItems && appendItems(item.id + "")}
+              btnHandler={() => {
+                appendItems && appendItems(item.id + "");
+                modalActive(item.name);
+              }}
             />
           ))}
       </div>
-      <Link href={"/login"}>
-        <a style={{ marginRight: "5px" }}>
-          <button>Login</button>
-        </a>
-      </Link>
-      <Link href={"/api/login/logout"}>
-        <a>
-          <button type="button">logout</button>
-        </a>
-      </Link>
     </div>
   );
 };

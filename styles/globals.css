@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.modal-active {
+  animation: fadeInFromNone 1.4s ease-out;
+}
+
+@keyframes fadeInFromNone {
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 0;
+  }
+}

@@ -12,37 +12,26 @@ import Modal from "components/modal";
 
 const Home: NextPage = () => {
   console.log("index component");
-  const [modalFlag, setModalFlag] = useState(false);
+
   const { appendItems, removeAll } = useContext(GlobalContext);
   const { user, isLoading, error, mutate } = useUser();
   const sampleItemArr = useItem();
-  const modalRef = useRef<any>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>("");
 
   var date = new Date();
   date.setDate(date.getDate() + 1);
 
-  const modalActive = (name: string) => {
-    if (modalRef == undefined) return;
-
-    setModalFlag(true);
-    console.log("modalRef.current - ", modalRef.current);
-    modalRef.current?.classList.add("modal-active");
-    const node = modalRef.current?.children[0];
-    console.log(node);
-    node.innerText = name;
-
-    setTimeout(() => {
-      modalRef.current?.classList.remove("modal-active");
-    }, 1500);
-
-    setModalFlag(false);
-    // if
-    // clearTimeout(timeout);
+  const itemBtnClickHandler = (id: string, name: string) => {
+    appendItems && appendItems(id + "");
+    setModalTitle(name);
+    setModalOpen(true);
   };
 
   return (
     <div>
-      {modalFlag ? <Modal title="" modalRef={modalRef} /> : null}
+      {/* Dispatch<SetStateAction<boolean>> */}
+      <Modal title={modalTitle} modalOpen={modalOpen} />
 
       <h1 className="mt-12">쇼핑몰</h1>
       <div>
@@ -89,10 +78,9 @@ const Home: NextPage = () => {
               key={item.id}
               index={i}
               item={item}
-              btnHandler={() => {
-                appendItems && appendItems(item.id + "");
-                modalActive(item.name);
-              }}
+              btnHandler={(e: any) =>
+                itemBtnClickHandler(item.id + "", item.name)
+              }
             />
           ))}
       </div>

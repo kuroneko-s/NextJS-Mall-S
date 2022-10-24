@@ -1,19 +1,31 @@
 import { cls } from "@lib/client/common";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { useRef } from "react";
 
 interface ModalProps {
   title: string;
   modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  modalOpenFn: () => void;
+  modalCloseFn: () => void;
 }
 
-export default function Modal({ title, modalOpen }: ModalProps) {
+export default function ModalEx({
+  title,
+  modalOpen,
+  setModalOpen,
+  modalOpenFn,
+  modalCloseFn,
+}: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const [timeoutKey, setTimeoutKey] = useState<NodeJS.Timeout>();
+  console.log("modal run");
 
-  // 이 컴포넌트는 어떤 값을 띄우고, 띄울 여부만 묻고 나머지는 스스로 해결하는 방향으로 진행
-  setTimeout(() => {
+  if (modalOpen) {
     modalRef.current?.classList.remove("modal-active");
-  }, 1500);
+    modalRef.current?.classList.add("modal-active");
+  } else {
+    modalRef.current?.classList.remove("modal-active");
+  }
 
   return (
     <div

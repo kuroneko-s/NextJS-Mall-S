@@ -10,6 +10,7 @@ import kakaoPay from "@lib/server/kakaoPay";
 
 const Buy: NextPage = () => {
   const { baskets, appendItems, removeAll } = useContext(GlobalContext);
+
   // cookie 적용
   useEffect(() => {
     const cookie = getCookie(COOKIE_NAME);
@@ -41,6 +42,7 @@ const Buy: NextPage = () => {
       <h1>살 목록들</h1>
       <div>
         <button
+          className="bg-yellow-500"
           style={{ marginRight: "5px" }}
           type="button"
           onClick={() => {
@@ -49,14 +51,20 @@ const Buy: NextPage = () => {
         >
           전체 비우기
         </button>
-        <button type="button" onClick={kakaoPayHandler}>
+        <button
+          className="bg-yellow-500"
+          type="button"
+          onClick={kakaoPayHandler}
+        >
           카카오 페이 결제
         </button>
       </div>
       <Link href="/">
         <a>
           <div>
-            <button type="button">Home</button>
+            <button className="bg-yellow-500" type="button">
+              Home
+            </button>
           </div>
         </a>
       </Link>

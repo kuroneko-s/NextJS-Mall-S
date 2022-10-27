@@ -12,10 +12,12 @@ export async function middleware(req: NextRequest) {
     password: process.env.IRON_PASSWORD!,
   });
 
-  console.log(session);
+  const { user } = session;
 
   // user 검증
-  // return NextResponse.redirect(new URL("/", request.url));
+  if (user?.role == undefined || user.role === "USER") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 }
 
 // See "Matching Paths" below to learn more

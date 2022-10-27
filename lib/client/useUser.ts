@@ -4,6 +4,7 @@ import useSWR from "swr";
 interface UserInfo {
   id: number;
   name: string;
+  role: string;
 }
 
 export interface UserInfoResult {

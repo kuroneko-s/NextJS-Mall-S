@@ -26,6 +26,7 @@
   - 가끔 쿠키가 남아서 장바구니가 남아있긴 한데 오류인지 뭔지 몰라서 일단 보류
 - [ ] 관리자 페이지 (관리자만 걸러내는 작업 필요)
   - kakao는 USER, naver는 ADMIN 계정으로 취급
+  - 값을 기반으로 그래프로 그려줘야 하는데 DB 연결을 안하고 있어서 그냥 랜덤값으로 그리는걸로 끝.
 
 ---
 
@@ -81,3 +82,4 @@ ironSession = https://github.com/vvo/iron-session
 SWR = https://swr.vercel.app/docs/getting-started
 react-modal = http://reactcommunity.org/react-modal/styles/transitions/
 nextJS-middleware = https://nextjs.org/docs/advanced-features/middleware
+apexcharts = https://apexcharts.com/

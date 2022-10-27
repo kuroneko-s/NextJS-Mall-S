@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 
-const Admin: NextPage = () => {
+const Dashboard: NextPage = () => {
   return (
     <div>
-      <h1>Admin</h1>
+      <h1>Dashboard</h1>
     </div>
   );
 };
 
-export default Admin;
+export default Dashboard;

@@ -59,6 +59,8 @@ const Home: NextPage = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  console.log();
   return (
     <div>
       <h1 className="mt-12">쇼핑몰</h1>
@@ -75,10 +77,17 @@ const Home: NextPage = () => {
       </div>
       <div>
         <Link href={"/buy"}>
-          <a>
+          <a className="mr-1">
             <button>구매</button>
           </a>
         </Link>
+        {user?.data?.role === "ADMIN" ? (
+          <Link href={"/admin"}>
+            <a>
+              <button>Dashboard</button>
+            </a>
+          </Link>
+        ) : null}
       </div>
 
       <Link href={"/login"}>
@@ -88,7 +97,9 @@ const Home: NextPage = () => {
       </Link>
       <Link href={"/api/login/logout"}>
         <a>
-          <button type="button">logout</button>
+          <button className="bg-yellow-500" type="button">
+            logout
+          </button>
         </a>
       </Link>
 

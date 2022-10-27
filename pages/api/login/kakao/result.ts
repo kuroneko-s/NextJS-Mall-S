@@ -57,6 +57,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     req.session.user = {
       id: info.id,
       name: info.kakao_account.profile.nickname,
+      role: "USER",
     };
 
     console.log("kakao login - ", req.session.user);

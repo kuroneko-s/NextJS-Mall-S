@@ -13,8 +13,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     )
   ).json();
 
-  console.log(json);
-
   const { response } = await (
     await fetch(`https://openapi.naver.com/v1/nid/me`, {
       headers: {
@@ -26,6 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   req.session.user = {
     id: response.id,
     name: response.nickname,
+    role: "ADMIN",
   };
 
   console.log("naver login - ", req.session.user);

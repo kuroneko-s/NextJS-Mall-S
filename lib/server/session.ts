@@ -5,6 +5,7 @@ declare module "iron-session" {
     user?: {
       id: number;
       name: string;
+      role: string;
     };
   }
 }

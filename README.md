@@ -25,6 +25,7 @@
     - 카카오 페이 진행
   - 가끔 쿠키가 남아서 장바구니가 남아있긴 한데 오류인지 뭔지 몰라서 일단 보류
 - [ ] 관리자 페이지 (관리자만 걸러내는 작업 필요)
+  - kakao는 USER, naver는 ADMIN 계정으로 취급
 
 ---
 
@@ -78,3 +79,5 @@ github = https://github.com/kuroneko-s/TS-Small-PJ-S
 simple.css = https://github.com/kevquirk/simple.css/wiki/Getting-Started-With-Simple.css  
 ironSession = https://github.com/vvo/iron-session  
 SWR = https://swr.vercel.app/docs/getting-started
+react-modal = http://reactcommunity.org/react-modal/styles/transitions/
+nextJS-middleware = https://nextjs.org/docs/advanced-features/middleware

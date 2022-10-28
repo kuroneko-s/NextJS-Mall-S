@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "apexcharts": "^3.36.0",
     "iron-session": "^6.2.1",
     "next": "12.3.1",
     "react": "18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
     "react-modal": "^3.16.1",

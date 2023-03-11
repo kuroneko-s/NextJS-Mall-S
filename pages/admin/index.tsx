@@ -62,13 +62,13 @@ const Dashboard: NextPage = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <Chart
+      {/* <Chart
         options={options}
         series={series}
         type="line"
         width="800"
         height={600}
-      />
+      /> */}
     </div>
   );
 };

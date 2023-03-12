@@ -26,12 +26,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
       .then((res) =>
         res.json().catch((err) => {
-          console.log("json parse error");
-          console.log(err);
+          console.error("json parse error");
+          console.error(err);
         })
       )
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         res.redirect(404, "/404?message=API_ERROR");
       });
 
@@ -42,13 +42,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
       .then((res) =>
         res.json().catch((err) => {
-          console.log("json parse error");
-          console.log(err);
+          console.error("json parse error");
+          console.error(err);
         })
       )
       .catch((err) => {
-        console.log("kakao info profile 가져오기 실패");
-        console.log(err);
+        console.error("kakao info profile 가져오기 실패");
+        console.error(err);
         res
           .status(404)
           .json({ ok: false, message: "kakao info profile 가져오기 실패" });
@@ -59,8 +59,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       name: info.kakao_account.profile.nickname,
       role: "USER",
     };
-
-    console.log("kakao login - ", req.session.user);
 
     await req.session.save();
 

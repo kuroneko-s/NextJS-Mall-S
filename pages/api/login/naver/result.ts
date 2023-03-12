@@ -3,7 +3,6 @@ import { withIronSession } from "@lib/server/session";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, state, error, error_description } = req.query;
-  console.log(code, state, error, error_description);
 
   // https://nid.naver.com/oauth2.0/token?client_id={클라이언트 아이디}&client_secret={클라이언트 시크릿}&grant_type=authorization_code&state={상태 토큰}&code={인증 코드}
 
@@ -26,8 +25,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     name: response.nickname,
     role: "ADMIN",
   };
-
-  console.log("naver login - ", req.session.user);
 
   await req.session.save();
 

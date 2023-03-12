@@ -34,8 +34,6 @@ const customStyles = {
 Modal.setAppElement("#__next");
 
 const Home: NextPage = () => {
-  console.log("index component");
-
   const { appendItems, removeAll } = useContext(GlobalContext);
   const { user, isLoading, error, mutate } = useUser();
   const sampleItemArr = useItem();
@@ -60,7 +58,6 @@ const Home: NextPage = () => {
     setIsOpen(false);
   }
 
-  console.log();
   return (
     <div>
       <h1 className="mt-12">쇼핑몰</h1>

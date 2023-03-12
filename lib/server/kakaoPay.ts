@@ -1,3 +1,5 @@
+import { server } from "@lib/common";
+
 interface KakaoPayProps {
   /** 상품명, 최대 100자 */
   item_name: string;
@@ -10,7 +12,7 @@ interface KakaoPayProps {
 }
 
 export default async function kakaoPay(props: KakaoPayProps) {
-  const user = await (await fetch("/api/user/info")).json();
+  const user = await (await fetch(`${server}/api/user/info`)).json();
 
   const formBody = [];
   const cid = "TC0ONETIME";

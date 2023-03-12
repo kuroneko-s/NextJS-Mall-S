@@ -10,9 +10,9 @@ import { objectIsEmpty } from "@lib/common";
 const Login: NextPage = ({ defaultUser }: any) => {
   const [kakaoUrl, setKakaoUrl] = useState("");
   const [naverUrl, setNaverUrl] = useState("");
+  console.log("defaultUser - ", defaultUser);
 
   useEffect(() => {
-    console.log(defaultUser);
     setKakaoUrl(
       `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.KAKAO_API_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}`
     );
@@ -81,7 +81,7 @@ const Login: NextPage = ({ defaultUser }: any) => {
 };
 
 export async function getServerSideProps({ req, res }: any) {
-  console.log("SSR RUn");
+  console.log("SSR Run");
   const cookieOptions = {
     cookieName: "shop-user-info",
     password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long
@@ -91,13 +91,15 @@ export async function getServerSideProps({ req, res }: any) {
 
   let defaultUser = {};
 
+  console.log("result - ", result);
+
   if (!objectIsEmpty(result)) {
     defaultUser = {
       id: result?.user?.id,
       name: result?.user?.name,
     };
   }
-
+  console.log("defaultUser - ", defaultUser);
   return {
     props: {
       defaultUser,

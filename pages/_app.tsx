@@ -28,7 +28,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
           href="https://cdn.simplecss.org/simple.min.css"
         ></link>
-
         <Component {...pageProps} />
       </SWRConfig>
     </GlobalContext.Provider>

@@ -4,8 +4,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.query);
-
   const { pg_token, params } = req.query!;
   const splitedParams = params!.toString().split("===");
   splitedParams.push("pg_token", pg_token!.toString());
@@ -22,8 +20,6 @@ export default async function handler(
       body: bodyParams,
     })
   ).json();
-
-  console.log(json);
 
   return res.redirect(302, "/kakao/success");
 }

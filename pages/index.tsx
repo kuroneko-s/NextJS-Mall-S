@@ -6,32 +6,9 @@ import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import Item from "components/Item";
 import useItem from "@lib/itemSample";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "./_app";
-import Modal from "react-modal";
-
-const customStyles = {
-  overlay: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(99, 110, 114, .5)",
-  },
-  content: {
-    width: "350px",
-    height: "180px",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgba(178, 190, 195,1.0)",
-  },
-};
-
-Modal.setAppElement("#__next");
+import Modal from "components/modal";
 
 const Home: NextPage = () => {
   const { appendItems, removeAll } = useContext(GlobalContext);
@@ -40,23 +17,21 @@ const Home: NextPage = () => {
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  var date = new Date();
+  let date = new Date();
   date.setDate(date.getDate() + 1);
-
-  const itemBtnClickHandler = (id: string, name: string) => {
-    appendItems && appendItems(id + "");
-    setModalTitle(name);
-  };
 
   function openModal() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {}
-
   function closeModal() {
     setIsOpen(false);
   }
+
+  const itemBtnClickHandler = (id: string, name: string) => {
+    appendItems && appendItems(id + "");
+    setModalTitle(name);
+  };
 
   return (
     <div>
@@ -123,27 +98,10 @@ const Home: NextPage = () => {
           ))}
       </div>
       <Modal
-        closeTimeoutMS={200}
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <p className="font-medium text-3xl text-gray-900 text-center">
-          {modalTitle}
-        </p>
-        <p className="font-medium text-1xl text-center text-gray-900">
-          장바구니에 추가되었습니다.
-        </p>
-        <button
-          className="items-center bg-slate-600 text-gray-300"
-          type="button"
-          onClick={() => setIsOpen(false)}
-        >
-          팝업 닫기
-        </button>
-      </Modal>
+        modalTitle={modalTitle}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

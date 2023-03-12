@@ -19,7 +19,7 @@ const Buy: NextPage = () => {
         appendItems && appendItems(...cookie);
       }
     }
-  }, []);
+  }, [baskets, appendItems]);
 
   const sampelItems = useItem();
   const newArr =

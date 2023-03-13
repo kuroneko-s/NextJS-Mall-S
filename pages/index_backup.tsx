@@ -1,14 +1,14 @@
 import useUser from "@lib/client/useUser";
-import useItem from "@lib/itemSample";
 import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import Link from "next/link";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import Item from "components/Item";
-import Modal from "components/modal";
+import useItem from "@lib/itemSample";
 import { useContext, useState } from "react";
 import { GlobalContext } from "./_app";
+import Modal from "components/modal";
 
 const Home: NextPage = () => {
   const { appendItems, removeAll } = useContext(GlobalContext);
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <h1>쇼핑몰</h1>
+      <h1 className="mt-12">쇼핑몰</h1>
       <div>
         <button
           className="bg-yellow-500"
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             removeAll && removeAll();
           }}
         >
-          REMOVE_COOKIE_ALL test
+          REMOVE_COOKIE_ALL
         </button>
       </div>
       <div>

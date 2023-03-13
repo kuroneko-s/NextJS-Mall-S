@@ -16,7 +16,7 @@ const NotFound: NextPage = () => {
   }, [router]);
 
   return (
-    <div>
+    <div className="min-h-[53vh]">
       <h1>Error page</h1>
       <p>{errorMessage}</p>
 

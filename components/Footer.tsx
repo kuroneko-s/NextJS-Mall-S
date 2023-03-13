@@ -112,6 +112,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
       <div className="space-y-2">
         <div className="flex text-sm items-center">
           리디(주) 사업자 정보{" "}

@@ -29,7 +29,7 @@ const Item: NextPage = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-[80.9vh]">
       <h1>품목 상세</h1>
       <h4>{id}</h4>
       {!item ? (

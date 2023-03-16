@@ -5,5 +5,5 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return <div className="h-full min-h-screen">{children}</div>;
+  return <div className="mx-auto h-full min-h-screen">{children}</div>;
 }

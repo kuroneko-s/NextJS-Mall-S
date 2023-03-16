@@ -1,107 +1,51 @@
-import useUser from "@lib/client/useUser";
-import useItem from "@lib/itemSample";
 import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
-import Link from "next/link";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
-import Item from "components/Item";
-import Modal from "components/modal";
-import { useContext, useState } from "react";
-import { GlobalContext } from "./_app";
+import { useState } from "react";
+import Head from "next/head";
+import Recommendation from "components/index/Recommendation";
+import Event from "components/index/Event";
+import { cls } from "@lib/client/common";
 
 const Home: NextPage = () => {
-  const { appendItems, removeAll } = useContext(GlobalContext);
-  const { user, isLoading, error, mutate } = useUser();
-  const sampleItemArr = useItem();
-  const [modalTitle, setModalTitle] = useState<string>("");
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  let date = new Date();
-  date.setDate(date.getDate() + 1);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const itemBtnClickHandler = (id: string, name: string) => {
-    appendItems && appendItems(id + "");
-    setModalTitle(name);
-  };
+  const [swapping, setSwapping] = useState<"recommendation" | "event">(
+    "recommendation"
+  );
 
   return (
-    <div>
-      <h1>쇼핑몰</h1>
-      <div>
+    <div className="px-16 max-w-[1280px] mx-auto">
+      <Head>
+        <title>도서 | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
+
+      <div className="flex space-x-3">
         <button
-          className="bg-yellow-500"
+          className={cls(
+            "font-bold text-base px-3 py-1",
+            swapping === "recommendation"
+              ? "bg-blue-400 text-white rounded-lg"
+              : ""
+          )}
           type="button"
-          onClick={() => {
-            removeAll && removeAll();
-          }}
+          onClick={() => setSwapping("recommendation")}
         >
-          REMOVE_COOKIE_ALL test
+          도서
+        </button>
+        <button
+          className={cls(
+            "font-bold text-base px-3 py-1",
+            swapping === "event" ? "bg-blue-400 text-white rounded-lg" : ""
+          )}
+          type="button"
+          onClick={() => setSwapping("event")}
+        >
+          기획전
         </button>
       </div>
-      <div>
-        <Link href={"/buy"}>
-          <a className="mr-1">
-            <button>구매</button>
-          </a>
-        </Link>
-        {user?.data?.role === "ADMIN" ? (
-          <Link href={"/admin"}>
-            <a>
-              <button>Dashboard</button>
-            </a>
-          </Link>
-        ) : null}
-      </div>
 
-      <Link href={"/login"}>
-        <a style={{ marginRight: "5px" }}>
-          <button>Login</button>
-        </a>
-      </Link>
-      <Link href={"/api/login/logout"}>
-        <a>
-          <button className="bg-yellow-500" type="button">
-            logout
-          </button>
-        </a>
-      </Link>
-
-      {!isLoading && user && user?.ok ? (
-        <p>user: {user?.data?.name}</p>
-      ) : (
-        <p>you need Login</p>
-      )}
-
-      <h1>품목 리스트</h1>
-
-      <div id="item_div">
-        {sampleItemArr &&
-          sampleItemArr.map((item, i) => (
-            <Item
-              key={item.id}
-              index={i}
-              item={item}
-              btnHandler={(e: any) => {
-                itemBtnClickHandler(item.id + "", item.name);
-                openModal();
-              }}
-            />
-          ))}
-      </div>
-      <Modal
-        modalTitle={modalTitle}
-        modalIsOpen={modalIsOpen}
-        closeModal={closeModal}
-      />
+      {swapping === "recommendation" ? <Recommendation /> : <Event />}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import Header3 from "./header/Header3";
 
 export default function Header() {
   return (
-    <div>
+    <div className="mb-6">
       <Header1 />
       <Header2 />
       <Header3 />

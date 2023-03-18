@@ -14,38 +14,40 @@ const Home: NextPage = () => {
   );
 
   return (
-    <div className="px-16 max-w-[1280px] mx-auto">
-      <Head>
-        <title>도서 | 흑우냥이</title>
-        {/* <meta /> */}
-      </Head>
+    <div className="px-16">
+      <div className="max-w-[1280px] mx-auto">
+        <Head>
+          <title>도서 | 흑우냥이</title>
+          {/* <meta /> */}
+        </Head>
 
-      <div className="flex space-x-3">
-        <button
-          className={cls(
-            "font-bold text-base px-3 py-1",
-            swapping === "recommendation"
-              ? "bg-blue-400 text-white rounded-lg"
-              : ""
-          )}
-          type="button"
-          onClick={() => setSwapping("recommendation")}
-        >
-          도서
-        </button>
-        <button
-          className={cls(
-            "font-bold text-base px-3 py-1",
-            swapping === "event" ? "bg-blue-400 text-white rounded-lg" : ""
-          )}
-          type="button"
-          onClick={() => setSwapping("event")}
-        >
-          기획전
-        </button>
+        <div className="flex space-x-3 mb-5">
+          <button
+            className={cls(
+              "font-bold text-base px-3 py-1",
+              swapping === "recommendation"
+                ? "bg-blue-400 text-white rounded-lg"
+                : ""
+            )}
+            type="button"
+            onClick={() => setSwapping("recommendation")}
+          >
+            도서
+          </button>
+          <button
+            className={cls(
+              "font-bold text-base px-3 py-1",
+              swapping === "event" ? "bg-blue-400 text-white rounded-lg" : ""
+            )}
+            type="button"
+            onClick={() => setSwapping("event")}
+          >
+            기획전
+          </button>
+        </div>
+
+        {swapping === "recommendation" ? <Recommendation /> : <Event />}
       </div>
-
-      {swapping === "recommendation" ? <Recommendation /> : <Event />}
     </div>
   );
 };

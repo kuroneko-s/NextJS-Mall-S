@@ -1,7 +1,7 @@
 import BookList from "components/BookList";
 import React from "react";
 import styled from "styled-components";
-import { Book } from "@lib/client/common";
+import { BookSample } from "@lib/client/common";
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -15,45 +15,6 @@ const ImageContainer = styled.div`
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 `;
-
-const BookSample: Book[] = [
-  {
-    imageUrl: "red",
-    author: "test",
-    score: "0",
-    title: "test 서적 1",
-  },
-  {
-    imageUrl: "blue",
-    author: "test",
-    score: "5",
-    title: "test 서적 1",
-  },
-  {
-    imageUrl: "pink",
-    author: "test",
-    score: "5",
-    title: "test 서적 1",
-  },
-  {
-    imageUrl: "yellow",
-    author: "test",
-    score: "5",
-    title: "test 서적 1",
-  },
-  {
-    imageUrl: "green",
-    author: "test",
-    score: "5",
-    title: "test 서적 1",
-  },
-  {
-    imageUrl: "gray",
-    author: "test",
-    score: "5",
-    title: "test 서적 1",
-  },
-];
 
 export default function Event() {
   return (

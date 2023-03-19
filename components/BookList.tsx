@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Book } from "@lib/client/common";
+import Link from "next/link";
 
 interface BookListProps {
   bookInfoList: Book[];
@@ -12,20 +13,21 @@ interface ImageBoxProps {
 
 const ContentsContainer = styled.div`
   width: 100%;
-  height: 350px;
-  background-color: rgb(241 245 249);
+  /* background-color: rgb(241 245 249); */
 `;
 
 const ImageBox = styled.div<ImageBoxProps>`
   width: 100%;
-  height: 65%;
+  height: 260px;
   background-color: ${(props) => props.image};
+  border-radius: 0.375rem;
+  cursor: pointer;
 `;
 
 // ImageSlide 처럼 좌우 이동 가능해져야함
 export default function BookList({ bookInfoList }: BookListProps) {
   return (
-    <ContentsContainer>
+    <ContentsContainer className="mb-6">
       <div className="flex justify-between ">
         <p className="font-bold text-2xl mb-4">신간 서적 베스트셀러</p>
         <p className="font-bold text-lg text-gray-500 cursor-pointer hover:text-gray-400">
@@ -36,7 +38,9 @@ export default function BookList({ bookInfoList }: BookListProps) {
         {bookInfoList.map((bookInfo, idx) => {
           return (
             <div className="w-full" key={idx}>
-              <ImageBox className="rounded-md" image={bookInfo.imageUrl} />
+              <Link href={`/bookInfo/${bookInfo.id}`}>
+                <ImageBox image={bookInfo.imageUrl} />
+              </Link>
               <div>
                 <p className="font-semibold">{bookInfo.title}</p>
               </div>

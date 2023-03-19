@@ -157,7 +157,7 @@ export default function ImageSlider() {
 
   // https://velog.io/@sweet_pumpkin/Megabyte-School-%EB%AC%B4%ED%95%9C%EC%9C%BC%EB%A1%9C-%EC%A6%90%EA%B8%B0%EB%8A%94-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EB%AC%B4%ED%95%9C%EB%A3%A8%ED%94%84%EC%9E%90%EB%8F%99%EB%B3%80%ED%99%98
   return (
-    <ImageContainer>
+    <ImageContainer className="mb-8">
       <div
         className="absolute p-2 left-0 top-0 bg-white rounded-full shadow-xl ring-1 ring-gray-300 cursor-pointer hover:text-gray-400"
         onClick={leftHandler}

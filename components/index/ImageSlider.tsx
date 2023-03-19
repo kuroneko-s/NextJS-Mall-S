@@ -11,8 +11,8 @@ const ImageContainer = styled.div`
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
     0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow: var(0 0 #0000, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 `;
 
 interface SlideItemProps {
@@ -155,10 +155,11 @@ export default function ImageSlider() {
     }
   };
 
+  // https://velog.io/@sweet_pumpkin/Megabyte-School-%EB%AC%B4%ED%95%9C%EC%9C%BC%EB%A1%9C-%EC%A6%90%EA%B8%B0%EB%8A%94-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EB%AC%B4%ED%95%9C%EB%A3%A8%ED%94%84%EC%9E%90%EB%8F%99%EB%B3%80%ED%99%98
   return (
     <ImageContainer>
       <div
-        className="absolute p-2 bg-white rounded-full shadow-xl ring-1 ring-gray-300 cursor-pointer hover:text-gray-400"
+        className="absolute p-2 left-0 top-0 bg-white rounded-full shadow-xl ring-1 ring-gray-300 cursor-pointer hover:text-gray-400"
         onClick={leftHandler}
       >
         <svg
@@ -209,7 +210,7 @@ export default function ImageSlider() {
       </SlideContainer>
 
       <div
-        className="absolute p-2 bg-white rounded-full shadow-xl ring-1 ring-gray-300 cursor-pointer hover:text-gray-400"
+        className="absolute p-2 right-0 top-0 bg-white rounded-full shadow-xl ring-1 ring-gray-300 cursor-pointer hover:text-gray-400"
         onClick={rightHandler}
       >
         <svg

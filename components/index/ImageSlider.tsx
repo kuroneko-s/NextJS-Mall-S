@@ -19,7 +19,7 @@ interface SlideItemProps {
   bgColor: string;
   isActive: boolean;
   isSecond: boolean;
-  isDummy?: boolean;
+  test?: boolean;
 }
 
 interface Item {
@@ -32,7 +32,7 @@ const SlideItem = styled.div<SlideItemProps>`
   flex-grow: ${(props) => (props.isActive ? 1 : 0)};
   flex-basis: ${(props) => (props.isSecond ? "3.5rem" : 0)};
   background-color: ${(props) => props.bgColor};
-  transition: ${(props) => (props.isDummy ? "" : `all 0.7s ease-in-out`)};
+  transition: ${(props) => (props.test ? "" : "all 0.7s ease-in-out")};
   font-size: ${(props) => (props.isActive || props.isSecond ? "1rem" : "0rem")};
   color: yellow;
   text-align: center;
@@ -42,7 +42,6 @@ const SlideContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-
   overflow: hidden;
 `;
 
@@ -83,6 +82,7 @@ export default function ImageSlider() {
   const startDummy = useRef(false);
   const lastDummy = useRef(false);
   const container = useRef<HTMLDivElement>(null);
+  const [test, setTest] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
     undefined
@@ -128,13 +128,24 @@ export default function ImageSlider() {
   const rightHandler = () => {
     if (timeoutId === undefined) {
       setActiveIdx((cur) => {
-        return cur >= (container.current?.children.length ?? 0) - 3
+        return cur >= (container.current?.children.length ?? 0) - 2
           ? 0
           : cur + 1;
       });
 
       console.log("activeIdx - ", activeIdx);
       console.log("activeIdx - ", container.current?.children[activeIdx]);
+
+      if (activeIdx === 8) {
+        startDummy.current = true;
+
+        setTimeout(() => {
+          startDummy.current = false;
+          setActiveIdx(0);
+          setTest(true);
+          return () => setTest(false);
+        }, animationDelay.current);
+      }
 
       const _timeoutId = setTimeout(() => {
         setTimeoutId(undefined);
@@ -175,6 +186,7 @@ export default function ImageSlider() {
               isActive={activeIdx === idx}
               isSecond={second.current === idx || third.current === idx}
               data-index={idx}
+              test={idx <= 2 ? test : false}
             >
               {idx}
             </SlideItem>
@@ -182,10 +194,12 @@ export default function ImageSlider() {
         })}
         <SlideItem
           bgColor={items[0].color}
-          isActive={activeIdx === -1}
+          isActive={activeIdx === 9}
           isSecond={lastDummy.current}
           data-index={-1}
-        />
+        >
+          9
+        </SlideItem>
         <SlideItem
           bgColor={items[items.length - 1].color}
           isActive={activeIdx === -1}

@@ -23,9 +23,9 @@ export default function Event() {
         <div className="w-full h-full bg-red-300 rounded-md"></div>
       </ImageContainer>
 
-      <BookList bookInfoList={BookSample} />
-      <BookList bookInfoList={BookSample} />
-      <BookList bookInfoList={BookSample} />
+      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
+      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
+      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
     </div>
   );
 }

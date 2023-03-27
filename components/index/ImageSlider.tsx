@@ -182,11 +182,11 @@ export default function ImageSlider() {
         {items.map((item, idx) => {
           return (
             <SlideItem
-              bgColor={item.color}
               key={idx}
+              data-index={idx}
+              bgColor={item.color}
               isActive={activeIdx === idx}
               isSecond={second.current === idx || third.current === idx}
-              data-index={idx}
               test={idx <= 2 ? test : false}
             >
               {idx}

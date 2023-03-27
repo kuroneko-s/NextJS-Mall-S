@@ -11,6 +11,11 @@ const nextConfig = {
     NAVER_CLIENT_SECRET: process.env.NAVER_CLIENT_SECRET,
     NAVER_REDIRECT_URL: process.env.NAVER_REDIRECT_URL,
   },
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
   async redirects() {
     return [
       {

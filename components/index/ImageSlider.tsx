@@ -82,6 +82,7 @@ export default function ImageSlider() {
   const startDummy = useRef(false);
   const lastDummy = useRef(false);
   const container = useRef<HTMLDivElement>(null);
+
   const [test, setTest] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(

@@ -7,16 +7,11 @@ import Head from "next/head";
 import Recommendation from "components/index/Recommendation";
 import Event from "components/index/Event";
 import { cls } from "@lib/client/common";
-import { executeQuery } from "@lib/server/db";
-import useQuery from "@lib/client/useQuery";
 
 const Home: NextPage = () => {
   const [swapping, setSwapping] = useState<"recommendation" | "event">(
     "recommendation"
   );
-
-  const result = useQuery();
-  console.log("🚀 ~ file: index.tsx:19 ~ result:", result);
 
   return (
     <div className="px-16">

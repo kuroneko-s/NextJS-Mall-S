@@ -11,7 +11,7 @@ export interface QueryResult {
   error?: any | undefined;
 }
 
-export default function useQuery() {
+export default function useUserInfo() {
   const { data, error, mutate } = useSWR<QueryResult>(
     `${server}/api/db/getUsers`
   );

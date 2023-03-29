@@ -1,14 +1,18 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 export default function Header2() {
+  const router = useRouter();
+
   return (
     <div className="px-16 py-4">
       <div className="max-w-[1280px] mx-auto flex justify-between items-center">
         <div className="text-3xl font-extrabold cursor-pointer">
           <Link href={"/"}>
             <p>
-              <span className="text-blue-500">RIDI</span>BOOKS
+              <span className="text-blue-500">RIDI</span>
+              {router.asPath === "/" ? <span>BOOKS</span> : null}
             </p>
           </Link>
         </div>

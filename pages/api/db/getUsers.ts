@@ -14,11 +14,6 @@ export default async function handler(
     return res.json({ ok: false, error: result.error });
   }
 
-  console.log({
-    ok: true,
-    data: result.result,
-  });
-
   return res.json({
     ok: true,
     data: result.result,

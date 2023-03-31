@@ -7,7 +7,7 @@ interface UseBookProps {
 
 interface BookInfo {
   isbn: string;
-  id: string;
+  writer_id: string;
   title: string;
   price: string;
   book_description: string;
@@ -25,7 +25,7 @@ interface BookInfo {
   text_count: string;
   publisher_description: string;
   book_contents: string;
-  category: string;
+  category_id: string;
 }
 
 export interface QueryResult {

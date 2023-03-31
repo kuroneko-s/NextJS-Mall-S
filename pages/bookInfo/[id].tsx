@@ -44,7 +44,7 @@ export default function BookInfo() {
   return (
     <div className="px-16 bg-red-200 w-full min-h-screen">
       <InnerContainer>
-        <div className="flex">
+        <div className="flex flex-1">
           <ImageBox>
             <Image
               src={imageUrl}

@@ -11,10 +11,9 @@ const nextConfig = {
     NAVER_CLIENT_SECRET: process.env.NAVER_CLIENT_SECRET,
     NAVER_REDIRECT_URL: process.env.NAVER_REDIRECT_URL,
   },
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false };
-
-    return config;
+  compiler: {
+    // styled-components SSR로인해 className이 unmatch되는 문제를 SWC로 해결하기 위해서 추가.
+    styledComponents: true,
   },
   async redirects() {
     return [

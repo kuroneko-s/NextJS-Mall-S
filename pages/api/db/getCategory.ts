@@ -8,7 +8,7 @@ export default async function handler(
   const id = req.query?.id ?? "";
 
   const queryResult = await executeQuery({
-    query: `select * from book where isbn = ?`,
+    query: `select * from category where name = ?`,
     values: [id.toString()],
   });
 
@@ -16,14 +16,14 @@ export default async function handler(
     return res.json({ ok: false, error: queryResult.error });
   }
 
-  const bookInfoArr = queryResult.result ?? [];
+  const categoryInfo = queryResult.result ?? [];
 
-  if (bookInfoArr?.length > 1) {
+  if (categoryInfo?.length > 1) {
     return res.json({ ok: false, error: "조회 실패 - UnUnique Key" });
   }
 
   return res.json({
     ok: true,
-    data: bookInfoArr[0],
+    data: categoryInfo[0],
   });
 }

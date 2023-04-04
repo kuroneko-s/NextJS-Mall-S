@@ -5,7 +5,7 @@ import { createContext } from "react";
 import useBaskets, { UseItems } from "@lib/useItems";
 import Layout from "components/Layout";
 import Header from "components/Header";
-import Footer from "components/Footer";
+import Footer from "@components/Footer";
 
 export const GlobalContext = createContext<UseItems>({});
 

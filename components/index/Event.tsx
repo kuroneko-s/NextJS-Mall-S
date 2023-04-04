@@ -24,8 +24,6 @@ export default function Event() {
       </ImageContainer>
 
       <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
-      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
-      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { BookInfo, CategoryInfo } from "@lib/interface";
-import uesQuery from "./uesQuery";
+import uesQuery from "../hooks/uesQuery";
 
 export interface QueryResult<type> {
   ok: boolean;
@@ -7,12 +7,14 @@ export interface QueryResult<type> {
   error?: any | undefined;
 }
 
+const BASE_URL = "/api/db";
+
 class MySqlUtil {
   constructor() {}
 
   getCategoryInfo(id: string) {
     return uesQuery<QueryResult<CategoryInfo>>({
-      path: "/api/db/getCategory",
+      path: `${BASE_URL}/getCategory`,
       args: { id },
     });
   }
@@ -24,7 +26,12 @@ class MySqlUtil {
     });
   }
 
-  getBookAndBookSeries(bookId: string) {}
+  getBookAndBookSeries(bookId: string) {
+    return uesQuery<QueryResult<BookInfo>>({
+      path: "",
+      args: { id: bookId },
+    });
+  }
 }
 
 export const mySqlUtil = new MySqlUtil();

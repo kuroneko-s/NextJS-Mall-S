@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   return (
     <div className="footer px-16 py-12 mt-6 bottom-0 border-t-2 space-y-12">
-      <div className="max-w-[1280px] mx-auto">
+      <div className="max-w-[1280px] mx-auto space-y-6">
         <div className="flex space-x-36">
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-1">
@@ -44,11 +44,6 @@ export default function Footer() {
           <div className="flex flex-col space-y-3">
             <p className="font-bold">서비스</p>
             <p>서비스1</p>
-            <p>서비스2</p>
-            <p>서비스3</p>
-            <p>서비스4</p>
-            <p>서비스5</p>
-            <p>서비스6</p>
           </div>
           <div className="flex flex-col space-y-3">
             <p className="font-bold">기타 문의</p>

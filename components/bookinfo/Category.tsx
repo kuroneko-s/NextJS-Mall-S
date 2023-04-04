@@ -13,7 +13,7 @@ export default function Category({ categoryId }: CategoryProps) {
   const categoryInfo = categoriInfoResult.queryResult?.data;
 
   const categoryName = categoryInfo?.name; // category 이름
-  const parentCategoryName = categoryInfo?.parent; // 상위 category 이름
+  const parentCategoryName = categoryInfo?.parent_name; // 상위 category 이름
 
   return (
     <>

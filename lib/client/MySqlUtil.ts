@@ -1,5 +1,6 @@
+import { COMMON_URL } from "@lib/appConstant";
+import customUseQuery from "@lib/hooks/useCustomQuery";
 import { BookInfo, CategoryInfo } from "@lib/interface";
-import uesQuery from "../hooks/uesQuery";
 
 export interface QueryResult<type> {
   ok: boolean;
@@ -7,28 +8,39 @@ export interface QueryResult<type> {
   error?: any | undefined;
 }
 
-const BASE_URL = "/api/db";
+export interface QueryResultList<type> {
+  ok: boolean;
+  data: type[];
+  error?: any | undefined;
+}
 
 class MySqlUtil {
   constructor() {}
 
   getCategoryInfo(id: string) {
-    return uesQuery<QueryResult<CategoryInfo>>({
-      path: `${BASE_URL}/getCategory`,
+    return customUseQuery<QueryResult<CategoryInfo>>({
+      path: `${COMMON_URL.getCategoryInfo}`,
       args: { id },
     });
   }
 
+  getBookList() {
+    return customUseQuery<QueryResultList<BookInfo>>({
+      path: `${COMMON_URL.getBookList}`,
+      args: {},
+    });
+  }
+
   getBookInfo(id: string) {
-    return uesQuery<QueryResult<BookInfo>>({
-      path: "/api/db/getBookInfo",
+    return customUseQuery<QueryResult<BookInfo>>({
+      path: `${COMMON_URL.getBookInfo}`,
       args: { id },
     });
   }
 
   getBookAndBookSeries(bookId: string) {
-    return uesQuery<QueryResult<BookInfo>>({
-      path: "",
+    return customUseQuery<QueryResult<BookInfo>>({
+      path: `${COMMON_URL.getBookAndBookSeries}`,
       args: { id: bookId },
     });
   }

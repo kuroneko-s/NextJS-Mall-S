@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Book } from "@lib/client/common";
 import Link from "next/link";
 import BookScore from "./BookScore";
 import BookTitle from "./BookTitle";
 import BookAuthor from "./BookAuthor";
+import { BookInfo } from "@lib/interface";
 
 interface BookListProps {
-  bookInfoList: Book[];
+  bookInfoList: BookInfo[] | [];
   title: String;
 }
 
@@ -30,6 +30,7 @@ const ImageBox = styled.div<ImageBoxProps>`
 
 // ImageSlide 처럼 좌우 이동 가능해져야함
 export default function BookList({ bookInfoList, title }: BookListProps) {
+  console.log("bookInfoList - ", bookInfoList);
   return (
     <ContentsContainer className="mb-6">
       <div className="flex justify-between ">
@@ -39,14 +40,14 @@ export default function BookList({ bookInfoList, title }: BookListProps) {
         </p>
       </div>
       <div className="flex space-x-4 w-full h-full">
-        {bookInfoList.map((bookInfo, idx) => {
+        {bookInfoList.slice(0, 6).map((bookInfo, idx) => {
           return (
             <div className="w-full" key={idx}>
-              <Link href={`/bookInfo/${bookInfo.id}`}>
-                <ImageBox image={bookInfo.imageUrl} />
+              <Link href={`/bookInfo/${bookInfo.isbn}`}>
+                <ImageBox image={bookInfo.image_path ? "red" : "blue"} />
               </Link>
               <BookTitle title={bookInfo.title} id={bookInfo.title} />
-              <BookAuthor title={bookInfo.author} id={bookInfo.author} />
+              <BookAuthor title={bookInfo.writer_id} id={bookInfo.writer_id} />
               <BookScore score={bookInfo.score} />
             </div>
           );

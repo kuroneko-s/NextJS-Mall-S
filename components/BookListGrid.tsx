@@ -1,12 +1,12 @@
-import { Book } from "@lib/client/common";
 import React from "react";
 import styled from "styled-components";
 import BookAuthor from "./BookAuthor";
 import BookScore from "./BookScore";
 import BookTitle from "./BookTitle";
+import { BookInfo } from "@lib/interface";
 
 interface BookListGridProps {
-  bookInfoList: Book[];
+  bookInfoList: BookInfo[] | [];
   title: string;
 }
 
@@ -43,7 +43,6 @@ export default function BookListGrid({
   bookInfoList,
   title,
 }: BookListGridProps) {
-  const sampleList = [...bookInfoList, ...bookInfoList].slice(0, 9);
   return (
     <Container className="mb-6">
       <div>
@@ -57,18 +56,20 @@ export default function BookListGrid({
               {[idx, idx + 1, idx + 2].map((v, idx) => {
                 return (
                   <Item key={idx}>
-                    <ImageItem imageUrl={sampleList[v].imageUrl} />
+                    <ImageItem
+                      imageUrl={bookInfoList[v].image_path ? "red" : "blue"}
+                    />
                     <p className="flex-grow-[0.5] text-center">{v + 1}</p>
                     <div className="flex-grow text-start">
                       <BookTitle
-                        id={sampleList[v].title}
-                        title={sampleList[v].title}
+                        id={bookInfoList[v].title}
+                        title={bookInfoList[v].title}
                       />
                       <BookAuthor
-                        id={sampleList[v].author}
-                        title={sampleList[v].author}
+                        id={bookInfoList[v].writer_id}
+                        title={bookInfoList[v].writer_id}
                       />
-                      <BookScore score={sampleList[v].score} />
+                      <BookScore score={bookInfoList[v].score} />
                     </div>
                   </Item>
                 );

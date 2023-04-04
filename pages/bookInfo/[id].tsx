@@ -95,14 +95,16 @@ export default function BookInfo() {
   const bookInfo = bookInfoResult.queryResult?.data;
   let seriesInfo;
 
-  if (bookInfo?.series_yn === "Y") {
+  /* if (bookInfo?.series_yn === "Y") {
     seriesInfo = mySqlUtil.getBookAndBookSeries(bookInfo.isbn);
-  }
+  } */
 
   console.log("🚀 ~ file: [id].tsx:96 ~ BookInfo ~ bookInfo:", bookInfo);
 
   const imageUrl = require(`../../images/${
-    bookInfo?.isbn === undefined ? "sample" : "cat" + bookInfo.isbn
+    bookInfo?.isbn === undefined
+      ? "sample"
+      : "cat" + bookInfo.isbn.split("_")[1]
   }.jpg`);
 
   return (
@@ -126,7 +128,7 @@ export default function BookInfo() {
             <BookTitle>{bookInfo?.title}</BookTitle>
             <StarBox className="space-x-1">
               <EmptyStar>
-                <Star w={(bookInfo?.score ?? 0) * 20} />
+                <Star w={+(bookInfo?.score ?? 0) * 20} />
               </EmptyStar>
               <span className="text-sm text-[#fa722e] font-bold">
                 {bookInfo?.score ?? 0}점

@@ -30,6 +30,7 @@ export interface BookInfo {
   publisher_description: string;
   book_contents: string;
   score: string;
+  image_path: string;
   create_user: string;
   create_dt: string;
   update_user: string;

@@ -6,7 +6,7 @@ interface QueryProps {
   args: { [key: string]: string };
 }
 
-export default function useQuery<type>({ path, args }: QueryProps) {
+export default function useCustomQuery<type>({ path, args }: QueryProps) {
   const params = Object.keys(args)
     .map((key) => `${key}=${args[key]}`)
     .join("");

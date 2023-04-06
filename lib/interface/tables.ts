@@ -36,3 +36,13 @@ export interface BookInfo {
   update_user: string;
   update_dt: string;
 }
+
+export interface BookSeries {
+  id: string;
+  finish_yn: string;
+  count: number;
+  create_user: string;
+  create_dt: string;
+  update_user: string;
+  update_dt: string;
+}

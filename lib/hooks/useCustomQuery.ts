@@ -1,5 +1,6 @@
 import { server } from "@lib/common";
-import useSWR from "swr";
+import { QueryResult } from "@lib/interface/db";
+import useSWR, { KeyedMutator } from "swr";
 
 interface QueryProps {
   path: string;

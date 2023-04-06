@@ -3,7 +3,7 @@ import styled from "styled-components";
 import BookAuthor from "./BookAuthor";
 import BookScore from "./BookScore";
 import BookTitle from "./BookTitle";
-import { BookInfo } from "@lib/interface";
+import { BookInfo } from "@lib/interface/tables";
 
 interface BookListGridProps {
   bookInfoList: BookInfo[] | [];

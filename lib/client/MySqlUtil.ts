@@ -1,22 +1,20 @@
 import { COMMON_URL } from "@lib/appConstant";
 import customUseQuery from "@lib/hooks/useCustomQuery";
-import { BookInfo, CategoryInfo } from "@lib/interface";
+import { BookInfo, BookSeries, CategoryInfo } from "@lib/interface/tables";
 
-export interface QueryResult<type> {
+interface QueryResult<type> {
   ok: boolean;
   data: type;
   error?: any | undefined;
 }
 
-export interface QueryResultList<type> {
+interface QueryResultList<type> {
   ok: boolean;
   data: type[];
   error?: any | undefined;
 }
 
 class MySqlUtil {
-  constructor() {}
-
   getCategoryInfo(id: string) {
     return customUseQuery<QueryResult<CategoryInfo>>({
       path: `${COMMON_URL.getCategoryInfo}`,
@@ -38,9 +36,9 @@ class MySqlUtil {
     });
   }
 
-  getBookAndBookSeries(bookId: string) {
-    return customUseQuery<QueryResult<BookInfo>>({
-      path: `${COMMON_URL.getBookAndBookSeries}`,
+  getBookSeries(bookId: string) {
+    return customUseQuery<QueryResult<BookSeries>>({
+      path: `${COMMON_URL.getBookSeries}`,
       args: { id: bookId },
     });
   }

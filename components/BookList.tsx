@@ -4,7 +4,7 @@ import Link from "next/link";
 import BookScore from "./BookScore";
 import BookTitle from "./BookTitle";
 import BookAuthor from "./BookAuthor";
-import { BookInfo } from "@lib/interface";
+import { BookInfo } from "@lib/interface/tables";
 
 interface BookListProps {
   bookInfoList: BookInfo[] | [];

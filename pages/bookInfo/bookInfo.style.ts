@@ -116,3 +116,14 @@ export const ServiceInfoTitle = styled.span`
 export const ServiceInfoContents = styled.span`
   color: rgb(75 85 99);
 `;
+
+export const ContentsTitle = styled.p`
+  font-size: 1.25rem /* 22.5px */;
+  line-height: 1.75rem /* 31.5px */;
+  font-weight: 700;
+  color: rgb(75 85 99);
+  padding-bottom: 0.375rem;
+  border-bottom-width: 2px;
+  margin-bottom: 0.575rem;
+  border-color: rgb(107 114 128);
+`;

@@ -1,13 +1,17 @@
 import { server } from "@lib/common";
-import { QueryResult } from "@lib/interface/db";
-import useSWR, { KeyedMutator } from "swr";
+import useSWR from "swr";
 
 interface QueryProps {
   path: string;
   args: { [key: string]: string };
+  intervalTime?: number;
 }
 
-export default function useCustomQuery<type>({ path, args }: QueryProps) {
+export default function useCustomQuery<type>({
+  path,
+  args,
+  intervalTime = 10000,
+}: QueryProps) {
   const params = Object.keys(args)
     .map((key) => `${key}=${args[key]}`)
     .join("");
@@ -15,7 +19,7 @@ export default function useCustomQuery<type>({ path, args }: QueryProps) {
   const apiUrl = `${server}${path}?${params}`;
 
   const { data, error, mutate } = useSWR<type>(apiUrl, {
-    refreshInterval: 10000,
+    refreshInterval: intervalTime,
   });
 
   return { queryResult: data, error, isLoading: !data && !error, mutate };

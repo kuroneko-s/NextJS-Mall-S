@@ -1,6 +1,12 @@
 import { COMMON_URL } from "@lib/appConstant";
 import customUseQuery from "@lib/hooks/useCustomQuery";
-import { BookInfo, BookSeries, CategoryInfo } from "@lib/interface/tables";
+import {
+  BookInfo,
+  BookSeries,
+  CategoryInfo,
+  TranslatorInfo,
+  WriterInfo,
+} from "@lib/interface/tables";
 
 interface QueryResult<type> {
   ok: boolean;
@@ -33,6 +39,7 @@ class MySqlUtil {
     return customUseQuery<QueryResult<BookInfo>>({
       path: `${COMMON_URL.getBookInfo}`,
       args: { id },
+      intervalTime: 10000000,
     });
   }
 
@@ -40,6 +47,20 @@ class MySqlUtil {
     return customUseQuery<QueryResult<BookSeries>>({
       path: `${COMMON_URL.getBookSeries}`,
       args: { id: bookId },
+    });
+  }
+
+  getWriterInfo(id: string) {
+    return customUseQuery<QueryResult<WriterInfo>>({
+      path: `${COMMON_URL.getWriterInfo}`,
+      args: { id },
+    });
+  }
+
+  getTranslatorInfo(id: string) {
+    return customUseQuery<QueryResult<TranslatorInfo>>({
+      path: `${COMMON_URL.getTranslatorInfo}`,
+      args: { id },
     });
   }
 }

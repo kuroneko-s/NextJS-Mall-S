@@ -1,18 +1,31 @@
+import { cls } from "@lib/client/common";
 import React from "react";
 
 interface StarPorps {
-  score: string;
+  fill: string;
+  stroke: string;
+  width?: number;
+  height?: number;
+  hover?: boolean;
 }
 
-export default function Star({ score }: StarPorps) {
+export default function StarSvg({
+  fill,
+  stroke,
+  width = 13.5,
+  height = 13.5,
+  hover = false,
+}: StarPorps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={score !== "0" ? "red" : "none"}
-      stroke={score !== "0" ? "red" : "gray"}
+      fill={fill}
+      stroke={stroke}
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      className="w-3 h-3"
+      width={width}
+      height={height}
+      className={cls(hover ? "fill-red-500 stroke-red-500" : "")}
     >
       <path
         strokeLinecap="round"

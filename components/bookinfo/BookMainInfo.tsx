@@ -14,8 +14,8 @@ import React, { useContext } from "react";
 import Category from "./Category";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
-import { BookInfo, BookSeries } from "@lib/interface/tables";
 import { BookInfoProps } from "pages/bookInfo/info.type";
+import CartSvg from "@components/svg/Cart";
 
 export default function BookMainInfo({ bookInfo, seriesInfo }: BookInfoProps) {
   const { appendItems } = useContext(GlobalContext);
@@ -80,7 +80,7 @@ export default function BookMainInfo({ bookInfo, seriesInfo }: BookInfoProps) {
             <span>총{seriesInfo.count}권</span>
           </p>
         ) : null}
-        <div className="border-b-2 border-t-2 w-full py-4 my-2">
+        <div className="border-b-2 border-t-2 w-full py-4 my-2 min-w-[400px]">
           <div className="flex flex-col">
             <div className="flex">
               <p>이벤트 큰 제목</p>
@@ -105,16 +105,22 @@ export default function BookMainInfo({ bookInfo, seriesInfo }: BookInfoProps) {
           </div>
           <small className="self-end">할인 기간</small>
         </div>
-        <Link href={"/"}>
-          <a>구매버튼(바로 결제화면으로 이동)</a>
-        </Link>
-        <button
-          type="button"
-          onClick={() => appendItems && appendItems(bookInfo?.isbn + "")}
-          style={{ backgroundColor: "purple", color: "white" }}
-        >
-          장바구니
-        </button>
+
+        <div className="flex flex-row w-full mt-3 space-x-4 justify-end">
+          <div
+            className="flex justify-center items-center cursor-pointer border-[1px] text-gray-900 p-3 rounded-md shadow-md font-bold"
+            onClick={() => appendItems && appendItems(bookInfo?.isbn + "")}
+          >
+            <CartSvg width={24} height={24} />
+          </div>
+
+          <div
+            className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 py-3 px-8 rounded-md shadow-md font-bold"
+            onClick={() => appendItems && appendItems(bookInfo?.isbn + "")}
+          >
+            구매버튼(바로 결제화면으로 이동)
+          </div>
+        </div>
       </BookInfoBox>
     </BookTopInfoBox>
   );

@@ -1,19 +1,32 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import {
   InnerContainer,
   SideMenuContainer,
   Container,
   MainContentsBox,
+  ContentsTitle,
+  StarBox,
+  EmptyStar,
+  Star,
+  StarScoreBox,
+  EmptyScoreBox,
+  ScoreBox,
 } from "./bookInfo.style";
 import IsLoading from "@components/IsLoading";
 import BookMainInfo from "@components/bookinfo/BookMainInfo";
 import BookSubInfo from "@components/bookinfo/BookSubInfo";
 import BookContents from "@components/bookinfo/BookContents";
+import StarSvg from "@components/svg/Star";
+import StarScore from "@components/bookinfo/StarScore";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);
+  const [activeScore, setActiveScore] = useState<number>(-1);
+  const [clickedScore, setClickedScore] = useState<number>(-1);
+  const [activeMessage, setActiveMessage] =
+    useState<string>("이 책을 평가해주세요!");
 
   const route = useRouter();
   const id = route?.query?.id ?? "";
@@ -49,6 +62,51 @@ export default function BookInfoIndex() {
     }
   };
 
+  const starMouseOverHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const { index } = e.currentTarget.dataset;
+    setActiveScore(index === undefined ? -1 : +index);
+    bindActiveMessage(index === undefined ? -1 : +index);
+  };
+
+  const starMouseOutHandler = () => {
+    setActiveScore(-1);
+    setActiveMessage("이 책을 평가해주세요!");
+  };
+
+  const starClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const { index } = e.currentTarget.dataset;
+    setClickedScore(index === undefined ? -1 : +index);
+  };
+
+  const bindActiveMessage = (num: number) => {
+    switch (num) {
+      case 1:
+        setActiveMessage("별로예요");
+        break;
+      case 2:
+        setActiveMessage("그저 그래요");
+        break;
+      case 3:
+        setActiveMessage("괜찮아요");
+        break;
+      case 4:
+        setActiveMessage("재밌어요");
+        break;
+      case 5:
+        setActiveMessage("최고에요");
+        break;
+    }
+  };
+
+  // TODO: 리뷰 쪽 테이블에 점수 스코어 준것들 필요함
+  const reviewScoreSampleArr = [1, 2, 3, 4, 5].map((v) =>
+    Math.floor(Math.random() * 100)
+  );
+  const reviewTotalCntSample = reviewScoreSampleArr.reduce(
+    (acc, cur) => +acc + +cur,
+    0
+  );
+
   // TODO: 값이 없을 경우 어떻게 해줘야함
   return (
     <>
@@ -78,7 +136,76 @@ export default function BookInfoIndex() {
                 profileSelect={profileSelect}
               />
 
-              <div>리뷰</div>
+              <div>
+                <ContentsTitle>리뷰</ContentsTitle>
+
+                <div className="flex mt-6">
+                  <div>
+                    <div className="text-center text-sm text-gray-500">
+                      구매자 평점
+                    </div>
+                    <div className="text-center text-3xl font-bold">
+                      {bookInfoResult?.data?.score}
+                    </div>
+                    <StarBox className="space-x-1 mb-3">
+                      <EmptyStar>
+                        <Star w={+(bookInfoResult?.data?.score ?? 0) * 20} />
+                      </EmptyStar>
+                    </StarBox>
+
+                    {reviewScoreSampleArr.map((score, index) => {
+                      return (
+                        <div
+                          className="flex items-center space-x-1 text-sm"
+                          key={index}
+                        >
+                          <StarSvg fill="gray" stroke="gray" />
+                          <span>{5 - index}</span>
+                          <StarScoreBox className="space-x-1">
+                            <EmptyScoreBox>
+                              <ScoreBox
+                                w={(+score / reviewTotalCntSample) * 100}
+                              />
+                            </EmptyScoreBox>
+                          </StarScoreBox>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-col w-full space-y-3">
+                    <div className="relative text-center font-bold text-2xl text-gray-500 h-[32px]">
+                      <div className="absolute left-[28%] top-0 w-[250px]">
+                        {activeMessage}
+                      </div>
+                    </div>
+                    <StarScore
+                      handler={starMouseOverHandler}
+                      mouseOutHandler={starMouseOutHandler}
+                      clickHandler={starClickHandler}
+                      clickedScore={clickedScore}
+                      activeNum={activeScore}
+                    />
+                    <div className="flex flex-col px-2">
+                      <textarea
+                        className="border-2 border-gray-300 rounded-md outline-gray-400 text-xs min-h-[110px] break-words"
+                        placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
+                      />
+                      <div className="flex justify-between mt-2">
+                        <button
+                          className="shadow-md py-1 px-2 border-2 text-sm text-gray-800"
+                          type="button"
+                        >
+                          리뷰 주의사항
+                        </button>
+                        <button className="" type="button">
+                          작성
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div>비슷한 장르의 책들 추천 </div>
             </MainContentsBox>

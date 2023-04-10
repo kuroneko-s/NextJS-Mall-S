@@ -8,15 +8,7 @@ import IsLoading from "@components/IsLoading";
 
 export default function Recommendation() {
   const bookInfoResult = mySqlUtil.getBookList();
-  console.log(
-    "🚀 ~ file: Recommendation.tsx:10 ~ Recommendation ~ bookInfoResult:",
-    bookInfoResult
-  );
   const bookList = bookInfoResult.queryResult?.data ?? [];
-  console.log(
-    "🚀 ~ file: Recommendation.tsx:15 ~ Recommendation ~ bookList:",
-    bookList
-  );
 
   return (
     <>

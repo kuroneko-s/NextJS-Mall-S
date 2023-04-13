@@ -18,15 +18,17 @@ import IsLoading from "@components/IsLoading";
 import BookMainInfo from "@components/bookinfo/BookMainInfo";
 import BookSubInfo from "@components/bookinfo/BookSubInfo";
 import BookContents from "@components/bookinfo/BookContents";
-import StarSvg from "@components/svg/Star";
+import StarSvg from "svg/Star";
 import StarScore from "@components/bookinfo/StarScore";
+import { cls } from "@lib/client/common";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);
-  const [activeScore, setActiveScore] = useState<number>(-1);
-  const [clickedScore, setClickedScore] = useState<number>(-1);
+  const [activeScore, setActiveScore] = useState<number>(-1); // mouseOver
+  const [clickedScore, setClickedScore] = useState<number>(-1); // Click
   const [activeMessage, setActiveMessage] =
     useState<string>("이 책을 평가해주세요!");
+  const [reviewSwitch, setReviewSwitch] = useState<boolean>(true);
 
   const route = useRouter();
   const id = route?.query?.id ?? "";
@@ -107,6 +109,11 @@ export default function BookInfoIndex() {
     0
   );
 
+  const reviewClickHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const { index } = e.currentTarget.dataset;
+    setReviewSwitch(index !== "2");
+  };
+
   // TODO: 값이 없을 경우 어떻게 해줘야함
   return (
     <>
@@ -185,6 +192,9 @@ export default function BookInfoIndex() {
                       clickHandler={starClickHandler}
                       clickedScore={clickedScore}
                       activeNum={activeScore}
+                      setClickedScoure={setClickedScore}
+                      setActiveMessage={setActiveMessage}
+                      bindActiveMessage={bindActiveMessage}
                     />
                     <div className="flex flex-col px-2">
                       <textarea
@@ -193,12 +203,16 @@ export default function BookInfoIndex() {
                       />
                       <div className="flex justify-between mt-2">
                         <button
-                          className="shadow-md py-1 px-2 border-2 text-sm text-gray-800"
+                          className="shadow-sm py-1 px-2 border-2 text-sm text-gray-800 rounded-md"
                           type="button"
                         >
                           리뷰 주의사항
                         </button>
-                        <button className="" type="button">
+
+                        <button
+                          className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 px-8 rounded-md shadow-md font-bold text-sm"
+                          type="button"
+                        >
                           작성
                         </button>
                       </div>
@@ -207,7 +221,41 @@ export default function BookInfoIndex() {
                 </div>
               </div>
 
-              <div>비슷한 장르의 책들 추천 </div>
+              <div>
+                <div className="flex items-center justify-between border-b-[1px] border-gray-500 py-2">
+                  {/* <div className="font-bold text-sm space-x-3 text-gray-500">
+                    <span
+                      className={cls(
+                        "py-2 hover:border-b-2 hover:border-gray-400 cursor-pointer",
+                        reviewSwitch ? "border-b-2 border-gray-700" : ""
+                      )}
+                      data-index={"1"}
+                      onClick={reviewClickHandler}
+                    >
+                      구매자
+                    </span>
+                    <span
+                      className={cls(
+                        "py-2 hover:border-b-2 hover:border-gray-400 cursor-pointer",
+                        !reviewSwitch ? "border-b-2 border-gray-700" : ""
+                      )}
+                      data-index={"2"}
+                      onClick={reviewClickHandler}
+                    >
+                      전체
+                    </span>
+                  </div> */}
+                  {/* <div className="space-x-1 text-sm text-gray-500 font-bold">
+                    <span>최신순</span>
+                    <span className="text-gray-300">|</span>
+                    <span>공감순</span>
+                    <span className="text-gray-300">|</span>
+                    <span>별점 높은순</span>
+                    <span className="text-gray-300">|</span>
+                    <span>별점 낮은순</span>
+                  </div> */}
+                </div>
+              </div>
             </MainContentsBox>
             <SideMenuContainer className="border-l-2 border-gray-200"></SideMenuContainer>
           </InnerContainer>

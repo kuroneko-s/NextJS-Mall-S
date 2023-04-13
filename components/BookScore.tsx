@@ -1,5 +1,5 @@
 import React from "react";
-import StarSvg from "./svg/Star";
+import StarSvg from "../svg/Star";
 
 interface BookScoreProps {
   score: string;

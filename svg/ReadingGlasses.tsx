@@ -8,7 +8,11 @@ export default function ReadingGlassesSvg() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-5 h-5 absolute top-2 left-2"
+      className="absolute"
+      style={{
+        top: "5px",
+        left: "3px",
+      }}
     >
       <path
         strokeLinecap="round"

@@ -1,7 +1,6 @@
 import BookList from "components/BookList";
 import React from "react";
 import styled from "styled-components";
-import { BookSample } from "@lib/client/common";
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -23,7 +22,7 @@ export default function Event() {
         <div className="w-full h-full bg-red-300 rounded-md"></div>
       </ImageContainer>
 
-      <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} />
+      {/* <BookList bookInfoList={BookSample} title={"가장 많이 본 책"} /> */}
     </div>
   );
 }

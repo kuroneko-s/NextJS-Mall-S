@@ -1,8 +1,8 @@
-import AndroidSvg from "@components/svg/Android";
-import AppleSvg from "@components/svg/Apple";
-import HeadPhoneSvg from "@components/svg/HeadPhone";
-import MacSvg from "@components/svg/Mac";
-import WindowSvg from "@components/svg/Window";
+import AndroidSvg from "svg/Android";
+import AppleSvg from "svg/Apple";
+import HeadPhoneSvg from "svg/HeadPhone";
+import MacSvg from "svg/Mac";
+import WindowSvg from "svg/Window";
 import {
   ServiceInfoContents,
   ServiceInfoTitle,

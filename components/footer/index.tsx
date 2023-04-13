@@ -1,6 +1,6 @@
 import React from "react";
-import ServiceCenterSvg from "./svg/ServiceCenter";
-import NorticeSvg from "./svg/Nortice";
+import ServiceCenterSvg from "@svg/ServiceCenter";
+import NorticeSvg from "@svg/Nortice";
 
 export default function Footer() {
   return (

@@ -15,7 +15,7 @@ import Category from "./Category";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import { BookInfoProps } from "pages/bookInfo/info.type";
-import CartSvg from "@components/svg/Cart";
+import CartSvg from "svg/Cart";
 
 export default function BookMainInfo({ bookInfo, seriesInfo }: BookInfoProps) {
   const { appendItems } = useContext(GlobalContext);

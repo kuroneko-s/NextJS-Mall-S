@@ -3,9 +3,9 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { createContext } from "react";
 import useBaskets, { UseItems } from "@lib/useItems";
-import Layout from "components/Layout";
-import Header from "components/Header";
-import Footer from "@components/Footer";
+import Layout from "@components/layout";
+import Header from "@components/header";
+import Footer from "@components/footer";
 
 export const GlobalContext = createContext<UseItems>({});
 

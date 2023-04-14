@@ -2,9 +2,9 @@ import BookList from "components/BookList";
 import BookListGrid from "components/BookListGrid";
 import React from "react";
 import ImageButton from "./ImageButton";
-import ImageSlider from "./ImageSlider";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import IsLoading from "@components/IsLoading";
+import ImageSlider from "../ImageSlider";
 
 export default function Recommendation() {
   const bookInfoResult = mySqlUtil.getBookList();

@@ -1,4 +1,3 @@
-import useUser from "@lib/client/useUser";
 import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import Link from "next/link";
@@ -8,7 +7,8 @@ import Item from "components/Item";
 import useItem from "@lib/itemSample";
 import { useContext, useState } from "react";
 import { GlobalContext } from "./_app";
-import Modal from "components/modal";
+import useUser from "@lib/hooks/useUser";
+import Modal from "@components/modal";
 
 const Home: NextPage = () => {
   const { appendItems, removeAll } = useContext(GlobalContext);

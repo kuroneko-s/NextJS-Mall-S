@@ -15,7 +15,9 @@ export const ContentsContainer = styled.div`
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+`;
 
+export const SvgContainer = styled(ContentsContainer)`
   svg {
     width: 25px;
     height: 25px;

@@ -2,11 +2,12 @@ import { objectIsEmpty } from "@lib/common";
 import { getIronSession } from "iron-session";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Head from "next/head";
-import Recommendation from "components/index/Recommendation";
-import Event from "components/index/Event";
+import Recommendation from "@components/main/recommendation";
+import Event from "@components/main/event";
 import { cls } from "@lib/client/common";
+import { Container, ContentsContainer } from "styles/common";
 
 const Home: NextPage = () => {
   const [swapping, setSwapping] = useState<"recommendation" | "event">(
@@ -14,8 +15,8 @@ const Home: NextPage = () => {
   );
 
   return (
-    <div className="px-16">
-      <div className="max-w-[1280px] mx-auto">
+    <Container>
+      <ContentsContainer>
         <Head>
           <title>도서 | 흑우냥이</title>
           {/* <meta /> */}
@@ -47,8 +48,8 @@ const Home: NextPage = () => {
         </div>
 
         {swapping === "recommendation" ? <Recommendation /> : <Event />}
-      </div>
-    </div>
+      </ContentsContainer>
+    </Container>
   );
 };
 

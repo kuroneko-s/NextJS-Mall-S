@@ -30,7 +30,6 @@ const ImageBox = styled.div<ImageBoxProps>`
 
 // ImageSlide 처럼 좌우 이동 가능해져야함
 export default function BookList({ bookInfoList, title }: BookListProps) {
-  console.log("bookInfoList - ", bookInfoList);
   return (
     <ContentsContainer className="mb-6">
       <div className="flex justify-between ">

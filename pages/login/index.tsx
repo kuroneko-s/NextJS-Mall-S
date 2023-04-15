@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import kakaoLoginImage from "@images/kakao_login.png";
 import naverLoginImage from "@images/naver_login.png";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import { GlobalContext } from "pages/_app";
 
-interface LoginProps {
-  [key: string]: any;
-}
+const Login: NextPage = () => {
+  const { userInfo } = useContext(GlobalContext);
+  console.log("🚀 ~ file: index.tsx:15 ~ userInfo:", userInfo);
 
-const Login: NextPage = ({ loginUser }: LoginProps) => {
   const stateToken = useRef<string>(`(
     Math.random().toString(36).substring(2) +
     Math.random().toString(36).substring(2) +
@@ -30,7 +30,7 @@ const Login: NextPage = ({ loginUser }: LoginProps) => {
   return (
     <div>
       <h1>Login</h1>
-      {loginUser?.name !== undefined ? (
+      {userInfo?.name !== undefined ? (
         <div>
           <p>이미 로그인되어 있음</p>
           <Link href={"/"}>

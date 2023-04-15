@@ -74,3 +74,8 @@ export interface TranslatorInfo {
   update_user: string;
   update_dt: string;
 }
+
+export interface UserInfo {
+  id: number;
+  name: string;
+}

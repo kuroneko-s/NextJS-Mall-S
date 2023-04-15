@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { appendCookie, removeCookieValue, removeCookieAll } from "./cookies";
 import { COOKIE_NAME } from "@lib/common";
+import { UserInfo } from "./interface/tables";
 
-export interface UseItems {
+export interface ContextApiProps {
   baskets?: string[];
   appendItems?: appendItemFn;
   removeItem?: removeItemFn;
   removeAll?: removeAllFn;
+  userInfo?: UserInfo;
+  setUserInfo?: any;
 }
 
 type appendItemFn = (...newItems: string[]) => void;

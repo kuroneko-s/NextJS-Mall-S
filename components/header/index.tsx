@@ -8,6 +8,7 @@ interface HeaderProp {
 }
 
 const Header = (pageProps: HeaderProp) => {
+  console.log("🚀 ~ file: index.tsx:11 ~ Header ~ pageProps:", pageProps);
   const {
     loginUser: { id, name },
   } = pageProps;
@@ -21,7 +22,15 @@ const Header = (pageProps: HeaderProp) => {
               <a>회원가입</a>
             </Link>
             <span className="text-gray-300">|</span>
-            <Link href={"/login"}>로그인</Link>
+            <Link
+              href={{
+                pathname: "/login",
+                query: { id, name },
+              }}
+              replace
+            >
+              로그인
+            </Link>
           </div>
         </ContentsContainer>
       </Container>

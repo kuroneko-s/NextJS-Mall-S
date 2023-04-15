@@ -1,4 +1,4 @@
-import { COMMON_URL } from "@lib/appConstant";
+import { COMMON_URL } from "@lib/client/appConstant";
 import customUseQuery from "@lib/hooks/useCustomQuery";
 import {
   BookInfo,

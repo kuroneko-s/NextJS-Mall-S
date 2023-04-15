@@ -1,5 +1,3 @@
-import { objectIsEmpty } from "@lib/common";
-import { getIronSession } from "iron-session";
 import { SWRConfig } from "swr";
 import type { NextPage } from "next";
 import { useState } from "react";
@@ -74,7 +72,7 @@ export default function Page({ defaultUser }: any) {
   );
 }
 
-export async function getServerSideProps({ req, res }: any) {
+/* export async function getServerSideProps({ req, res }: any) {
   console.log("SSR RUn");
   const cookieOptions = {
     cookieName: "shop-user-info",
@@ -97,4 +95,4 @@ export async function getServerSideProps({ req, res }: any) {
       defaultUser,
     },
   };
-}
+} */

@@ -3,7 +3,15 @@ import Link from "next/link";
 import Menu from "@components/menu";
 import { Container, ContentsContainer } from "styles/common";
 
-export default function Header() {
+interface HeaderProp {
+  [key: string]: any;
+}
+
+const Header = (pageProps: HeaderProp) => {
+  const {
+    loginUser: { id, name },
+  } = pageProps;
+
   return (
     <>
       <Container className="text-gray-500 font-extrabold text-sm border-b-2">
@@ -20,4 +28,6 @@ export default function Header() {
       <Menu />
     </>
   );
-}
+};
+
+export default Header;

@@ -23,8 +23,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   }, []);
 
-  console.log("🚀 ~ file: _app.tsx:23 ~ MyApp ~ userInfo:", userInfo);
-
   return (
     <GlobalContext.Provider
       value={{
@@ -33,7 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         removeItem,
         removeAll,
         userInfo,
-        setUserInfo,
       }}
     >
       <SWRConfig
@@ -43,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       >
         <Layout>
-          <Header {...pageProps} />
+          <Header />
           <Component {...pageProps} />
           <Footer />
         </Layout>

@@ -5,10 +5,10 @@ import kakaoLoginImage from "@images/kakao_login.png";
 import naverLoginImage from "@images/naver_login.png";
 import { useRef, useContext } from "react";
 import { GlobalContext } from "pages/_app";
+import { Container, ContentsContainer } from "styles/common";
 
 const Login: NextPage = () => {
   const { userInfo } = useContext(GlobalContext);
-  console.log("🚀 ~ file: index.tsx:15 ~ userInfo:", userInfo);
 
   const stateToken = useRef<string>(`(
     Math.random().toString(36).substring(2) +
@@ -28,50 +28,62 @@ const Login: NextPage = () => {
   );
 
   return (
-    <div>
-      <h1>Login</h1>
-      {userInfo?.name !== undefined ? (
-        <div>
-          <p>이미 로그인되어 있음</p>
-          <Link href={"/"}>
-            <a style={{ marginRight: "5px" }}>
-              <button type="button">Home</button>
-            </a>
-          </Link>
-          <Link href={"/api/login/logout"}>
-            <a>
-              <button type="button">logout</button>
-            </a>
-          </Link>
-        </div>
-      ) : (
-        <>
-          <Link href={kakaoUrl.current}>
-            <a style={{ marginRight: "5px" }}>
-              <Image
-                src={kakaoLoginImage}
-                quality="100"
-                alt="kakaoLoginImage"
-                placeholder="blur"
-              />
-            </a>
-          </Link>
+    <Container>
+      <ContentsContainer className="min-h-[71vh] flex items-center justify-center">
+        {userInfo?.name !== undefined ? (
+          <div>
+            <p className="font-extrabold text-[50px] text-center">
+              이미 로그인되어 있음
+            </p>
+            <div className="flex flex-col w-60 mx-auto">
+              <Link href={"/"}>
+                <a className="text-center mb-2 bg-blue-500 hover:bg-blue-400 text-gray-200 font-bold text-2xl py-2 px-12 rounded-md">
+                  Home
+                </a>
+              </Link>
+              <Link href={"/api/login/logout"}>
+                <a className="text-center mb-2 bg-red-400 hover:bg-red-300 text-gray-200 font-bold text-2xl py-2 px-12 rounded-md">
+                  logout
+                </a>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p className="font-extrabold text-[70px] text-center my-6 text-blue-500">
+              로그인
+            </p>
+            <div className="flex flex-col justify-center items-center">
+              <Link href={kakaoUrl.current}>
+                <a className="mb-2">
+                  <Image
+                    src={kakaoLoginImage}
+                    quality="100"
+                    alt="kakaoLoginImage"
+                    placeholder="blur"
+                    width={420}
+                    height={100}
+                  />
+                </a>
+              </Link>
 
-          <Link href={naverUrl.current}>
-            <a>
-              <Image
-                src={naverLoginImage}
-                quality="100"
-                alt="naverLoginImage"
-                placeholder="blur"
-                width={183}
-                height={45}
-              />
-            </a>
-          </Link>
-        </>
-      )}
-    </div>
+              <Link href={naverUrl.current}>
+                <a>
+                  <Image
+                    src={naverLoginImage}
+                    quality="100"
+                    alt="naverLoginImage"
+                    placeholder="blur"
+                    width={420}
+                    height={100}
+                  />
+                </a>
+              </Link>
+            </div>
+          </div>
+        )}
+      </ContentsContainer>
+    </Container>
   );
 };
 

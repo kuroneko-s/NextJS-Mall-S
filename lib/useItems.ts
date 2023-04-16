@@ -9,7 +9,6 @@ export interface ContextApiProps {
   removeItem?: removeItemFn;
   removeAll?: removeAllFn;
   userInfo?: UserInfo;
-  setUserInfo?: any;
 }
 
 type appendItemFn = (...newItems: string[]) => void;

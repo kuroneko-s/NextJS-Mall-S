@@ -1,17 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import Menu from "@components/menu";
 import { Container, ContentsContainer } from "styles/common";
+import { GlobalContext } from "pages/_app";
 
-interface HeaderProp {
-  [key: string]: any;
-}
-
-const Header = (pageProps: HeaderProp) => {
-  console.log("🚀 ~ file: index.tsx:11 ~ Header ~ pageProps:", pageProps);
-  const {
-    loginUser: { id, name },
-  } = pageProps;
+const Header = () => {
+  const { userInfo } = useContext(GlobalContext);
 
   return (
     <>
@@ -22,15 +16,11 @@ const Header = (pageProps: HeaderProp) => {
               <a>회원가입</a>
             </Link>
             <span className="text-gray-300">|</span>
-            <Link
-              href={{
-                pathname: "/login",
-                query: { id, name },
-              }}
-              replace
-            >
-              로그인
-            </Link>
+            {userInfo?.id ? (
+              <Link href={"/api/login/logout"}>로그아웃</Link>
+            ) : (
+              <Link href={"/login"}>로그인</Link>
+            )}
           </div>
         </ContentsContainer>
       </Container>

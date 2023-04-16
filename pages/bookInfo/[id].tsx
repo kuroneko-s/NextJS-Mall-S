@@ -3,9 +3,9 @@ import React, { useState, useRef } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import {
   InnerContainer,
-  SideMenuContainer,
+  RightContainer,
   Container,
-  MainContentsBox,
+  LeftContainer,
   ContentsTitle,
   StarBox,
   EmptyStar,
@@ -14,13 +14,10 @@ import {
   EmptyScoreBox,
   ScoreBox,
 } from "./bookInfo.style";
-import IsLoading from "@components/IsLoading";
-import BookMainInfo from "@components/bookinfo/BookMainInfo";
-import BookSubInfo from "@components/bookinfo/BookSubInfo";
-import BookContents from "@components/bookinfo/BookContents";
+import IsLoading from "@components/common/IsLoading";
+import Profile from "@components/bookinfo/Profile";
 import StarSvg from "svg/Star";
-import StarScore from "@components/bookinfo/StarScore";
-import { cls } from "@lib/client/common";
+import Information from "@components/bookinfo/Information";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);
@@ -28,7 +25,6 @@ export default function BookInfoIndex() {
   const [clickedScore, setClickedScore] = useState<number>(-1); // Click
   const [activeMessage, setActiveMessage] =
     useState<string>("이 책을 평가해주세요!");
-  const [reviewSwitch, setReviewSwitch] = useState<boolean>(true);
 
   const route = useRouter();
   const id = route?.query?.id ?? "";
@@ -109,9 +105,17 @@ export default function BookInfoIndex() {
     0
   );
 
-  const reviewClickHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const { index } = e.currentTarget.dataset;
-    setReviewSwitch(index !== "2");
+  const activedClickHandler = () => {
+    setClickedScore(-1);
+    setActiveMessage("취소하기");
+  };
+
+  const activedHoverHandler = () => {
+    setActiveMessage("취소하기");
+  };
+
+  const activedOutHandler = () => {
+    bindActiveMessage(activeScore);
   };
 
   // TODO: 값이 없을 경우 어떻게 해줘야함
@@ -125,14 +129,13 @@ export default function BookInfoIndex() {
       ) : (
         <Container>
           <InnerContainer className="space-x-4">
-            <MainContentsBox className="space-y-6">
-              <BookMainInfo
+            <LeftContainer className="space-y-6">
+              <Information
                 bookInfo={bookInfoResult?.data!}
                 seriesInfo={seriesInfoResult?.data}
               />
 
-              <BookSubInfo bookInfo={bookInfoResult?.data} />
-              <BookContents
+              <Profile
                 bookInfoProps={{
                   bookInfo: bookInfoResult?.data,
                   seriesInfo: seriesInfoResult?.data,
@@ -186,16 +189,162 @@ export default function BookInfoIndex() {
                         {activeMessage}
                       </div>
                     </div>
-                    <StarScore
-                      handler={starMouseOverHandler}
-                      mouseOutHandler={starMouseOutHandler}
-                      clickHandler={starClickHandler}
-                      clickedScore={clickedScore}
-                      activeNum={activeScore}
-                      setClickedScoure={setClickedScore}
-                      setActiveMessage={setActiveMessage}
-                      bindActiveMessage={bindActiveMessage}
-                    />
+
+                    <div className="flex justify-center items-center">
+                      {clickedScore === -1 ? (
+                        <div className="flex justify-center items-center">
+                          <span
+                            data-index="1"
+                            className="pr-2 border-r-2 border-gray-100 cursor-pointer"
+                            onMouseOver={starMouseOverHandler}
+                            onMouseOut={starMouseOutHandler}
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 1}
+                            />
+                          </span>
+                          <span
+                            data-index="2"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onMouseOver={starMouseOverHandler}
+                            onMouseOut={starMouseOutHandler}
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 2}
+                            />
+                          </span>
+                          <span
+                            data-index="3"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onMouseOver={starMouseOverHandler}
+                            onMouseOut={starMouseOutHandler}
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 3}
+                            />
+                          </span>
+                          <span
+                            data-index="4"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onMouseOver={starMouseOverHandler}
+                            onMouseOut={starMouseOutHandler}
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 4}
+                            />
+                          </span>
+                          <span
+                            data-index="5"
+                            className="pl-2 cursor-pointer"
+                            onMouseOver={starMouseOverHandler}
+                            onMouseOut={starMouseOutHandler}
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 5}
+                            />
+                          </span>
+                        </div>
+                      ) : (
+                        <div
+                          className="flex justify-center items-center"
+                          onClick={activedClickHandler}
+                          onMouseOver={activedHoverHandler}
+                          onMouseOut={activedOutHandler}
+                        >
+                          <span
+                            data-index="1"
+                            className="pr-2 border-r-2 border-gray-100 cursor-pointer"
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 1}
+                            />
+                          </span>
+                          <span
+                            data-index="2"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 2}
+                            />
+                          </span>
+                          <span
+                            data-index="3"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 3}
+                            />
+                          </span>
+                          <span
+                            data-index="4"
+                            className="px-2 border-r-2 border-gray-100 cursor-pointer"
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 4}
+                            />
+                          </span>
+                          <span
+                            data-index="5"
+                            className="pl-2 cursor-pointer"
+                            onClick={starClickHandler}
+                          >
+                            <StarSvg
+                              fill="#e5e7eb"
+                              stroke="#e5e7eb"
+                              width={44}
+                              height={44}
+                              hover={activeScore >= 5}
+                            />
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
                     <div className="flex flex-col px-2">
                       <textarea
                         className="border-2 border-gray-300 rounded-md outline-gray-400 text-xs min-h-[110px] break-words"
@@ -222,42 +371,10 @@ export default function BookInfoIndex() {
               </div>
 
               <div>
-                <div className="flex items-center justify-between border-b-[1px] border-gray-500 py-2">
-                  {/* <div className="font-bold text-sm space-x-3 text-gray-500">
-                    <span
-                      className={cls(
-                        "py-2 hover:border-b-2 hover:border-gray-400 cursor-pointer",
-                        reviewSwitch ? "border-b-2 border-gray-700" : ""
-                      )}
-                      data-index={"1"}
-                      onClick={reviewClickHandler}
-                    >
-                      구매자
-                    </span>
-                    <span
-                      className={cls(
-                        "py-2 hover:border-b-2 hover:border-gray-400 cursor-pointer",
-                        !reviewSwitch ? "border-b-2 border-gray-700" : ""
-                      )}
-                      data-index={"2"}
-                      onClick={reviewClickHandler}
-                    >
-                      전체
-                    </span>
-                  </div> */}
-                  {/* <div className="space-x-1 text-sm text-gray-500 font-bold">
-                    <span>최신순</span>
-                    <span className="text-gray-300">|</span>
-                    <span>공감순</span>
-                    <span className="text-gray-300">|</span>
-                    <span>별점 높은순</span>
-                    <span className="text-gray-300">|</span>
-                    <span>별점 낮은순</span>
-                  </div> */}
-                </div>
+                <div className="flex items-center justify-between border-b-[1px] border-gray-500 py-2"></div>
               </div>
-            </MainContentsBox>
-            <SideMenuContainer className="border-l-2 border-gray-200"></SideMenuContainer>
+            </LeftContainer>
+            <RightContainer className="border-l-2 border-gray-200"></RightContainer>
           </InnerContainer>
         </Container>
       )}

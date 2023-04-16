@@ -1,14 +1,13 @@
 import { cls } from "@lib/client/common";
-import { BookInfo } from "@lib/interface/tables";
 import { ContentsTitle } from "pages/bookInfo/bookInfo.style";
 import React, { useState } from "react";
 
-interface ContentsBoxProps {
+interface DescriptionProps {
   title: string;
   description: string;
 }
 
-export default function ContentsBox({ title, description }: ContentsBoxProps) {
+export default function Description({ title, description }: DescriptionProps) {
   const [show, setShow] = useState<boolean>(false);
 
   const clickHandler = (e: React.MouseEvent<HTMLElement>) => {

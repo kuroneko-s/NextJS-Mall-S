@@ -19,13 +19,13 @@ export default function StarSvg({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={fill}
-      stroke={stroke}
+      fill={hover ? "red" : fill}
+      stroke={hover ? "red" : stroke}
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       width={width}
       height={height}
-      className={cls(hover ? "fill-red-500 stroke-red-500" : "")}
+      // className={cls(hover ? "fill-red-500 stroke-red-500" : "")}
     >
       <path
         strokeLinecap="round"

@@ -19,7 +19,7 @@ export const InnerContainer = styled.div`
   margin-right: auto;
 `;
 
-export const MainContentsBox = styled.div`
+export const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 0%;
@@ -42,7 +42,7 @@ export const BookInfoBox = styled.div`
   padding-left: 3rem;
 `;
 
-export const SideMenuContainer = styled.div`
+export const RightContainer = styled.div`
   width: 100%;
   max-width: 300px;
 `;

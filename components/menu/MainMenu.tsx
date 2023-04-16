@@ -5,7 +5,7 @@ import ProfileSvg from "@svg/Profile";
 import ReadingGlassesSvg from "@svg/ReadingGlasses";
 import Link from "next/link";
 import React from "react";
-import Logo from "@components/Logo";
+import Logo from "@components/common/Logo";
 import { Container, ContentsContainer } from "styles/common";
 
 export default function MainMenu() {

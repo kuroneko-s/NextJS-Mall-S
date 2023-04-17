@@ -3,23 +3,26 @@ import Link from "next/link";
 import Menu from "@components/menu";
 import { Container, ContentsContainer } from "styles/common";
 import { GlobalContext } from "pages/_app";
+import LinkedText from "@components/common/LinkedText";
 
 const Header = () => {
   const { userInfo } = useContext(GlobalContext);
 
   return (
     <>
-      <Container className="text-gray-500 font-extrabold text-sm border-b-2">
+      <Container className="font-extrabold border-b-2">
         <ContentsContainer className="flex justify-end">
-          <div className="space-x-3">
-            <Link href={"/signup"}>
-              <a>회원가입</a>
-            </Link>
+          <div className="space-x-2">
+            <LinkedText url="/signup" context="회원가입" size="sm" />
             <span className="text-gray-300">|</span>
             {userInfo?.id ? (
-              <Link href={"/api/login/logout"}>로그아웃</Link>
+              <LinkedText
+                url="/api/login/logout"
+                context="로그아웃"
+                size="sm"
+              />
             ) : (
-              <Link href={"/login"}>로그인</Link>
+              <LinkedText url="/login" context="로그인" size="sm" />
             )}
           </div>
         </ContentsContainer>

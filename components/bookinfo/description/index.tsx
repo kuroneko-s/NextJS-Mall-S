@@ -1,10 +1,10 @@
 import { BookInfoProps } from "pages/bookInfo/info.type";
 import React from "react";
 import { cls } from "@lib/client/common";
-import Description_ from "./Description_";
-import { ContentsTitle } from "./index.style";
+import Contents from "./Contents";
+import { ContentsTitle } from "../index.style";
 
-interface ProfileProps {
+interface DescriptionProps {
   bookInfoProps: BookInfoProps;
   profileClickHandler: (e: React.MouseEvent<HTMLElement>) => void;
   profileSelect: boolean;
@@ -14,25 +14,19 @@ export default function Description({
   bookInfoProps: { bookInfo, writerInfo, translatorInfo },
   profileClickHandler,
   profileSelect,
-}: ProfileProps) {
+}: DescriptionProps) {
   return (
     <>
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Description_
-          title="작품 소개"
-          description={bookInfo.book_description}
-        />
+        <Contents title="작품 소개" description={bookInfo.book_description} />
       )}
 
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Description_
-          title="출판사 서평"
-          description={bookInfo.book_description}
-        />
+        <Contents title="출판사 서평" description={bookInfo.book_description} />
       )}
 
       <div>
@@ -147,13 +141,13 @@ export default function Description({
       {writerInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Description_ title="저자 소개" description={writerInfo.description} />
+        <Contents title="저자 소개" description={writerInfo.description} />
       )}
 
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Description_ title="목차" description={bookInfo.book_description} />
+        <Contents title="목차" description={bookInfo.book_description} />
       )}
     </>
   );

@@ -1,13 +1,13 @@
 import { cls } from "@lib/client/common";
 import React, { useState } from "react";
-import { ContentsTitle } from "./index.style";
+import { ContentsTitle } from "../index.style";
 
 interface DescriptionProps {
   title: string;
   description: string;
 }
 
-export default function Description_({ title, description }: DescriptionProps) {
+export default function Contents({ title, description }: DescriptionProps) {
   const [show, setShow] = useState<boolean>(false);
 
   const clickHandler = (e: React.MouseEvent<HTMLElement>) => {

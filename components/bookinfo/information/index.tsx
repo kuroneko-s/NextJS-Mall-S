@@ -25,7 +25,7 @@ import AndroidSvg from "@svg/Android";
 import AppleSvg from "@svg/Apple";
 import WindowSvg from "@svg/Window";
 import MacSvg from "@svg/Mac";
-import { EmptyStar, Star, StarBox } from "./index.style";
+import { EmptyStar, Star, StarBox } from "../index.style";
 
 export interface InformationProps {
   bookInfo?: BookInfo | undefined;
@@ -40,7 +40,7 @@ export default function Information({
 }: InformationProps) {
   const { appendItems } = useContext(GlobalContext);
 
-  const imageUrl = require(`../../images/${
+  const imageUrl = require(`../../../images/${
     bookInfo?.isbn === undefined
       ? "sample"
       : "cat" + bookInfo?.isbn.split("_")[1]

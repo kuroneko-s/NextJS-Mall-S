@@ -8,9 +8,8 @@ import {
   LeftContainer,
 } from "./bookInfo.style";
 import IsLoading from "@components/common/IsLoading";
-import Description from "@components/bookinfo/Description";
-import StarSvg from "svg/Star";
-import Information from "@components/bookinfo/Information";
+import Description from "@components/bookinfo/description";
+import Information from "@components/bookinfo/information";
 import Review from "@components/bookinfo/Review";
 
 export default function BookInfoIndex() {

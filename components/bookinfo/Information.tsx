@@ -4,9 +4,6 @@ import {
   BookTopInfoBox,
   ImageBox,
   BookTitle,
-  StarBox,
-  EmptyStar,
-  Star,
   ScoreText,
   WrtierInfoBox,
   ServiceInfoContents,
@@ -16,7 +13,6 @@ import React, { useContext } from "react";
 import Category from "./Category";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
-import { BookInfoProps } from "pages/bookInfo/info.type";
 import CartSvg from "svg/Cart";
 import {
   BookInfo,
@@ -29,6 +25,7 @@ import AndroidSvg from "@svg/Android";
 import AppleSvg from "@svg/Apple";
 import WindowSvg from "@svg/Window";
 import MacSvg from "@svg/Mac";
+import { EmptyStar, Star, StarBox } from "./index.style";
 
 export interface InformationProps {
   bookInfo?: BookInfo | undefined;

@@ -8,7 +8,8 @@ export default function RightArrow() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-3 h-3"
+      width={14}
+      height={14}
     >
       <path
         strokeLinecap="round"

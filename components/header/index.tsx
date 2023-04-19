@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Link from "next/link";
 import Menu from "@components/menu";
 import { Container, ContentsContainer } from "styles/common";
 import { GlobalContext } from "pages/_app";

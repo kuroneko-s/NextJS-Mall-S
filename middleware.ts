@@ -16,11 +16,11 @@ export async function middleware(req: NextRequest) {
 
   // user 검증
   if (user?.role == undefined || user.role === "USER") {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: ["/admin/:path*", "/notification", "/cart", "/library", "/profile"],
 };

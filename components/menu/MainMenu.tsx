@@ -18,7 +18,7 @@ export default function MainMenu() {
             <ReadingGlassesSvg />
             <input
               type={"text"}
-              className="bg-gray-200 h-full pl-8 py-2 rounded-lg"
+              className="bg-gray-200 h-full pl-8 py-2 shadow-sm rounded-lg outline-none focus:ring-offset-1 focus:ring-2 focus:ring-blue-500"
             />
           </div>
 

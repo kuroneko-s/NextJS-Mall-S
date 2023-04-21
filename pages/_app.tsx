@@ -9,12 +9,13 @@ import Footer from "@components/footer";
 import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
 import App from "next/app";
+import { UserInfo } from "@lib/interface/tables";
 
 export const GlobalContext = createContext<ContextApiProps>({});
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [baskets, appendItems, removeItem, removeAll] = useBaskets();
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState<UserInfo>();
 
   useEffect(() => {
     setUserInfo((cur) =>

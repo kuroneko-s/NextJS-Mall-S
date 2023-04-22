@@ -1,0 +1,18 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  // previewFeatures = ["referentialIntegrity"] // referentialIntegrity => 객체를 연결할때 그 객체가 존재해야 한다 ( FK )
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = "mysql://l483hv25zwddysic5t79:pscale_pw_B9Byc2w30LQsPwye6o5DzocSs2lo01hi4x1CQscfVc8@aws.connect.psdb.cloud/ridibooks?sslaccept=strict"
+  relationMode = "prisma"
+}
+
+model User {
+  id String @id 
+  name String 
+}

@@ -142,3 +142,9 @@ react-motion써서 애니메이션 적극 활용
 수정하면 될 것들
 
 - [ ] 로그인 유지할건지 말건지 정할 수 있게 해줌.
+
+---
+
+db - mysql (planetscale)
+ORM - prisma
+deploy - amazon AWS

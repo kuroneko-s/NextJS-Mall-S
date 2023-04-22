@@ -11,10 +11,13 @@
     "cypress": "cypress open"
   },
   "dependencies": {
+    "@prisma/client": "^4.13.0",
     "apexcharts": "^3.36.0",
     "iron-session": "^6.2.1",
+    "mysql2": "^3.2.3",
     "net": "^1.0.2",
     "next": "12.3.1",
+    "prisma": "^4.13.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-cookie": "^4.1.1",

@@ -1,4 +1,11 @@
-const mysql = require("serverless-mysql")();
+// const client = new PrismaClient();
+
+const mysql = require("mysql2");
+const connection = mysql.createConnection(process.env.DATABASE_URL);
+
+/* const mysql = require("serverless-mysql")();
+
+console.log(process.env);
 
 mysql.config({
   host: process.env.MYSQL_HOST,
@@ -6,7 +13,7 @@ mysql.config({
   database: process.env.MYSQL_DB,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
-});
+}); */
 
 export interface ExecuteQueryProps {
   query: string;
@@ -15,7 +22,7 @@ export interface ExecuteQueryProps {
 
 export async function executeQuery({ query, values }: ExecuteQueryProps) {
   try {
-    let results = await mysql.query(query, values);
+    let results = await connection.query(query, values);
 
     const resultArr = [];
 

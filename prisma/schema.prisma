@@ -12,7 +12,135 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id String @id 
-  name String 
+model Book {
+  isbn Int @id @default(autoincrement())
+  writer Writer @relation(fields: [writerId], references: [id])
+  writerId Int
+  Translator Translator @relation(fields: [translatorId], references: [id])
+  translatorId Int
+  Category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  Artist Artist @relation(fields: [artistId], references: [id])
+  artistId Int
+  title String 
+  price Int
+  bookDescription String
+  publisher String
+  publishingDescription String
+  listeningYn String
+  macYn String
+  windowYn String
+  androidYn String
+  iosYn String
+  fileType String
+  fileSize String
+  textCount String
+  publisherDescription String
+  bookContents String
+  score String
+  imagePath String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+
+  @@index([writerId])
+  @@index([translatorId])
+  @@index([categoryId])
+  @@index([artistId])
+}
+
+model Artist {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  nationality String
+  birth String
+  education String
+  career String
+  awards String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+  books Book[]
+}
+
+model BookAndBookSeries {
+  id Int @id @default(autoincrement())
+  bookId Int
+  bookseriesId Int
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+model BookSeries {
+  id Int @id @default(autoincrement())
+  finishYn String
+  count Int
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  parentName String
+  useYn String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+  books Book[]
+}
+
+model Publisher {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  nationality String
+  birth String
+  education String
+  career String
+  awards String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+model Translator {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  nationality String
+  birth String
+  education String
+  career String
+  awards String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+  books Book[]
+}
+
+model Writer {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  nationality String
+  birth String
+  education String
+  career String
+  awards String
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+  books Book[]
 }

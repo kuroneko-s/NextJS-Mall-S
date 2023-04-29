@@ -1,4 +1,4 @@
-import { executeQuery } from "@lib/server/db";
+import prismaClient from "@lib/server/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,23 +7,18 @@ export default async function handler(
 ) {
   const id = req.query?.id ?? "";
 
-  const queryResult = await executeQuery({
-    query: `select * from writer where name = ?`,
-    values: [id.toString()],
+  const writer = await prismaClient.writer.findUnique({
+    where: {
+      id: Number(id.toString()),
+    },
   });
 
-  if (queryResult.hasOwnProperty("error")) {
-    return res.json({ ok: false, error: queryResult.error });
-  }
-
-  const writerInfoArr = queryResult.result ?? [];
-
-  if (writerInfoArr?.length > 1) {
-    return res.json({ ok: false, error: "조회 실패 - UnUnique Key" });
+  if (writer === null) {
+    return res.json({ ok: false, error: "writer not found id: " + id });
   }
 
   return res.json({
     ok: true,
-    data: writerInfoArr[0],
+    data: writer,
   });
 }

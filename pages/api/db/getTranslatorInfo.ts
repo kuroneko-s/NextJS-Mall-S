@@ -1,4 +1,4 @@
-import { executeQuery } from "@lib/server/db";
+import prismaClient from "@lib/server/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,23 +7,18 @@ export default async function handler(
 ) {
   const id = req.query?.id ?? "";
 
-  const queryResult = await executeQuery({
-    query: `select * from translator where name = ?`,
-    values: [id.toString()],
+  const translator = await prismaClient.translator.findUnique({
+    where: {
+      id: Number(id.toString()),
+    },
   });
 
-  if (queryResult.hasOwnProperty("error")) {
-    return res.json({ ok: false, error: queryResult.error });
-  }
-
-  const translatorInfoArr = queryResult.result ?? [];
-
-  if (translatorInfoArr?.length > 1) {
-    return res.json({ ok: false, error: "조회 실패 - UnUnique Key" });
+  if (translator === null) {
+    return res.json({ ok: false, error: "category not found id: " + id });
   }
 
   return res.json({
     ok: true,
-    data: translatorInfoArr[0],
+    data: translator,
   });
 }

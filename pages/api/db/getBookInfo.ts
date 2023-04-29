@@ -1,4 +1,4 @@
-import { executeQuery } from "@lib/server/db";
+import prismaClient from "@lib/server/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,23 +7,20 @@ export default async function handler(
 ) {
   const id = req.query?.id ?? "";
 
-  const queryResult = await executeQuery({
-    query: `select * from book where isbn = ?`,
-    values: [id.toString()],
+  const book = await prismaClient.book.findUnique({
+    where: {
+      isbn: Number(id.toString()),
+    },
   });
 
-  if (queryResult.hasOwnProperty("error")) {
-    return res.json({ ok: false, error: queryResult.error });
-  }
+  console.log("bookList - ", book);
 
-  const bookInfoArr = queryResult.result ?? [];
-
-  if (bookInfoArr?.length > 1) {
-    return res.json({ ok: false, error: "조회 실패 - UnUnique Key" });
+  if (book === null) {
+    return res.json({ ok: false, error: "Not Found Book Id: " + id });
   }
 
   return res.json({
     ok: true,
-    data: bookInfoArr[0],
+    data: book,
   });
 }

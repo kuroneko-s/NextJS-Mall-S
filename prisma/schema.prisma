@@ -143,3 +143,19 @@ model Writer {
   updateDt DateTime @updatedAt
   books Book[]
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String
+  type LoginType
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+enum LoginType {
+  KAKAO
+  NAVER
+  EMAIL
+}

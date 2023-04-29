@@ -79,3 +79,10 @@ export interface UserInfo {
   id: number;
   name: string;
 }
+
+export interface Item {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+}

@@ -1,21 +1,19 @@
 import { executeQuery } from "@lib/server/db";
+import prismaClient from "@lib/server/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const result = await executeQuery({
-    query: "select * from user",
-    values: [],
-  });
+  const user = await prismaClient.user.findFirst();
 
-  if (result.hasOwnProperty("error")) {
-    return res.json({ ok: false, error: result.error });
+  if (user === null) {
+    return res.json({ ok: false, error: "User Not Found" });
   }
 
   return res.json({
     ok: true,
-    data: result.result,
+    data: user,
   });
 }

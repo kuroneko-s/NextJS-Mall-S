@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-
-export interface Item {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-}
+import { Item } from "./interface/tables";
 
 function sampleCreator() {
   return new Array(10).fill(1).map((_, i) => {

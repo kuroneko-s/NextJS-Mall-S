@@ -14,24 +14,19 @@ import Category from "./Category";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import CartSvg from "svg/Cart";
-import {
-  BookInfo,
-  BookSeries,
-  TranslatorInfo,
-  WriterInfo,
-} from "@lib/interface/tables";
 import HeadPhoneSvg from "@svg/HeadPhone";
 import AndroidSvg from "@svg/Android";
 import AppleSvg from "@svg/Apple";
 import WindowSvg from "@svg/Window";
 import MacSvg from "@svg/Mac";
 import { EmptyStar, Star, StarBox } from "../index.style";
+import { Book, BookSeries, Translator, Writer } from "@prisma/client";
 
 export interface InformationProps {
-  bookInfo?: BookInfo | undefined;
+  bookInfo?: Book | undefined;
   seriesInfo?: BookSeries | undefined;
-  writerInfo?: WriterInfo | undefined;
-  translatorInfo?: TranslatorInfo | undefined;
+  writerInfo?: Writer | undefined;
+  translatorInfo?: Translator | undefined;
 }
 
 export default function Information({
@@ -41,9 +36,7 @@ export default function Information({
   const { appendItems } = useContext(GlobalContext);
 
   const imageUrl = require(`../../../images/${
-    bookInfo?.isbn === undefined
-      ? "sample"
-      : "cat" + bookInfo?.isbn.split("_")[1]
+    bookInfo?.isbn === undefined ? "sample" : "cat" + bookInfo?.isbn
   }.jpg`);
 
   return (
@@ -62,7 +55,7 @@ export default function Information({
         </ImageBox>
 
         <BookInfoBox>
-          <Category categoryId={bookInfo?.category_id!} />
+          <Category categoryId={bookInfo?.categoryId! + ""} />
           <BookTitle>{bookInfo?.title}</BookTitle>
           <StarBox className="space-x-1">
             <EmptyStar>
@@ -73,22 +66,22 @@ export default function Information({
           </StarBox>
 
           <WrtierInfoBox>
-            <Link href={`/people/${bookInfo?.writer_id}`}>
+            <Link href={`/people/${bookInfo?.writerId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.writer_id}
+                {bookInfo?.writerId}
               </a>
             </Link>{" "}
             글<span className="text-gray-500"> | </span>
-            <Link href={`/people/${bookInfo?.artist_id}`}>
+            <Link href={`/people/${bookInfo?.artistId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.artist_id}
+                {bookInfo?.artistId}
               </a>
             </Link>
             그림
             <span className="text-gray-500"> | </span>
-            <Link href={`/people/${bookInfo?.translator_id}`}>
+            <Link href={`/people/${bookInfo?.translatorId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.translator_id}
+                {bookInfo?.translatorId}
               </a>
             </Link>{" "}
             역
@@ -153,8 +146,8 @@ export default function Information({
           <p className="min-w-[250px]">
             <ServiceInfoTitle>파일정보</ServiceInfoTitle>:{" "}
             <ServiceInfoContents className="min-w-[180px] whitespace-nowrap">
-              {bookInfo?.file_type} | {bookInfo?.file_size}MB |{" "}
-              {bookInfo?.text_count}
+              {bookInfo?.fileType} | {bookInfo?.fileSize}MB |{" "}
+              {bookInfo?.textCount}
             </ServiceInfoContents>
           </p>
           <p>
@@ -165,7 +158,7 @@ export default function Information({
         <div className="flex flex-col flex-1">
           <p>
             <ServiceInfoTitle>듣기기능</ServiceInfoTitle>:{" "}
-            {bookInfo?.listening_yn === "Y" ? (
+            {bookInfo?.listeningYn === "Y" ? (
               <ServiceInfoContents className="space-x-1">
                 <HeadPhoneSvg width={15} height={15} />
                 <span>듣기 가능</span>{" "}
@@ -178,26 +171,26 @@ export default function Information({
             <p className="flex items-center space-x-1 min-w-[310px]">
               <ServiceInfoTitle>지원기기</ServiceInfoTitle>:{" "}
               <ServiceInfoContents>
-                {bookInfo?.android_yn === "Y" ? (
+                {bookInfo?.androidYn === "Y" ? (
                   <span className="space-x-1">
                     <AndroidSvg width={15} height={15} />
                     <span className="text-sm">Android</span>
                   </span>
                 ) : null}
               </ServiceInfoContents>
-              {bookInfo?.ios_yn === "Y" ? (
+              {bookInfo?.iosYn === "Y" ? (
                 <ServiceInfoContents className="space-x-1">
                   <AppleSvg width={20} height={20} />
                   <span className="text-sm">IOS</span>
                 </ServiceInfoContents>
               ) : null}
-              {bookInfo?.window_yn === "Y" ? (
+              {bookInfo?.windowYn === "Y" ? (
                 <ServiceInfoContents className="space-x-1">
                   <WindowSvg width={15} height={15} />
                   <span className="text-sm">Window</span>
                 </ServiceInfoContents>
               ) : null}
-              {bookInfo?.mac_yn === "Y" ? (
+              {bookInfo?.macYn === "Y" ? (
                 <ServiceInfoContents className="space-x-1">
                   <MacSvg width={15} height={15} />
                   <span className="text-sm">Mac</span>

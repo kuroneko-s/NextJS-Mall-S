@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { createContext, useEffect, useState } from "react";
-import useBaskets, { ContextApiProps } from "@lib/useItems";
+import useBaskets, { ContextApiProps } from "@lib/contextApi";
 import Layout from "@components/layout";
 import Header from "@components/header";
 import Footer from "@components/footer";

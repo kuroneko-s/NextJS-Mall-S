@@ -26,7 +26,7 @@ model Book {
   price Int
   bookDescription String
   publisher String
-  publishingDescription String
+  publisherDescription String
   listeningYn String
   macYn String
   windowYn String
@@ -35,7 +35,6 @@ model Book {
   fileType String
   fileSize String
   textCount String
-  publisherDescription String
   bookContents String
   score String
   imagePath String

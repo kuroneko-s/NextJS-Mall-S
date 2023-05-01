@@ -8,7 +8,7 @@ generator client {
 
 datasource db {
   provider             = "mysql"
-  url                  = "mysql://l483hv25zwddysic5t79:pscale_pw_B9Byc2w30LQsPwye6o5DzocSs2lo01hi4x1CQscfVc8@aws.connect.psdb.cloud/ridibooks?sslaccept=strict"
+  url                  = env("DATABASE_URL")
   relationMode = "prisma"
 }
 

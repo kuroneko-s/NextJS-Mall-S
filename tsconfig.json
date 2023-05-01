@@ -19,7 +19,7 @@
       "@lib/*": ["lib/*"],
       "@components/*": ["components/*"],
       "@svg/*": ["svg/*"],
-      "@images/*": ["images/*"]
+      "@images/*": ["public/images/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

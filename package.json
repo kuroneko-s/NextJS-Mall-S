@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "cypress": "cypress open",
-    "dbpush": "dotenv -e .env.local -- npx prisma db push"
+    "dbpush": "dotenv -e .env.local -- npx prisma db push",
+    "studio": "dotenv -e .env.local -- npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",

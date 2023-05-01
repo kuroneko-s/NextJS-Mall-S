@@ -11,6 +11,7 @@ interface KakaoPayProps {
   tax_free_amount: number;
 }
 
+// https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment
 export default async function kakaoPay(props: KakaoPayProps) {
   const user = await (await fetch(`${server}/api/user/info`)).json();
 

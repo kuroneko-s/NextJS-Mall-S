@@ -25,7 +25,7 @@ export default function Cart() {
   useEffect(() => {
     const cookie = getCookie(COOKIE_NAME);
     if (bookIds === undefined || (bookIds && bookIds.length <= 0)) {
-      if (cookie.length >= 1) {
+      if (cookie && cookie.length >= 1) {
         appendBooks && appendBooks(...cookie);
       }
     }
@@ -46,7 +46,7 @@ export default function Cart() {
 
     window.location.href = result;
   };
-
+  console.log(queryResult?.data);
   return (
     <>
       {isLoading ? (
@@ -58,9 +58,17 @@ export default function Cart() {
             <div className="flex space-x-4">
               <div className="w-2/3">
                 <div className="space-y-4">
-                  {queryResult?.data.map((book) => (
-                    <BookItem key={book.isbn} book={book} />
-                  ))}
+                  {queryResult?.data === undefined ? (
+                    <div className="flex w-full space-x-8 rounded-md shadow-sm py-4 px-2 mt-2 bg-slate-50">
+                      <p className="text-lg font-semibold text-gray-700">
+                        장바구니가 비어있습니다.
+                      </p>
+                    </div>
+                  ) : (
+                    queryResult?.data.map((book) => (
+                      <BookItem key={book.isbn} book={book} />
+                    ))
+                  )}
                 </div>
               </div>
               <div className="w-1/3 h-screen p-2">

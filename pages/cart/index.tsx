@@ -72,8 +72,20 @@ export default function Cart() {
                 </div>
               </div>
               <div className="w-1/3 h-screen p-2">
-                <div className="bg-slate-100 rounded-md flex flex-col justify-center items-center space-y-2 py-4">
-                  <h1 className="font-semibold text-lg">결제</h1>
+                <div className="bg-slate-100 rounded-md flex flex-col justify-center items-center space-y-2 py-4 px-2">
+                  <h1 className="font-semibold text-lg">총 결제 금액</h1>
+                  <p>
+                    {queryResult?.data === undefined
+                      ? 0
+                      : new Intl.NumberFormat("ko-KR").format(
+                          queryResult?.data.reduce(
+                            (acc, cur) => acc + cur.price,
+                            0
+                          ) ?? 0
+                        )}
+                    원
+                  </p>
+
                   <div className="cursor-pointer" onClick={kakaoPayHandler}>
                     <Image
                       src={kakaoPayImg}

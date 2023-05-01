@@ -3,7 +3,7 @@ import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import { useContext } from "react";
 import { Book } from "@prisma/client";
-import TranshCan from "@svg/TranshCan";
+import TranshCanSvg from "@svg/TranshCan";
 
 interface BookProps {
   book: Book;
@@ -48,7 +48,7 @@ export default function BookItem({ book }: BookProps) {
         onClick={removeButtonHandler}
         className="right-0 px-9 hover:bg-slate-200 rounded-md"
       >
-        <TranshCan />
+        <TranshCanSvg />
       </button>
     </div>
   );

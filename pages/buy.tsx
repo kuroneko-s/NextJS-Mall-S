@@ -9,7 +9,11 @@ import { COOKIE_NAME } from "@lib/common";
 import kakaoPay from "@lib/server/kakaoPay";
 
 const Buy: NextPage = () => {
-  const { baskets, appendItems, removeAll } = useContext(GlobalContext);
+  const {
+    baskets,
+    appendBooks: appendItems,
+    removeAll,
+  } = useContext(GlobalContext);
 
   // cookie 적용
   useEffect(() => {

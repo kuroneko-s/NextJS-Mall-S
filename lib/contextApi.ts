@@ -5,13 +5,13 @@ import { UserInfo } from "./interface/tables";
 
 export interface ContextApiProps {
   baskets?: string[];
-  appendItems?: appendItemFn;
-  removeItem?: removeItemFn;
+  appendBooks?: appendItemFn;
+  removeBook?: removeItemFn;
   removeAll?: removeAllFn;
   userInfo?: UserInfo;
 }
 
-type appendItemFn = (...newItems: string[]) => void;
+type appendItemFn = (...books: string[]) => void;
 type removeItemFn = (item: string) => void;
 type removeAllFn = () => void;
 
@@ -23,15 +23,15 @@ export default function useBaskets(): [
 ] {
   const [baskets, setBaskets] = useState<string[]>([]);
 
-  const appendItems: appendItemFn = (...newItems: string[]) => {
-    setBaskets([...baskets, ...newItems]);
+  const appendBooks: appendItemFn = (...books: string[]) => {
+    setBaskets([...baskets, ...books]);
 
-    for (const target of newItems) {
+    for (const target of books) {
       appendCookie({ cookieName: COOKIE_NAME, value: target });
     }
   };
 
-  const removeItem: removeItemFn = (item: string) => {
+  const removeBook: removeItemFn = (item: string) => {
     const index = baskets.indexOf(item);
     if (index < 0) return;
 
@@ -44,5 +44,5 @@ export default function useBaskets(): [
     removeCookieAll(COOKIE_NAME);
   };
 
-  return [baskets, appendItems, removeItem, removeAll];
+  return [baskets, appendBooks, removeBook, removeAll];
 }

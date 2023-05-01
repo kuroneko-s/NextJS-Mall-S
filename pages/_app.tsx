@@ -28,8 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <GlobalContext.Provider
       value={{
         baskets,
-        appendItems,
-        removeItem,
+        appendBooks: appendItems,
+        removeBook: removeItem,
         removeAll,
         userInfo,
       }}

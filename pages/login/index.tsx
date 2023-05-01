@@ -7,6 +7,7 @@ import { useRef, useContext } from "react";
 import { GlobalContext } from "pages/_app";
 import { Container, ContentsContainer } from "styles/common";
 
+// TODO : kakao 로그인시 다른 페이지에서 로그인 여부 확인 불가능
 const Login: NextPage = () => {
   const { userInfo } = useContext(GlobalContext);
 

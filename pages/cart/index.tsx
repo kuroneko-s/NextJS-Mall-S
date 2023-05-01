@@ -1,79 +1,84 @@
 import { COOKIE_NAME } from "@lib/common";
 import { getCookie } from "@lib/cookies";
-import useItem from "@lib/itemSample";
 import kakaoPay from "@lib/server/kakaoPay";
-import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import React, { useEffect, useContext } from "react";
-import Item from "components/Item";
+import { mySqlUtil } from "@lib/client/MySqlUtil";
+import IsLoading from "@components/common/IsLoading";
+import BookItem from "@components/cart/BookItem";
+import { Container, ContentsContainer } from "styles/common";
+import kakaoPayImg from "@images/kakao_pay.png";
+import Image from "next/image";
 
 export default function Cart() {
-  const { baskets, appendItems, removeAll } = useContext(GlobalContext);
+  const {
+    baskets: bookIds,
+    appendBooks,
+    removeAll,
+  } = useContext(GlobalContext);
+
+  const { queryResult, isLoading } = mySqlUtil.getBookListForIds(
+    bookIds?.join(",") ?? ""
+  );
 
   // cookie 적용
   useEffect(() => {
     const cookie = getCookie(COOKIE_NAME);
-    if (!baskets || (baskets && baskets.length <= 0)) {
-      if (cookie && cookie.length >= 1) {
-        appendItems && appendItems(...cookie);
+    if (bookIds === undefined || (bookIds && bookIds.length <= 0)) {
+      if (cookie.length >= 1) {
+        appendBooks && appendBooks(...cookie);
       }
     }
-  }, [baskets, appendItems]);
-
-  const sampelItems = useItem();
-  const newArr =
-    sampelItems &&
-    sampelItems.filter((v) => baskets && baskets.includes(v.id + ""));
+  }, [bookIds, appendBooks]);
 
   const kakaoPayHandler = async () => {
+    if (queryResult?.data === undefined) return false;
+
     const result = await kakaoPay({
-      item_name: "Test 외 결제",
-      quantity: 1,
-      tax_free_amount: 1,
-      total_amount: 1,
+      item_name: `${queryResult?.data[0].title} 외 ${
+        (queryResult?.data.length ?? 0) - 1
+      }개`,
+      quantity: queryResult.data.length ?? 1,
+      tax_free_amount: 0,
+      total_amount:
+        queryResult?.data.reduce((acc, cur) => acc + cur.price, 0) ?? 0,
     });
 
     window.location.href = result;
   };
 
   return (
-    <div>
-      <h1>살 목록들</h1>
-      <div>
-        <button
-          className="bg-yellow-500"
-          style={{ marginRight: "5px" }}
-          type="button"
-          onClick={() => {
-            removeAll && removeAll();
-          }}
-        >
-          전체 비우기
-        </button>
-        <button
-          className="bg-yellow-500"
-          type="button"
-          onClick={kakaoPayHandler}
-        >
-          카카오 페이 결제
-        </button>
-      </div>
-      <Link href="/">
-        <a>
-          <div>
-            <button className="bg-yellow-500" type="button">
-              Home
-            </button>
-          </div>
-        </a>
-      </Link>
-      <div>
-        {newArr &&
-          newArr.length > 0 &&
-          newArr.map((item) => (
-            <Item index={item.id} key={item.id} item={item} type={"buy"} />
-          ))}
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <IsLoading />
+      ) : (
+        <Container>
+          <ContentsContainer className="space-y-2">
+            <h1 className="font-extrabold text-gray-700 text-2xl">장바구니</h1>
+            <div className="flex space-x-4">
+              <div className="w-2/3">
+                <div className="space-y-4">
+                  {queryResult?.data.map((book) => (
+                    <BookItem key={book.isbn} book={book} />
+                  ))}
+                </div>
+              </div>
+              <div className="w-1/3 h-screen p-2">
+                <div className="bg-slate-100 rounded-md flex flex-col justify-center items-center space-y-2 py-4">
+                  <h1 className="font-semibold text-lg">결제</h1>
+                  <div className="cursor-pointer" onClick={kakaoPayHandler}>
+                    <Image
+                      src={kakaoPayImg}
+                      placeholder="blur"
+                      alt="kakaoPay Button"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ContentsContainer>
+        </Container>
+      )}
+    </>
   );
 }

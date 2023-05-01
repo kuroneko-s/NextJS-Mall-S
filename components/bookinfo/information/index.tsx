@@ -9,7 +9,7 @@ import {
   ServiceInfoContents,
   ServiceInfoTitle,
 } from "pages/bookInfo/bookInfo.style";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import CartSvg from "svg/Cart";
@@ -30,6 +30,7 @@ import {
 } from "@prisma/client";
 import LinkedText from "@components/common/LinkedText";
 import RightArrow from "@svg/RightArrow";
+import Modal from "@components/common/Modal";
 
 export interface InformationProps {
   bookInfo?: Book | undefined;
@@ -50,10 +51,26 @@ export default function Information({
   publisherInfo,
   categoryInfo,
 }: InformationProps) {
-  const { appendItems } = useContext(GlobalContext);
+  const { appendBooks } = useContext(GlobalContext);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const categoryParentName = categoryInfo?.parentName ?? "#";
   const categoryName = categoryInfo?.name ?? "root";
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const cartClickHandler = () => {
+    appendBooks && appendBooks(bookInfo?.isbn + "");
+    setModalTitle(bookInfo?.title ?? "");
+    openModal();
+  };
 
   return (
     <>
@@ -160,14 +177,14 @@ export default function Information({
           <div className="flex flex-row w-full mt-3 space-x-4 justify-end">
             <div
               className="flex justify-center items-center cursor-pointer border-[1px] text-gray-900 p-3 rounded-md shadow-md font-bold"
-              onClick={() => appendItems && appendItems(bookInfo?.isbn + "")}
+              onClick={cartClickHandler}
             >
               <CartSvg width={24} height={24} />
             </div>
 
             <div
               className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 py-3 px-8 rounded-md shadow-md font-bold"
-              onClick={() => appendItems && appendItems(bookInfo?.isbn + "")}
+              onClick={() => appendBooks && appendBooks(bookInfo?.isbn + "")}
             >
               구매버튼(바로 결제화면으로 이동)
             </div>
@@ -237,6 +254,12 @@ export default function Information({
           </div>
         </div>
       </div>
+
+      <Modal
+        modalTitle={modalTitle}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+      />
     </>
   );
 }

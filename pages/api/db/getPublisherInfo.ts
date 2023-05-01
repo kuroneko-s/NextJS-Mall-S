@@ -7,18 +7,18 @@ export default async function handler(
 ) {
   const id = req.query?.id ?? "";
 
-  const book = await prismaClient.book.findUnique({
+  const publisher = await prismaClient.publisher.findUnique({
     where: {
-      isbn: Number(id.toString()),
+      id: Number(id.toString()),
     },
   });
 
-  if (book === null) {
-    return res.json({ ok: false, error: "Not Found Book Id: " + id });
+  if (publisher === null) {
+    return res.json({ ok: false, error: "publisher not found id: " + id });
   }
 
   return res.json({
     ok: true,
-    data: book,
+    data: publisher,
   });
 }

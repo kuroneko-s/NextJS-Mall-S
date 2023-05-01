@@ -5,10 +5,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const bookList = await prismaClient.book.findMany();
+  const newBookList = await prismaClient.book.findMany({
+    take: 10,
+    orderBy: [
+      {
+        createDt: "desc",
+      },
+    ],
+  });
 
   return res.json({
     ok: true,
-    data: bookList,
+    data: newBookList,
   });
 }

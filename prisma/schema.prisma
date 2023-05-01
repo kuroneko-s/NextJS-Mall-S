@@ -22,11 +22,11 @@ model Book {
   categoryId Int
   Artist Artist @relation(fields: [artistId], references: [id])
   artistId Int
+  Publisher Publisher @relation(fields: [publisherId], references: [id])
+  publisherId Int
   title String 
   price Int
   bookDescription String
-  publisher String
-  publisherDescription String
   listeningYn String
   macYn String
   windowYn String
@@ -47,6 +47,7 @@ model Book {
   @@index([translatorId])
   @@index([categoryId])
   @@index([artistId])
+  @@index([publisherId])
 }
 
 model Artist {
@@ -87,7 +88,7 @@ model BookSeries {
 
 model Category {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   parentName String
   useYn String
   createUser String
@@ -110,6 +111,7 @@ model Publisher {
   createDt DateTime @default(now())
   updateUser String
   updateDt DateTime @updatedAt
+  books Book[]
 }
 
 model Translator {
@@ -142,6 +144,10 @@ model Writer {
   updateUser String
   updateDt DateTime @updatedAt
   books Book[]
+}
+
+model Review {
+  id Int @id @default(autoincrement())
 }
 
 model User {

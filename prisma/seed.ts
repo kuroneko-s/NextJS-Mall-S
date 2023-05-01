@@ -159,6 +159,7 @@ async function initBook() {
   const writerList = await prismaClient.writer.findMany();
   const translatorList = await prismaClient.translator.findMany();
   const categoryList = await prismaClient.category.findMany();
+  const publisherList = await prismaClient.publisher.findMany();
 
   for (let i = 0; i < 20; i++) {
     setTimeout(async () => {
@@ -166,6 +167,7 @@ async function initBook() {
       const translatorLen = translatorList.length;
       const categoryLen = categoryList.length;
       const artistLen = artistList.length;
+      const publisherLen = publisherList.length;
 
       await prismaClient.book.create({
         data: {
@@ -185,11 +187,13 @@ async function initBook() {
             artistLen > i
               ? artistList[i % artistLen].id
               : artistList[artistLen].id,
+          publisherId:
+            publisherLen > i
+              ? publisherList[i % publisherLen].id
+              : publisherList[publisherLen].id,
           title: `book title ${i}`,
           price: (i + 1000) * 10000,
           bookDescription: `sample book description ${i}`,
-          publisher: `sample book publisher ${i}`,
-          publisherDescription: `sample book publisher description ${i}`,
           listeningYn: i % 2 === 0 ? "Y" : "N",
           macYn: i % 2 === 0 ? "Y" : "N",
           windowYn: i % 2 === 0 ? "Y" : "N",
@@ -200,7 +204,7 @@ async function initBook() {
           textCount: `${Math.floor(((i + 10) % 20) / 2)} 자`,
           bookContents: `책 내용 대충 갈겨넣기 ${i}`,
           score: "0",
-          imagePath: "/images/cat0.jpg",
+          imagePath: `/book_${i}.jpg`,
           createUser: "1000000",
           updateUser: "1000000",
         },

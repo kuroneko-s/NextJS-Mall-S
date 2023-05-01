@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useContext } from "react";
 import { Container, ContentsContainer } from "styles/common";
-import cat3 from "@images/cat3.jpg";
+import empty from "@images/empty.jpg";
 import Book from "@svg/Book";
 import { GlobalContext } from "pages/_app";
 
@@ -21,7 +21,7 @@ export default function Profile() {
             <div className="w-1/3 py-4 px-4">
               <div className="h-full bg-slate-200 rounded-lg overflow-hidden shadow-md">
                 <Image
-                  src={cat3}
+                  src={empty}
                   alt={"profile"}
                   quality="100"
                   placeholder="blur"

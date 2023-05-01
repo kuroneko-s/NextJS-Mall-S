@@ -1,7 +1,7 @@
 import { GlobalContext } from "pages/_app";
 import React, { useContext } from "react";
 import { Container, ContentsContainer } from "styles/common";
-import cat3 from "@images/cat3.jpg";
+import empty from "@images/empty.jpg";
 import Image from "next/image";
 
 export default function Library() {
@@ -13,7 +13,7 @@ export default function Library() {
         <div className="w-full bg-slate-200 grid grid-cols-2">
           <div className="bg-red-300 p-2 w-full flex flex-row">
             <Image
-              src={cat3}
+              src={empty}
               alt={"profile"}
               quality="100"
               placeholder="blur"

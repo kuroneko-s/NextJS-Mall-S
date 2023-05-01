@@ -3,6 +3,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { GlobalContext } from "pages/_app";
 import { useContext } from "react";
+import empty from "@images/empty.jpg";
 
 interface ItemProps {
   index: number;
@@ -12,9 +13,7 @@ interface ItemProps {
 }
 
 export default function Item({ index = 1, item, btnHandler, type }: ItemProps) {
-  const { removeItem } = useContext(GlobalContext);
-  const i = index % 4;
-  const image = require(`../images/cat${i}.jpg`);
+  const { removeBook: removeItem } = useContext(GlobalContext);
 
   return (
     <>
@@ -23,7 +22,7 @@ export default function Item({ index = 1, item, btnHandler, type }: ItemProps) {
         <a>
           <div style={{ cursor: "pointer" }}>
             <Image
-              src={image}
+              src={empty}
               alt={"cat" + index}
               quality="100"
               placeholder="blur"

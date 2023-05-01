@@ -9,14 +9,14 @@ import {
   StarScoreBox,
 } from "./index.style";
 import StarSvg from "@svg/Star";
-import { BookInfo } from "@lib/interface/tables";
+import { Book } from "@prisma/client";
 
 interface ReviewProps {
   setClickedScore: React.Dispatch<React.SetStateAction<number>>;
   setActiveMessage: React.Dispatch<React.SetStateAction<string>>;
   setActiveScore: React.Dispatch<React.SetStateAction<number>>;
   activeScore: number;
-  bookInfo: BookInfo;
+  bookInfo: Book;
   activeMessage: string;
   clickedScore: number;
 }

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import {
   InnerContainer,
@@ -11,6 +11,7 @@ import IsLoading from "@components/common/IsLoading";
 import Description from "@components/bookinfo/description";
 import Information from "@components/bookinfo/information";
 import Review from "@components/bookinfo/Review";
+import Link from "next/link";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);
@@ -25,16 +26,30 @@ export default function BookInfoIndex() {
   const { queryResult: bookInfoResult, isLoading: bookInfoIsLoading } =
     mySqlUtil.getBookInfo(id!.toString());
 
+  const { queryResult: newBookResult, isLoading: newBookResultIsLoading } =
+    mySqlUtil.getNewBookList();
+
   const { queryResult: seriesInfoResult, isLoading: seriesInfoIsLoading } =
     mySqlUtil.getBookSeries(id!.toString());
 
   const { queryResult: writerInfoResult, isLoading: writerInfoIsLoading } =
-    mySqlUtil.getWriterInfo(bookInfoResult?.data?.writer_id ?? "");
+    mySqlUtil.getWriterInfo((bookInfoResult?.data?.writerId ?? "") + "");
+
+  const { queryResult: categoryInfoResult, isLoading: categoryInfoIsLoading } =
+    mySqlUtil.getCategoryInfo((bookInfoResult?.data?.categoryId ?? "") + "");
 
   const {
     queryResult: translatorInfoResult,
     isLoading: translatorInfoIsLoading,
-  } = mySqlUtil.getWriterInfo(bookInfoResult?.data?.translator_id ?? "");
+  } = mySqlUtil.getWriterInfo((bookInfoResult?.data?.translatorId ?? "") + "");
+
+  const { queryResult: artistInfoResult, isLoading: artistInfoIsLoading } =
+    mySqlUtil.getArtistInfo((bookInfoResult?.data.artistId ?? "") + "");
+
+  const {
+    queryResult: publisherInfoResult,
+    isLoading: publisherInfoIsLoading,
+  } = mySqlUtil.getArtistInfo((bookInfoResult?.data.publisherId ?? "") + "");
 
   const profileClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     const index = e.currentTarget.dataset?.index;
@@ -53,13 +68,16 @@ export default function BookInfoIndex() {
     }
   };
 
-  // TODO: 값이 없을 경우 어떻게 해줘야함
   return (
     <>
       {bookInfoIsLoading ||
       seriesInfoIsLoading ||
       writerInfoIsLoading ||
       translatorInfoIsLoading ||
+      newBookResultIsLoading ||
+      categoryInfoIsLoading ||
+      artistInfoIsLoading ||
+      publisherInfoIsLoading ||
       bookInfoResult?.data == undefined ? (
         <IsLoading />
       ) : (
@@ -69,6 +87,11 @@ export default function BookInfoIndex() {
               <Information
                 bookInfo={bookInfoResult?.data!}
                 seriesInfo={seriesInfoResult?.data}
+                categoryInfo={categoryInfoResult?.data}
+                artistInfo={artistInfoResult?.data}
+                publisherInfo={publisherInfoResult?.data}
+                translatorInfo={translatorInfoResult?.data}
+                writerInfo={writerInfoResult?.data}
               />
 
               <Description
@@ -96,7 +119,30 @@ export default function BookInfoIndex() {
                 <div className="flex items-center justify-between border-b-[1px] border-gray-500 py-2"></div>
               </div>
             </LeftContainer>
-            <RightContainer className="border-l-2 border-gray-200"></RightContainer>
+
+            <RightContainer>
+              <div>
+                <h1 className="text-blue-500 font-bold text-lg border-b-[1px] w-2/3 mb-2 pb-1">
+                  신간 책
+                </h1>
+                <div>
+                  {newBookResult?.data.map((book, idx) => {
+                    return (
+                      <p key={book.isbn} className="space-x-2">
+                        <span className="text-gray-700 text-center w-[18px] inline-block">
+                          {idx + 1}
+                        </span>
+                        <Link href={`/bookInfo/${book.isbn}`}>
+                          <a className="text-gray-700 hover:text-blue-400">
+                            {book.title}
+                          </a>
+                        </Link>
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+            </RightContainer>
           </InnerContainer>
         </Container>
       )}

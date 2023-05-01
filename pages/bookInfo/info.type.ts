@@ -1,13 +1,8 @@
-import {
-  BookInfo,
-  BookSeries,
-  TranslatorInfo,
-  WriterInfo,
-} from "@lib/interface/tables";
+import { Book, BookSeries, Translator, Writer } from "@prisma/client";
 
 export interface BookInfoProps {
-  bookInfo?: BookInfo | undefined;
+  bookInfo?: Book | undefined;
   seriesInfo?: BookSeries | undefined;
-  writerInfo?: WriterInfo | undefined;
-  translatorInfo?: TranslatorInfo | undefined;
+  writerInfo?: Writer | undefined;
+  translatorInfo?: Translator | undefined;
 }

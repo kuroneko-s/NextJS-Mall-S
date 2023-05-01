@@ -3,11 +3,10 @@ import Link from "next/link";
 import Script from "next/script";
 import { GlobalContext } from "pages/_app";
 import { useContext } from "react";
-import type { Item } from "../lib/itemSample";
 
 interface ItemProps {
   index: number;
-  item: Item;
+  item: any;
   btnHandler?: any;
   type?: string;
 }

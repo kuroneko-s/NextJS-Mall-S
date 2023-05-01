@@ -43,8 +43,11 @@ export const BookInfoBox = styled.div`
 `;
 
 export const RightContainer = styled.div`
-  width: 100%;
-  max-width: 300px;
+  width: 230px;
+  white-space: nowrap;
+  padding-left: 0.5rem /* 9px */;
+  border-color: rgb(229 231 235);
+  border-left-width: 2px;
 `;
 
 export const BookTitle = styled.p`

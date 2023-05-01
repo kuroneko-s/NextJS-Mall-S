@@ -20,13 +20,13 @@ export default function Description({
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Contents title="작품 소개" description={bookInfo.book_description} />
+        <Contents title="작품 소개" description={bookInfo.bookDescription} />
       )}
 
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Contents title="출판사 서평" description={bookInfo.book_description} />
+        <Contents title="출판사 서평" description={bookInfo.bookDescription} />
       )}
 
       <div>
@@ -147,7 +147,7 @@ export default function Description({
       {bookInfo === undefined ? (
         <div>정보가 없습니다</div>
       ) : (
-        <Contents title="목차" description={bookInfo.book_description} />
+        <Contents title="목차" description={bookInfo.bookDescription} />
       )}
     </>
   );

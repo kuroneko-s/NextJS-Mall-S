@@ -10,7 +10,6 @@ import {
   ServiceInfoTitle,
 } from "pages/bookInfo/bookInfo.style";
 import React, { useContext } from "react";
-import Category from "./Category";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";
 import CartSvg from "svg/Cart";
@@ -20,42 +19,80 @@ import AppleSvg from "@svg/Apple";
 import WindowSvg from "@svg/Window";
 import MacSvg from "@svg/Mac";
 import { EmptyStar, Star, StarBox } from "../index.style";
-import { Book, BookSeries, Translator, Writer } from "@prisma/client";
+import {
+  Artist,
+  Book,
+  BookSeries,
+  Category,
+  Publisher,
+  Translator,
+  Writer,
+} from "@prisma/client";
+import LinkedText from "@components/common/LinkedText";
+import RightArrow from "@svg/RightArrow";
 
 export interface InformationProps {
   bookInfo?: Book | undefined;
   seriesInfo?: BookSeries | undefined;
   writerInfo?: Writer | undefined;
+  artistInfo?: Artist | undefined;
+  publisherInfo?: Publisher | undefined;
   translatorInfo?: Translator | undefined;
+  categoryInfo?: Category | undefined;
 }
 
 export default function Information({
   bookInfo,
   seriesInfo,
+  writerInfo,
+  translatorInfo,
+  artistInfo,
+  publisherInfo,
+  categoryInfo,
 }: InformationProps) {
   const { appendItems } = useContext(GlobalContext);
 
-  const imageUrl = require(`../../../images/${
-    bookInfo?.isbn === undefined ? "sample" : "cat" + bookInfo?.isbn
-  }.jpg`);
+  const categoryParentName = categoryInfo?.parentName ?? "#";
+  const categoryName = categoryInfo?.name ?? "root";
 
   return (
     <>
       <BookTopInfoBox>
         <ImageBox>
           <Image
-            src={imageUrl}
-            alt={"cat" + bookInfo?.isbn}
+            src={"/book_1.jpg"}
+            alt={bookInfo?.title ?? ""}
             quality="100"
-            placeholder="blur"
             height={280}
             width={200}
           />
-          <div className="mx-auto">미리보기</div>
         </ImageBox>
 
         <BookInfoBox>
-          <Category categoryId={bookInfo?.categoryId! + ""} />
+          <div>
+            {categoryParentName !== "#" ? (
+              <div className="flex justify-center items-center space-x-1">
+                <LinkedText
+                  url={`/category/${categoryParentName}`}
+                  context={categoryParentName}
+                  size="sm"
+                />
+                <RightArrow />
+                <LinkedText
+                  url={`/category/${categoryName}`}
+                  context={categoryParentName}
+                  size="sm"
+                />
+              </div>
+            ) : (
+              <LinkedText
+                url={`/category/${categoryName}`}
+                context={categoryName}
+                size="sm"
+              />
+            )}
+          </div>
+
           <BookTitle>{bookInfo?.title}</BookTitle>
           <StarBox className="space-x-1">
             <EmptyStar>
@@ -68,26 +105,26 @@ export default function Information({
           <WrtierInfoBox>
             <Link href={`/people/${bookInfo?.writerId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.writerId}
+                {writerInfo?.name}
               </a>
             </Link>{" "}
             글<span className="text-gray-500"> | </span>
             <Link href={`/people/${bookInfo?.artistId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.artistId}
+                {artistInfo?.name}
               </a>
             </Link>
             그림
             <span className="text-gray-500"> | </span>
             <Link href={`/people/${bookInfo?.translatorId}`}>
               <a className="font-bold hover:text-gray-500">
-                {bookInfo?.translatorId}
+                {translatorInfo?.name}
               </a>
             </Link>{" "}
             역
           </WrtierInfoBox>
 
-          <p>{bookInfo?.publisher}</p>
+          <p>{publisherInfo?.name}</p>
           {seriesInfo ? (
             <p className="space-x-2">
               <span>시리즈명: {seriesInfo.id}</span>
@@ -141,7 +178,7 @@ export default function Information({
         <div className="flex flex-col">
           <p>
             <ServiceInfoTitle>출간정보</ServiceInfoTitle> :{" "}
-            <ServiceInfoContents>{bookInfo?.publisher}</ServiceInfoContents>
+            <ServiceInfoContents>{publisherInfo?.name}</ServiceInfoContents>
           </p>
           <p className="min-w-[250px]">
             <ServiceInfoTitle>파일정보</ServiceInfoTitle>:{" "}

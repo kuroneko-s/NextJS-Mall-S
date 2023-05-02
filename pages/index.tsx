@@ -8,9 +8,7 @@ import { cls } from "@lib/client/common";
 import { Container, ContentsContainer } from "styles/common";
 
 const Home: NextPage = () => {
-  const [swapping, setSwapping] = useState<"recommendation" | "event">(
-    "recommendation"
-  );
+  const [swapping, setSwapping] = useState<"recommendation" | "event">("event");
 
   return (
     <Container>

@@ -37,6 +37,22 @@ class MySqlUtil {
     });
   }
 
+  getBookListWithWriter(limit: string) {
+    return customUseQuery<
+      QueryResultList<
+        Book & {
+          writer: {
+            id: number;
+            name: string;
+          };
+        }
+      >
+    >({
+      path: `${COMMON_URL.getBookListWithWriter}`,
+      args: { limit },
+    });
+  }
+
   getBookListForIds(id: string) {
     // 1,2,3,4,5
     return customUseQuery<QueryResultList<Book>>({
@@ -71,6 +87,14 @@ class MySqlUtil {
   getWriterInfo(id: string) {
     return customUseQuery<QueryResult<Writer>>({
       path: `${COMMON_URL.getWriterInfo}`,
+      args: { id },
+    });
+  }
+
+  getWriterListForIds(id: string) {
+    // 1,2,3,4,5
+    return customUseQuery<QueryResult<Writer>>({
+      path: `${COMMON_URL.getWriterListForIds}`,
       args: { id },
     });
   }

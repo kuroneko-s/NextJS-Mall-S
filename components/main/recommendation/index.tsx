@@ -8,20 +8,20 @@ import {
   ButtonText,
   Container,
   Contents,
-  ImageBox,
-  ImageItem,
   Item,
   Items,
 } from "./index.style";
 import StarSvg from "@svg/Star";
+import Image from "next/image";
+import emptyImg from "@images/empty.jpg";
 
 export default function Recommendation() {
-  const bookInfoResult = mySqlUtil.getBookList();
-  const bookList = bookInfoResult.queryResult?.data ?? [];
+  const { queryResult: bookListQueryResult, isLoading: bookListIsLoading } =
+    mySqlUtil.getBookListWithWriter("18");
 
   return (
     <>
-      {bookList.length === 0 ? (
+      {bookListIsLoading ? (
         <IsLoading />
       ) : (
         <div className="w-full min-h-screen">
@@ -42,20 +42,27 @@ export default function Recommendation() {
               </p>
             </div>
             <div className="flex space-x-4 w-full h-full">
-              {bookList.slice(0, 6).map((bookInfo, idx) => {
+              {bookListQueryResult?.data.slice(0, 6).map((bookInfo, idx) => {
                 return (
                   <div className="w-full" key={idx}>
                     <Link href={`/bookInfo/${bookInfo.isbn}`}>
-                      <ImageBox image={bookInfo.image_path ? "red" : "blue"} />
+                      <a>
+                        <Image
+                          src={bookInfo.imagePath}
+                          alt={bookInfo.title}
+                          height={260}
+                          width={200}
+                        />
+                      </a>
                     </Link>
-                    <Link href={`/bookInfo/${bookInfo.title}`}>
+                    <Link href={`/bookInfo/${bookInfo.isbn}`}>
                       <a className="text-gray-800 font-bold">
                         <p>{bookInfo.title}</p>
                       </a>
                     </Link>
-                    <Link href={`/author/${bookInfo.writer_id}`}>
+                    <Link href={`/author/${bookInfo.writerId}`}>
                       <a className="text-gray-500 hover:text-gray-400">
-                        <p>{bookInfo.writer_id}</p>
+                        <p>{bookInfo.writer.name}</p>
                       </a>
                     </Link>
                     <div className="flex items-center space-x-1 text-gray-500 text-xs">
@@ -84,31 +91,46 @@ export default function Recommendation() {
                     {[idx, idx + 1, idx + 2].map((v, idx) => {
                       return (
                         <Item key={idx}>
-                          <ImageItem
-                            imageUrl={bookList[v].image_path ? "red" : "blue"}
+                          <Image
+                            src={
+                              bookListQueryResult?.data[v].imagePath ?? emptyImg
+                            }
+                            alt={bookListQueryResult?.data[v].title}
+                            width={110}
+                            height={140}
                           />
                           <p className="flex-grow-[0.5] text-center">{v + 1}</p>
                           <div className="flex-grow text-start">
-                            <Link href={`/bookInfo/${bookList[v].title}`}>
+                            <Link
+                              href={`/bookInfo/${bookListQueryResult?.data[v].isbn}`}
+                            >
                               <a className="text-gray-800 font-bold">
-                                <p>{bookList[v].title}</p>
+                                <p>{bookListQueryResult?.data[v].title}</p>
                               </a>
                             </Link>
-                            <Link href={`/author/${bookList[v].writer_id}`}>
+                            <Link
+                              href={`/author/${bookListQueryResult?.data[v].writerId}`}
+                            >
                               <a className="text-gray-500 hover:text-gray-400">
-                                <p>{bookList[v].writer_id}</p>
+                                <p>
+                                  {bookListQueryResult?.data[v].writer.name}
+                                </p>
                               </a>
                             </Link>
                             <div className="flex items-center space-x-1 text-gray-500 text-xs">
                               <StarSvg
                                 fill={
-                                  bookList[v].score !== "0" ? "red" : "none"
+                                  bookListQueryResult?.data[v].score !== "0"
+                                    ? "red"
+                                    : "none"
                                 }
                                 stroke={
-                                  bookList[v].score !== "0" ? "red" : "gray"
+                                  bookListQueryResult?.data[v].score !== "0"
+                                    ? "red"
+                                    : "gray"
                                 }
                               />
-                              <p>{bookList[v].score}</p>
+                              <p>{bookListQueryResult?.data[v].score}</p>
                             </div>
                           </div>
                         </Item>

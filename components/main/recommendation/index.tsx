@@ -1,7 +1,7 @@
 import React from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import IsLoading from "@components/common/IsLoading";
-import ImageSlider from "../ImageSlider";
+import ImageSlider from "../imageSlider";
 import Link from "next/link";
 import {
   Button,
@@ -25,7 +25,7 @@ export default function Recommendation() {
         <IsLoading />
       ) : (
         <div className="w-full min-h-screen">
-          {/* image slider */}
+          <ImageSlider />
           <div className="mb-8 flex justify-center space-x-6">
             <Link href={"/event"}>
               <a className="space-y-1 cursor-pointer">

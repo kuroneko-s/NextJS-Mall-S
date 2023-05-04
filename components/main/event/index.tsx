@@ -5,12 +5,13 @@ interface SlideProps {
   width: number;
   transitionSwitch?: boolean;
   left?: number;
+  imagePath?: string;
 }
 
 const SlideContainer = styled.div<SlideProps>`
   display: flex;
   position: relative;
-  height: 280px;
+  height: 360px;
   width: ${(props) => props.width}px;
   left: ${(props) => props.left}px;
 
@@ -24,11 +25,46 @@ const SlideContainer = styled.div<SlideProps>`
 `;
 
 const SlideBox = styled.div<SlideProps>`
+  position: relative;
   width: ${(props) => props.width}px;
   height: 100%;
-  background-color: rgb(252 165 165);
   border-radius: 0.375rem;
+  background-image: url(${(props) => props.imagePath});
+  background-size: 70%;
+  background-position: center;
 `;
+
+const SlideTitleBox = styled.div`
+  position: absolute;
+  bottom: 30px;
+  left: 25px;
+
+  max-width: 300px;
+`;
+
+const SlideTitle = styled.p`
+  font-weight: 700;
+  font-size: 1.5rem;
+`;
+
+const SlideSubTitle = styled.p`
+  font-weight: 600;
+  font-size: 1.1rem;
+`;
+
+interface eventBox {
+  path: string;
+  title: string;
+  subTitle?: string;
+}
+
+const eventBoxSample: eventBox[] = new Array(9).fill(1).map((_, idx) => {
+  return {
+    path: `/event_${idx + 1}.png`,
+    title: `고양이 ${idx + 1}`,
+    subTitle: "냐용냐옹".repeat(idx + 1),
+  } as eventBox;
+});
 
 export default function Event() {
   const FLAG_ELEMENT = useRef<HTMLDivElement>(null);
@@ -62,7 +98,7 @@ export default function Event() {
   }, [defaultWith]);
 
   const nextBtnHandler = () => {
-    // TODO: 클릭 동작에 debounce 적용 여부 판단
+    // TODO: 클릭 동작에 throttle 적용 여부 판단
     if (currentPage !== MAX_PAGE) {
       setLeft((cur) => cur - defaultWith);
       setCurrentPage((cur) => ++cur);
@@ -83,7 +119,7 @@ export default function Event() {
   };
 
   const previousBtnHandler = () => {
-    // TODO: 클릭 동작에 debounce 적용 여부 판단
+    // TODO: 클릭 동작에 throttle 적용 여부 판단
     if (currentPage !== MIN_PAGE) {
       setLeft((cur) => cur + defaultWith);
       setCurrentPage((cur) => --cur);
@@ -113,15 +149,42 @@ export default function Event() {
         transitionSwitch={transitionSwitch}
         width={defaultWith * 11}
       >
-        <SlideBox width={defaultWith}>0</SlideBox>
-        {new Array(9).fill(1).map((_, idx) => {
+        <SlideBox
+          width={defaultWith}
+          imagePath={eventBoxSample[eventBoxSample.length - 1].path}
+        >
+          <SlideTitleBox>
+            <SlideTitle>
+              {eventBoxSample[eventBoxSample.length - 1].title}
+            </SlideTitle>
+            {eventBoxSample[eventBoxSample.length - 1]?.subTitle !==
+            undefined ? (
+              <SlideSubTitle>
+                {eventBoxSample[eventBoxSample.length - 1].subTitle}
+              </SlideSubTitle>
+            ) : null}
+          </SlideTitleBox>
+        </SlideBox>
+        {eventBoxSample.map((eventBox, idx) => {
           return (
-            <SlideBox key={idx} width={defaultWith}>
-              {idx + 1}
+            <SlideBox key={idx} width={defaultWith} imagePath={eventBox.path}>
+              <SlideTitleBox>
+                <SlideTitle>{eventBox.title}</SlideTitle>
+                {eventBox?.subTitle !== undefined ? (
+                  <SlideSubTitle>{eventBox.subTitle}</SlideSubTitle>
+                ) : null}
+              </SlideTitleBox>
             </SlideBox>
           );
         })}
-        <SlideBox width={defaultWith}>10</SlideBox>
+        <SlideBox width={defaultWith} imagePath={eventBoxSample[0].path}>
+          <SlideTitleBox>
+            <SlideTitle>{eventBoxSample[0].title}</SlideTitle>
+            {eventBoxSample[0]?.subTitle !== undefined ? (
+              <SlideSubTitle>{eventBoxSample[0].subTitle}</SlideSubTitle>
+            ) : null}
+          </SlideTitleBox>
+        </SlideBox>
       </SlideContainer>
       <div className="flex justify-between">
         <button className="bg-slate-400 py-3 px-6" onClick={previousBtnHandler}>

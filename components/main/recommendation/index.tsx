@@ -25,7 +25,7 @@ export default function Recommendation() {
         <IsLoading />
       ) : (
         <div className="w-full min-h-screen">
-          <ImageSlider />
+          {/* image slider */}
           <div className="mb-8 flex justify-center space-x-6">
             <Link href={"/event"}>
               <a className="space-y-1 cursor-pointer">

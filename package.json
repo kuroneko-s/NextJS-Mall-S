@@ -15,6 +15,7 @@
   "dependencies": {
     "@prisma/client": "^4.13.0",
     "apexcharts": "^3.36.0",
+    "debounce": "^1.2.1",
     "iron-session": "^6.2.1",
     "mysql2": "^3.2.3",
     "net": "^1.0.2",
@@ -33,6 +34,7 @@
     "tls": "^0.0.1"
   },
   "devDependencies": {
+    "@types/debounce": "^1.2.1",
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",

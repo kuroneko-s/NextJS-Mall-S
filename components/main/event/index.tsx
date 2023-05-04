@@ -1,4 +1,3 @@
-import { cls } from "@lib/client/common";
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
@@ -32,35 +31,38 @@ const SlideBox = styled.div<SlideProps>`
 `;
 
 export default function Event() {
-  // const defaultWith = useRef(1280);
   const FLAG_ELEMENT = useRef<HTMLDivElement>(null);
-  const MAX_PAGE = 9;
-  const MIN_PAGE = 1;
+  // const TIMEOUT_KEY = useRef<null | NodeJS.Timeout>(null);
 
   const [defaultWith, setDefaultWith] = useState<number>(1280);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [left, setLeft] = useState<number>(defaultWith * -1);
   const [transitionSwitch, setTransitionSwitch] = useState<boolean>(true);
-
   const MAXIMUM_LEFT = defaultWith * -9;
+  const MAX_PAGE = 9;
+  const MIN_PAGE = 1;
+
+  // TODO: useState & event 간의 충돌로 인해서 정삭작동하지 않음. 추후 적용.
+  /* const resizeHandler = () => {
+    if (TIMEOUT_KEY.current === null) {
+      TIMEOUT_KEY.current = setTimeout(() => {
+        if (FLAG_ELEMENT.current !== null) {
+          setDefaultWith(FLAG_ELEMENT.current.offsetWidth * currentPage);
+        }
+        TIMEOUT_KEY.current = null;
+      }, 150);
+    }
+  }; */
 
   useEffect(() => {
     if (FLAG_ELEMENT.current !== null) {
       setDefaultWith(FLAG_ELEMENT.current.offsetWidth);
       setLeft(defaultWith * -1);
     }
-
-    window.addEventListener("resize", resizeHandler);
-    return () => window.removeEventListener("resize", resizeHandler);
   }, [defaultWith]);
 
-  const resizeHandler = () => {
-    if (FLAG_ELEMENT.current !== null) {
-      setDefaultWith(FLAG_ELEMENT.current.offsetWidth);
-    }
-  };
-
   const nextBtnHandler = () => {
+    // TODO: 클릭 동작에 debounce 적용 여부 판단
     if (currentPage !== MAX_PAGE) {
       setLeft((cur) => cur - defaultWith);
       setCurrentPage((cur) => ++cur);
@@ -81,6 +83,7 @@ export default function Event() {
   };
 
   const previousBtnHandler = () => {
+    // TODO: 클릭 동작에 debounce 적용 여부 판단
     if (currentPage !== MIN_PAGE) {
       setLeft((cur) => cur + defaultWith);
       setCurrentPage((cur) => --cur);

@@ -1,3 +1,4 @@
+import { throttle } from "@lib/client/common";
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
@@ -187,10 +188,16 @@ export default function Event() {
         </SlideBox>
       </SlideContainer>
       <div className="flex justify-between">
-        <button className="bg-slate-400 py-3 px-6" onClick={previousBtnHandler}>
+        <button
+          className="bg-slate-400 py-3 px-6"
+          onClick={throttle(previousBtnHandler, 710)}
+        >
           이전
         </button>
-        <button className="bg-slate-400 py-3 px-6" onClick={nextBtnHandler}>
+        <button
+          className="bg-slate-400 py-3 px-6"
+          onClick={throttle(nextBtnHandler, 710)}
+        >
           다음
         </button>
       </div>

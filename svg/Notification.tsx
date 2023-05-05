@@ -8,6 +8,8 @@ export default function NotificationSvg() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
+      width={36}
+      height={36}
       className="w-8 h-8 cursor-pointer"
     >
       <path

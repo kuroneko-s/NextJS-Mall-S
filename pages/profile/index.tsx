@@ -4,6 +4,7 @@ import { Container, ContentsContainer } from "styles/common";
 import empty from "@images/empty.jpg";
 import Book from "@svg/Book";
 import { GlobalContext } from "pages/_app";
+import Head from "next/head";
 
 export default function Profile() {
   const { userInfo } = useContext(GlobalContext);
@@ -15,6 +16,10 @@ export default function Profile() {
 
   return (
     <Container>
+      <Head>
+        <title>Profile | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
       <ContentsContainer className="h-[71vh]">
         <div className="flex">
           <div className="flex mr-4 w-full h-72 rounded-lg">

@@ -1,5 +1,6 @@
 import { COMMON_URL } from "@lib/client/appConstant";
 import customUseQuery from "@lib/hooks/useCustomQuery";
+import { BookWithWriter } from "@lib/interface/db";
 import {
   Artist,
   Book,
@@ -38,16 +39,7 @@ class MySqlUtil {
   }
 
   getBookListWithWriter(limit: string) {
-    return customUseQuery<
-      QueryResultList<
-        Book & {
-          writer: {
-            id: number;
-            name: string;
-          };
-        }
-      >
-    >({
+    return customUseQuery<QueryResultList<BookWithWriter>>({
       path: `${COMMON_URL.getBookListWithWriter}`,
       args: { limit },
     });

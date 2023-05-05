@@ -10,6 +10,7 @@ async function main() {
     initTranslator();
     initWriter();
     initBookSeries();
+    initEvent();
 
     setTimeout(() => {
       resolve(undefined);
@@ -23,6 +24,8 @@ async function main() {
       }, 5000);
     }).then(() => {
       initBookAndBookSeries();
+      initEventAndBook();
+      initEventAndCategory();
     });
   });
 }
@@ -225,6 +228,59 @@ function initBookSeries() {
         },
       });
     }, 1000);
+  }
+}
+
+async function initEvent() {
+  for (let i = 1; i < 10; i++) {
+    setTimeout(async () => {
+      await prismaClient.event.create({
+        data: {
+          filePath: `/event_${i}.jpg`,
+          title: `이벤트 제목_${i}`,
+          contents: `이벤트 내용입니다. (${i})`,
+          useYn: "Y",
+          createUser: "1000000",
+          updateUser: "1000000",
+        },
+      });
+    }, 1000);
+  }
+}
+
+async function initEventAndBook() {
+  const bookList = await prismaClient.book.findMany();
+  const eventList = await prismaClient.event.findMany();
+
+  for (let i = 0; i < eventList.length; i++) {
+    for (let j = i; j < i + 6; j++) {
+      setTimeout(async () => {
+        await prismaClient.eventAndBook.create({
+          data: {
+            bookId: bookList[j].isbn,
+            evnetId: eventList[i].id,
+            createUser: "1000000",
+            updateUser: "1000000",
+          },
+        });
+      }, 1000);
+    }
+  }
+}
+
+async function initEventAndCategory() {
+  const categoryList = await prismaClient.category.findMany();
+  const eventList = await prismaClient.event.findMany();
+
+  for (let i = 0; i < eventList.length; i++) {
+    await prismaClient.eventAndCategory.create({
+      data: {
+        categoryId: categoryList[i].id,
+        eventId: eventList[i].id,
+        createUser: "1000000",
+        updateUser: "1000000",
+      },
+    });
   }
 }
 

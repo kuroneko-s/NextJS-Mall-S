@@ -24,6 +24,7 @@ model Book {
   artistId Int
   Publisher Publisher @relation(fields: [publisherId], references: [id])
   publisherId Int
+  eventAndBookId Int?
   title String 
   price Int
   bookDescription String
@@ -88,6 +89,7 @@ model BookSeries {
 
 model Category {
   id Int @id @default(autoincrement())
+  eventAndCategoryId Int?
   name String @unique
   parentName String
   useYn String
@@ -146,6 +148,38 @@ model Writer {
   books Book[]
 }
 
+model Event {
+  id Int @id @default(autoincrement())
+  filePath String
+  title String
+  contents String
+  useYn UseYn
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+model EventAndBook {
+  id Int @id @default(autoincrement())
+  bookId Int
+  evnetId Int
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+model EventAndCategory {
+  id Int @id @default(autoincrement())
+  eventId Int
+  categoryId Int
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
 model Review {
   id Int @id @default(autoincrement())
 }
@@ -164,4 +198,9 @@ enum LoginType {
   KAKAO
   NAVER
   EMAIL
+}
+
+enum UseYn {
+  Y
+  N
 }

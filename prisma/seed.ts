@@ -236,7 +236,7 @@ async function initEvent() {
     setTimeout(async () => {
       await prismaClient.event.create({
         data: {
-          filePath: `/event_${i}.jpg`,
+          filePath: `/event_${i}.png`,
           title: `이벤트 제목_${i}`,
           contents: `이벤트 내용입니다. (${i})`,
           useYn: "Y",

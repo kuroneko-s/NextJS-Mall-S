@@ -6,10 +6,12 @@ import {
   Book,
   BookSeries,
   Category,
+  Event,
   Publisher,
   Translator,
   Writer,
 } from "@prisma/client";
+import { EventInfo } from "pages/api/db/Common";
 
 interface QueryResult<type> {
   ok: boolean;
@@ -108,6 +110,20 @@ class MySqlUtil {
   getPublisherInfo(id: string) {
     return customUseQuery<QueryResult<Publisher>>({
       path: `${COMMON_URL.getPublisherInfo}`,
+      args: { id },
+    });
+  }
+
+  getEventList() {
+    return customUseQuery<QueryResult<Event[]>>({
+      path: `${COMMON_URL.getEventList}`,
+      args: {},
+    });
+  }
+
+  getEventInfo(id: string) {
+    return customUseQuery<QueryResult<EventInfo>>({
+      path: `${COMMON_URL.getEventInfo}`,
       args: { id },
     });
   }

@@ -27,7 +27,7 @@ export default function Recommendation() {
       ) : (
         <div className="w-full min-h-screen">
           <ImageSlider />
-          <div className="mb-8 flex justify-center space-x-6">
+          <div className="my-4 flex justify-center space-x-6">
             <Link href={"/event"}>
               <a className="space-y-1 cursor-pointer">
                 <Button className="font-extrabold text-2xl">E</Button>

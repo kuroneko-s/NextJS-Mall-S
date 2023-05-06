@@ -5,7 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const eventMany = await prismaClient.event.findMany();
+  const eventMany = await prismaClient.event.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return res.json({
     ok: true,

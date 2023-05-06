@@ -8,16 +8,17 @@ import { cls } from "@lib/client/common";
 import { Container, ContentsContainer } from "styles/common";
 
 const Home: NextPage = () => {
-  const [swapping, setSwapping] = useState<"recommendation" | "event">("event");
+  const [swapping, setSwapping] = useState<"recommendation" | "event">(
+    "recommendation"
+  );
 
   return (
     <Container>
+      <Head>
+        <title>도서 | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
       <ContentsContainer>
-        <Head>
-          <title>도서 | 흑우냥이</title>
-          {/* <meta /> */}
-        </Head>
-
         <div className="flex space-x-3 mb-5">
           <button
             className={cls(

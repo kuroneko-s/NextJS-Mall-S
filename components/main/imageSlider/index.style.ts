@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SlideProps } from "./interface";
+import { ArrowProps, SlideProps } from "./interface";
 
 export const SlideContainer = styled.div<SlideProps>`
   display: flex;
@@ -45,19 +45,14 @@ export const SlideSubTitle = styled.p`
   font-size: 1.1rem;
 `;
 
-export const ArrowButtonContainer = styled.div`
+export const ArrowButton = styled.div<ArrowProps>`
   position: absolute;
-  display: flex;
-  justify-content: space-between;
-  top: 156px;
-  width: 100%;
-`;
-
-export const ArrowButton = styled.div`
   cursor: pointer;
   /* background-color: rgb(148 163 184); */
   padding: 8px 12px;
   border-radius: 6px;
+  ${(props) => (props.isLeft ? "left: 0px;" : "right: 0px;")}
+  top: 156px;
 
   &:hover {
     background-color: rgba(241, 245, 249, 0.5);

@@ -18,14 +18,16 @@ export default function Event() {
         <IsLoading />
       ) : (
         <Container>
-          <ContentsContainer className="min-h-[71vh]">
-            <Head>
-              <title>Event | 흑우냥이</title>
-            </Head>
+          <Head>
+            <title>Event | 흑우냥이</title>
+          </Head>
+          <ContentsContainer className="min-h-[71vh] space-y-4">
+            <Link href={"/event"}>
+              <a className="font-extrabold text-2xl border-b-2 mb-2 w-fit border-blue-300 text-gray-700 hover:text-gray-500">
+                이벤트
+              </a>
+            </Link>
 
-            <h1 className="font-extrabold text-2xl pb-1 border-b-2 mb-2 w-fit border-blue-300 text-gray-700">
-              이벤트
-            </h1>
             <div className="space-y-4">
               {eventListQueryResult?.data === undefined ? (
                 <div>Is Empty Design</div>

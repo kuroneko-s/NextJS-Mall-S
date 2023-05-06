@@ -5,8 +5,6 @@ export interface SlideProps {
   imagePath?: string;
 }
 
-export interface eventBox {
-  path: string;
-  title: string;
-  subTitle?: string;
+export interface ArrowProps {
+  isLeft: boolean;
 }

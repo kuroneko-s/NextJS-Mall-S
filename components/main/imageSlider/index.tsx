@@ -1,9 +1,7 @@
 import { throttle } from "@lib/client/common";
 import React, { useState, useRef, useEffect } from "react";
-import { eventBox } from "./interface";
 import {
   ArrowButton,
-  ArrowButtonContainer,
   SlideBox,
   SlideContainer,
   SlideSubTitle,
@@ -12,14 +10,9 @@ import {
 } from "./index.style";
 import RightCaretArrowSvg from "@svg/RightCaretArrow";
 import LeftCaretArrowSvg from "@svg/LeftCaretArrow";
-
-const eventBoxSample: eventBox[] = new Array(9).fill(1).map((_, idx) => {
-  return {
-    path: `/event_${idx + 1}.png`,
-    title: `고양이 ${idx + 1}`,
-    subTitle: "냐용냐옹".repeat(idx + 1),
-  } as eventBox;
-});
+import Link from "next/link";
+import { mySqlUtil } from "@lib/client/MySqlUtil";
+import IsLoading from "@components/common/IsLoading";
 
 export default function ImageSlider() {
   const FLAG_ELEMENT = useRef<HTMLDivElement>(null);
@@ -32,6 +25,11 @@ export default function ImageSlider() {
   const MAXIMUM_LEFT = defaultWith * -9;
   const MAX_PAGE = 9;
   const MIN_PAGE = 1;
+
+  const { queryResult: eventListQueryResult, isLoading } =
+    mySqlUtil.getEventList();
+
+  console.log(eventListQueryResult);
 
   // TODO: useState & event 간의 충돌로 인해서 정삭작동하지 않음. 추후 적용.
   /* const resizeHandler = () => {
@@ -95,61 +93,89 @@ export default function ImageSlider() {
   };
 
   return (
-    <div
-      className="w-full h-[360px] overflow-hidden relative "
-      ref={FLAG_ELEMENT}
-    >
-      <SlideContainer
-        left={left}
-        transitionSwitch={transitionSwitch}
-        width={defaultWith * 11}
-      >
-        <SlideBox
-          width={defaultWith}
-          imagePath={eventBoxSample[eventBoxSample.length - 1].path}
+    <>
+      {isLoading ? (
+        <IsLoading />
+      ) : (
+        <div
+          className="w-full h-[360px] overflow-hidden relative "
+          ref={FLAG_ELEMENT}
         >
-          <SlideTitleBox>
-            <SlideTitle>
-              {eventBoxSample[eventBoxSample.length - 1].title}
-            </SlideTitle>
-            {eventBoxSample[eventBoxSample.length - 1]?.subTitle !==
-            undefined ? (
-              <SlideSubTitle>
-                {eventBoxSample[eventBoxSample.length - 1].subTitle}
-              </SlideSubTitle>
-            ) : null}
-          </SlideTitleBox>
-        </SlideBox>
-        {eventBoxSample.map((eventBox, idx) => {
-          return (
-            <SlideBox key={idx} width={defaultWith} imagePath={eventBox.path}>
+          <SlideContainer
+            left={left}
+            transitionSwitch={transitionSwitch}
+            width={defaultWith * 11}
+          >
+            <SlideBox
+              width={defaultWith}
+              imagePath={
+                eventListQueryResult?.data[eventListQueryResult.data.length - 1]
+                  .filePath
+              }
+            >
               <SlideTitleBox>
-                <SlideTitle>{eventBox.title}</SlideTitle>
-                {eventBox?.subTitle !== undefined ? (
-                  <SlideSubTitle>{eventBox.subTitle}</SlideSubTitle>
+                <SlideTitle>
+                  {
+                    eventListQueryResult?.data[
+                      eventListQueryResult?.data.length - 1
+                    ].title
+                  }
+                </SlideTitle>
+                {eventListQueryResult?.data[
+                  eventListQueryResult?.data.length - 1
+                ]?.contents !== undefined ? (
+                  <SlideSubTitle>
+                    {
+                      eventListQueryResult?.data[
+                        eventListQueryResult?.data.length - 1
+                      ].contents
+                    }
+                  </SlideSubTitle>
                 ) : null}
               </SlideTitleBox>
             </SlideBox>
-          );
-        })}
-        <SlideBox width={defaultWith} imagePath={eventBoxSample[0].path}>
-          <SlideTitleBox>
-            <SlideTitle>{eventBoxSample[0].title}</SlideTitle>
-            {eventBoxSample[0]?.subTitle !== undefined ? (
-              <SlideSubTitle>{eventBoxSample[0].subTitle}</SlideSubTitle>
-            ) : null}
-          </SlideTitleBox>
-        </SlideBox>
-      </SlideContainer>
+            {eventListQueryResult?.data.map((event, idx) => {
+              return (
+                <Link key={event.id} href={`/event/${event.id}`}>
+                  <a>
+                    <SlideBox width={defaultWith} imagePath={event.filePath}>
+                      <SlideTitleBox>
+                        <SlideTitle>{event.title}</SlideTitle>
+                        {event?.contents !== undefined ? (
+                          <SlideSubTitle>{event.contents}</SlideSubTitle>
+                        ) : null}
+                      </SlideTitleBox>
+                    </SlideBox>
+                  </a>
+                </Link>
+              );
+            })}
+            <SlideBox
+              width={defaultWith}
+              imagePath={eventListQueryResult?.data[0].filePath}
+            >
+              <SlideTitleBox>
+                <SlideTitle>{eventListQueryResult?.data[0].title}</SlideTitle>
+                {eventListQueryResult?.data[0]?.contents !== undefined ? (
+                  <SlideSubTitle>
+                    {eventListQueryResult?.data[0].contents}
+                  </SlideSubTitle>
+                ) : null}
+              </SlideTitleBox>
+            </SlideBox>
+          </SlideContainer>
 
-      <ArrowButtonContainer>
-        <ArrowButton onClick={throttle(previousBtnHandler, 710)}>
-          <LeftCaretArrowSvg />
-        </ArrowButton>
-        <ArrowButton onClick={throttle(nextBtnHandler, 710)}>
-          <RightCaretArrowSvg />
-        </ArrowButton>
-      </ArrowButtonContainer>
-    </div>
+          <ArrowButton
+            onClick={throttle(previousBtnHandler, 710)}
+            isLeft={true}
+          >
+            <LeftCaretArrowSvg />
+          </ArrowButton>
+          <ArrowButton onClick={throttle(nextBtnHandler, 710)} isLeft={false}>
+            <RightCaretArrowSvg />
+          </ArrowButton>
+        </div>
+      )}
+    </>
   );
 }

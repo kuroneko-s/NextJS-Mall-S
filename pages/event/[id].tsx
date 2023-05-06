@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Container, ContentsContainer } from "styles/common";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Event() {
   const router = useRouter();
@@ -22,6 +23,11 @@ export default function Event() {
         {/* <meta /> */}
       </Head>
       <ContentsContainer className="min-h-[71vh] space-y-4">
+        <Link href={"/event"}>
+          <a className="font-extrabold text-2xl pb-1 border-b-2 w-fit border-blue-300 text-gray-700 hover:text-gray-500">
+            이벤트
+          </a>
+        </Link>
         <div className="w-fit mx-auto">
           <Image
             src={"/eventDefault.jpg"}

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from "@lib/server/session";
+import prismaClient from "@lib/server/prismaClient";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, error, error_description } = req.query;
@@ -35,7 +36,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         res.redirect(404, "/404?message=API_ERROR");
       });
 
-    const info = await fetch("https://kapi.kakao.com/v2/user/me", {
+    const response = await fetch("https://kapi.kakao.com/v2/user/me", {
       headers: {
         Authorization: `${json.token_type} ${json.access_token}`,
       },
@@ -54,9 +55,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           .json({ ok: false, message: "kakao info profile 가져오기 실패" });
       });
 
+    console.log("login user info - ", response);
+
     req.session.user = {
-      id: info.id,
-      name: info.kakao_account.profile.nickname,
+      id: response.id,
+      name: response.kakao_account.profile.nickname,
       role: "USER",
     };
 

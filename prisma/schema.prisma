@@ -92,7 +92,7 @@ model Category {
   eventAndCategoryId Int?
   name String @unique
   parentName String
-  useYn String
+  useYn UseYn
   createUser String
   createDt DateTime @default(now())
   updateUser String
@@ -184,14 +184,32 @@ model Review {
   id Int @id @default(autoincrement())
 }
 
-model User {
+model BuyHistory {
   id Int @id @default(autoincrement())
-  email String
-  type LoginType
+  userId Int
+  bookId  Int
   createUser String
   createDt DateTime @default(now())
   updateUser String
   updateDt DateTime @updatedAt
+}
+
+model User {
+  id String @id 
+  email String @unique
+  name String
+  type LoginType
+  loginCount Int @default(1)
+  role Role @default(USER)
+  createUser String
+  createDt DateTime @default(now())
+  updateUser String
+  updateDt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 enum LoginType {

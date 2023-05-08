@@ -14,7 +14,6 @@ export default function Event() {
   // get Book
   const { queryResult: bookListQueryResult, isLoading: bookListIsLoading } =
     mySqlUtil.getEventInfo(id.toString());
-  console.log(bookListQueryResult);
 
   return (
     <Container>

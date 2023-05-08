@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from "@lib/server/session";
+import prismaClient from "@lib/server/prismaClient";
+import nodemailer from "nodemailer";
+import { Mail } from "@lib/server/mail";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, state, error, error_description } = req.query;
@@ -20,10 +23,47 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   ).json();
 
+  let user = await prismaClient.user.findUnique({
+    where: {
+      id: response.id,
+    },
+  });
+
+  if (user === null) {
+    user = await prismaClient.user.create({
+      data: {
+        email: "",
+        id: response.id,
+        type: "NAVER",
+        name: response.nickname,
+        createUser: response.id,
+        updateUser: response.id,
+      },
+    });
+  } else {
+    user = await prismaClient.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        loginCount: user.loginCount + 1,
+        updateUser: response.id,
+      },
+    });
+  }
+
+  const mailResponse = Mail({
+    to: "drivespublic@gmail.com",
+    subject: "회원가입 인증 메일",
+    htmlMsg: `<h1>안녕하세요. 회원가입 인증 메일입니다.</h1><p>1234</p>`,
+  });
+
+  console.log(mailResponse);
+
   req.session.user = {
-    id: response.id,
-    name: response.nickname,
-    role: "ADMIN",
+    id: user.id,
+    name: user.name,
+    role: user.role,
   };
 
   await req.session.save();

@@ -1,5 +1,34 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import { Container, ContentsContainer } from "styles/common";
 
 export default function Signup() {
-  return <div>Hello</div>;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data: any) => console.log(data);
+  console.log(watch("example"));
+
+  return (
+    <Container>
+      <ContentsContainer>
+        <div className="bg-red-300">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* register your input into the hook by invoking the "register" function */}
+            <input defaultValue="test" {...register("example")} />
+
+            {/* include validation with required or other standard HTML validation rules */}
+            <input {...register("exampleRequired", { required: true })} />
+            {/* errors will return when field validation fails  */}
+            {errors.exampleRequired && <span>This field is required</span>}
+
+            <input type="submit" />
+          </form>
+        </div>
+      </ContentsContainer>
+    </Container>
+  );
 }

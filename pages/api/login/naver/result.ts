@@ -32,8 +32,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (user === null) {
     user = await prismaClient.user.create({
       data: {
-        email: "",
         id: response.id,
+        email: "",
+        role: "USER",
+        password: "",
         type: "NAVER",
         name: response.nickname,
         createUser: response.id,

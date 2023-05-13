@@ -197,10 +197,12 @@ model BuyHistory {
 model User {
   id String @id 
   email String @unique
+  password String
   name String
   type LoginType
   loginCount Int @default(1)
   role Role @default(USER)
+  token String?
   createUser String
   createDt DateTime @default(now())
   updateUser String

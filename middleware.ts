@@ -14,8 +14,8 @@ export async function middleware(req: NextRequest) {
 
   const { user } = session;
 
-  // user 검증
-  if (user?.role == undefined || user.role === "USER") {
+  // 로그인 유무 검증
+  if (user?.role == undefined) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }

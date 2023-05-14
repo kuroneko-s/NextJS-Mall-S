@@ -21,7 +21,7 @@ export default function SliderOfSix({
       <div className="flex space-x-4 w-full h-full">
         {bookList.slice(0, 6).map((bookInfo, idx) => {
           return (
-            <div className="w-full" key={idx}>
+            <div className="" key={idx}>
               <Link href={`/bookInfo/${bookInfo.isbn}`}>
                 <a>
                   <Image

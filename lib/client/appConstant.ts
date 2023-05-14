@@ -4,6 +4,8 @@ export const COMMON_URL = {
   getBookListWithWriter: "/api/db/getBookListWithWriter",
   getBookListForIds: "/api/db/getBookListForIds",
   getBookListForWriter: "/api/db/getBookListForWriter",
+  getBookListForArtist: "/api/db/getBookListForArtist",
+  getBookListForTranslator: "/api/db/getBookListForTranslator",
   getBookInfo: "/api/db/getBookInfo",
   getNewBookList: "/api/db/getNewBookList",
   getBookSeries: "/api/db/getBookSeries",

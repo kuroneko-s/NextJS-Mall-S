@@ -10,9 +10,11 @@ export default function Writer() {
   const { id } = route?.query;
 
   const { queryResult: result, isLoading: writerIsLoading } =
-    mySqlUtil.getWriterInfo(id?.toString() ?? "");
+    mySqlUtil.getTranslatorInfo(id?.toString() ?? "");
   const { queryResult: bookResult, isLoading: bookIsLoading } =
-    mySqlUtil.getBookListForWriter(id?.toString() ?? "");
+    mySqlUtil.getBookListForTranslator(id?.toString() ?? "");
+
+  console.log(bookResult);
 
   return (
     <>

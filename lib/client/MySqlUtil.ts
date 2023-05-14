@@ -56,9 +56,22 @@ class MySqlUtil {
   }
 
   getBookListForWriter(id: string) {
-    // 1,2,3,4,5
     return customUseQuery<QueryResultList<Book>>({
       path: `${COMMON_URL.getBookListForWriter}`,
+      args: { id },
+    });
+  }
+
+  getBookListForArtist(id: string) {
+    return customUseQuery<QueryResultList<Book>>({
+      path: `${COMMON_URL.getBookListForArtist}`,
+      args: { id },
+    });
+  }
+
+  getBookListForTranslator(id: string) {
+    return customUseQuery<QueryResultList<Book>>({
+      path: `${COMMON_URL.getBookListForTranslator}`,
       args: { id },
     });
   }

@@ -120,20 +120,20 @@ export default function Information({
           </StarBox>
 
           <WrtierInfoBox>
-            <Link href={`/people/${bookInfo?.writerId}`}>
+            <Link href={`/writer/${bookInfo?.writerId}`}>
               <a className="font-bold hover:text-gray-500">
                 {writerInfo?.name}
               </a>
             </Link>{" "}
             글<span className="text-gray-500"> | </span>
-            <Link href={`/people/${bookInfo?.artistId}`}>
+            <Link href={`/artist/${bookInfo?.artistId}`}>
               <a className="font-bold hover:text-gray-500">
                 {artistInfo?.name}
               </a>
             </Link>
             그림
             <span className="text-gray-500"> | </span>
-            <Link href={`/people/${bookInfo?.translatorId}`}>
+            <Link href={`/translator/${bookInfo?.translatorId}`}>
               <a className="font-bold hover:text-gray-500">
                 {translatorInfo?.name}
               </a>

@@ -9,14 +9,14 @@ export default function Writer() {
   const route = useRouter();
   const { id } = route?.query;
 
-  const { queryResult: result, isLoading: writerIsLoading } =
-    mySqlUtil.getWriterInfo(id?.toString() ?? "");
+  const { queryResult: result, isLoading: artistIsLoading } =
+    mySqlUtil.getArtistInfo(id?.toString() ?? "");
   const { queryResult: bookResult, isLoading: bookIsLoading } =
-    mySqlUtil.getBookListForWriter(id?.toString() ?? "");
+    mySqlUtil.getBookListForArtist(id?.toString() ?? "");
 
   return (
     <>
-      {bookIsLoading || writerIsLoading || bookResult?.data === undefined ? (
+      {bookIsLoading || artistIsLoading || bookResult?.data === undefined ? (
         <IsLoading />
       ) : (
         <Container>

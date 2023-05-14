@@ -4,12 +4,18 @@ interface ModalProps {
   modalTitle: string;
   modalIsOpen: boolean;
   closeModal: () => void;
+  isConfirm?: boolean;
+  confirmFn?: () => void;
+  contents?: string;
 }
 
 export default function Modal({
   modalTitle,
   modalIsOpen,
   closeModal,
+  contents = "장바구니에 추가되었습니다.",
+  isConfirm = false,
+  confirmFn,
 }: ModalProps) {
   ReactModal.setAppElement("#__next");
 
@@ -49,15 +55,26 @@ export default function Modal({
         {modalTitle}
       </p>
       <p className="font-medium text-1xl text-center text-gray-900">
-        장바구니에 추가되었습니다.
+        {contents}
       </p>
-      <button
-        className="items-center bg-slate-600 text-gray-300"
-        type="button"
-        onClick={closeModal}
-      >
-        팝업 닫기
-      </button>
+      <div className="flex justify-between mt-5">
+        {isConfirm ? (
+          <button
+            className="items-center bg-slate-600 text-gray-300"
+            type="button"
+            onClick={confirmFn}
+          >
+            이동
+          </button>
+        ) : null}
+        <button
+          className="items-center bg-slate-600 text-gray-300"
+          type="button"
+          onClick={closeModal}
+        >
+          닫기
+        </button>
+      </div>
     </ReactModal>
   );
 }

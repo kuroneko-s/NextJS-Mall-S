@@ -1,13 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from "@lib/server/session";
 import prismaClient from "@lib/server/prismaClient";
-import nodemailer from "nodemailer";
 import { Mail } from "@lib/server/mail";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, state, error, error_description } = req.query;
-
-  // https://nid.naver.com/oauth2.0/token?client_id={클라이언트 아이디}&client_secret={클라이언트 시크릿}&grant_type=authorization_code&state={상태 토큰}&code={인증 코드}
 
   const json = await (
     await fetch(
@@ -23,44 +20,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   ).json();
 
-  let user = await prismaClient.user.findUnique({
+  const user = await prismaClient.user.upsert({
     where: {
+      email: response.email,
+    },
+    update: {
       id: response.id,
+      name: response.name,
+      updateUser: response.id,
+    },
+    create: {
+      id: response.id,
+      email: response.email,
+      password: "",
+      name: response.name,
+      type: "NAVER",
+      role: "USER",
+      createUser: response.id,
+      updateUser: response.id,
     },
   });
-
-  if (user === null) {
-    user = await prismaClient.user.create({
-      data: {
-        id: response.id,
-        email: "",
-        role: "USER",
-        password: "",
-        type: "NAVER",
-        name: response.nickname,
-        createUser: response.id,
-        updateUser: response.id,
-      },
-    });
-  } else {
-    user = await prismaClient.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        loginCount: user.loginCount + 1,
-        updateUser: response.id,
-      },
-    });
-  }
-
-  const mailResponse = Mail({
-    to: "drivespublic@gmail.com",
-    subject: "회원가입 인증 메일",
-    htmlMsg: `<h1>안녕하세요. 회원가입 인증 메일입니다.</h1><p>1234</p>`,
-  });
-
-  console.log(mailResponse);
 
   req.session.user = {
     id: user.id,

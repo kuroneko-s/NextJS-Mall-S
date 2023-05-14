@@ -30,6 +30,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
+  if (user.token !== null) {
+    return res.json({
+      ok: true,
+      type: "verify",
+      url: `/signup/verifying?email=${user.email}`,
+    });
+  }
+
   req.session.user = {
     id: user.id,
     name: user.name,

@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from "@lib/server/session";
 import prismaClient from "@lib/server/prismaClient";
+import { Mail } from "@lib/server/mail";
+import { signUp } from "@lib/MailTemplate";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, error, error_description } = req.query;
@@ -55,7 +57,28 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           .json({ ok: false, message: "kakao info profile 가져오기 실패" });
       });
 
-    console.log("login user info - ", response);
+    const id = response.id + "";
+    const email = response.kakao_account.email ?? "";
+
+    await prismaClient.user.upsert({
+      where: {
+        email: email,
+      },
+      update: {
+        id: id,
+        updateUser: id,
+      },
+      create: {
+        id: id,
+        email: email,
+        password: "",
+        name: response.properties.nickname,
+        type: "KAKAO",
+        role: "USER",
+        createUser: id,
+        updateUser: id,
+      },
+    });
 
     req.session.user = {
       id: response.id,

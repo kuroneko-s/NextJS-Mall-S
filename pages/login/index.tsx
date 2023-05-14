@@ -3,28 +3,49 @@ import Image from "next/image";
 import Link from "next/link";
 import kakaoLoginImage from "@images/kakao_login_medium_narrow.png";
 import naverLoginImage from "@images/naver_login.png";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import { GlobalContext } from "pages/_app";
 import { Container, ContentsContainer } from "styles/common";
 import { useForm } from "react-hook-form";
 import { Input, Label, ErrorMessage } from "./index.style";
 import Head from "next/head";
 import { server } from "@lib/common";
+import { useRouter } from "next/router";
+import Modal from "@components/common/Modal";
 
 interface EmailLoginProps {
   email: string;
   password: string;
+  verifying: string;
 }
 
 interface EmailLoginResult {
   ok: boolean;
-  type?: "email" | "password";
+  type?: "email" | "password" | "verify";
   message?: string;
+  url?: string;
 }
 
 // TODO : kakao 로그인시 다른 페이지에서 로그인 여부 확인 불가능
 const Login: NextPage = () => {
+  const router = useRouter();
   const { userInfo } = useContext(GlobalContext);
+  const [modalTitle, _] = useState("로그인 알림");
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [url, setUrl] = useState("");
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const confirmHandler = () => {
+    setIsOpen(false);
+    router.push(url);
+  };
 
   const stateToken = useRef<string>(`(
     Math.random().toString(36).substring(2) +
@@ -51,6 +72,8 @@ const Login: NextPage = () => {
   } = useForm<EmailLoginProps>();
 
   const onSubmit = async (data: EmailLoginProps) => {
+    setIsOpen(false);
+
     const json: EmailLoginResult = await fetch(`${server}/api/login/email`, {
       method: "POST",
       headers: {
@@ -59,11 +82,14 @@ const Login: NextPage = () => {
       body: JSON.stringify(data),
     }).then((res) => res.json());
 
-    if (!json.ok) {
+    if (!json.ok && json.type !== "verify") {
       setError(json.type!, {
         type: "fail",
         message: json.message!,
       });
+    } else if (json.type === "verify") {
+      openModal();
+      setUrl(json.url!);
     } else {
       // router 사용 시 session 업데이트 안됨.
       window.location.href = "/";
@@ -187,6 +213,14 @@ const Login: NextPage = () => {
           </div>
         )}
       </ContentsContainer>
+      <Modal
+        modalTitle={modalTitle}
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        isConfirm={true}
+        confirmFn={confirmHandler}
+        contents={"인증번호 검증 화면으로 이동합니다."}
+      />
     </Container>
   );
 };

@@ -12,8 +12,13 @@ const Header = () => {
       <Container className="font-extrabold border-b-2">
         <ContentsContainer className="flex justify-end">
           <div className="space-x-2">
-            <LinkedText url="/signup" context="회원가입" size="sm" />
-            <span className="text-gray-300">|</span>
+            {userInfo?.id ? null : (
+              <>
+                <LinkedText url="/signup" context="회원가입" size="sm" />
+                <span className="text-gray-300">|</span>
+              </>
+            )}
+
             {userInfo?.id ? (
               <LinkedText
                 url="/api/login/logout"

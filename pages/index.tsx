@@ -50,16 +50,22 @@ const Home: NextPage = () => {
   );
 };
 
-export default function Page({ defaultUser }: any) {
+export default Home;
+
+/* export default function Page({ defaultUser }: any) {
+  console.log("🚀 ~ file: index.tsx:56 ~ Page ~ defaultUser:", defaultUser);
   console.log("SWR");
+
   return (
     <SWRConfig
       value={{
         fallback: {
           "/api/user/info": {
+            ok: true,
             user: {
-              ...defaultUser,
-              ok: true,
+              id: defaultUser?.id ?? "",
+              name: defaultUser?.name ?? "",
+              role: defaultUser?.rule ?? "USER",
             },
             isLoading: false,
           },
@@ -69,16 +75,18 @@ export default function Page({ defaultUser }: any) {
       <Home />
     </SWRConfig>
   );
-}
+} */
 
 /* export async function getServerSideProps({ req, res }: any) {
-  console.log("SSR RUn");
+  console.log("SSR");
+
   const cookieOptions = {
     cookieName: "shop-user-info",
     password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long
   };
 
   const result = await getIronSession(req, res, cookieOptions);
+  console.log("🚀 ~ file: index.tsx:84 ~ getServerSideProps ~ result:", result);
 
   let defaultUser = {};
 
@@ -86,6 +94,7 @@ export default function Page({ defaultUser }: any) {
     defaultUser = {
       id: result?.user?.id,
       name: result?.user?.name,
+      rule: result?.user?.role,
     };
   }
 

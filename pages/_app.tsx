@@ -9,13 +9,13 @@ import Footer from "@components/footer";
 import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
 import App from "next/app";
-import { UserInfo } from "@lib/interface/tables";
+import { User } from "@prisma/client";
 
 export const GlobalContext = createContext<ContextApiProps>({});
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [baskets, appendItems, removeItem, removeAll] = useBaskets();
-  const [userInfo, setUserInfo] = useState<UserInfo>();
+  const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     setUserInfo((cur) =>
@@ -73,6 +73,7 @@ MyApp.getInitialProps = async (appContext: any) => {
       loginUser = {
         id: result?.user?.id,
         name: result?.user?.name,
+        rule: result?.user?.role,
       };
     }
   }

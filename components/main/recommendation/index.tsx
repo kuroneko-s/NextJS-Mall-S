@@ -54,14 +54,22 @@ export default function Recommendation() {
                     {[idx, idx + 1, idx + 2].map((v, idx) => {
                       return (
                         <Item key={idx}>
-                          <Image
-                            src={
-                              bookListQueryResult?.data[v].imagePath ?? emptyImg
-                            }
-                            alt={bookListQueryResult?.data[v].title}
-                            width={110}
-                            height={140}
-                          />
+                          <Link
+                            href={`/bookInfo/${bookListQueryResult?.data[v].isbn}`}
+                          >
+                            <a>
+                              <Image
+                                src={
+                                  bookListQueryResult?.data[v].imagePath ??
+                                  emptyImg
+                                }
+                                alt={bookListQueryResult?.data[v].title}
+                                width={110}
+                                height={140}
+                              />
+                            </a>
+                          </Link>
+
                           <p className="flex-grow-[0.5] text-center">{v + 1}</p>
                           <div className="flex-grow text-start">
                             <Link
@@ -72,7 +80,7 @@ export default function Recommendation() {
                               </a>
                             </Link>
                             <Link
-                              href={`/author/${bookListQueryResult?.data[v].writerId}`}
+                              href={`/writer/${bookListQueryResult?.data[v].writerId}`}
                             >
                               <a className="text-gray-500 hover:text-gray-400">
                                 <p>

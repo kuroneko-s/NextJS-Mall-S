@@ -37,7 +37,7 @@ export default function SliderOfSix({
                   <p>{bookInfo.title}</p>
                 </a>
               </Link>
-              <Link href={`/author/${bookInfo.writerId}`}>
+              <Link href={`/writer/${bookInfo.writerId}`}>
                 <a className="text-gray-500 hover:text-gray-400">
                   <p>{bookInfo.writer.name}</p>
                 </a>

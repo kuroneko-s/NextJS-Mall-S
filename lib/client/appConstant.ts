@@ -1,8 +1,9 @@
 export const COMMON_URL = {
   getCategoryInfo: "/api/db/getCategory",
   getBookList: "/api/db/getBookList",
-  getBookListWithWriter: "/api/db/getBookListWirthWriter",
+  getBookListWithWriter: "/api/db/getBookListWithWriter",
   getBookListForIds: "/api/db/getBookListForIds",
+  getBookListForWriter: "/api/db/getBookListForWriter",
   getBookInfo: "/api/db/getBookInfo",
   getNewBookList: "/api/db/getNewBookList",
   getBookSeries: "/api/db/getBookSeries",

@@ -7,7 +7,7 @@ interface QueryProps {
   intervalTime?: number;
 }
 
-export default function useCustomQuery<type>({
+export default function useCustomQuery<T>({
   path,
   args,
   intervalTime = 10000,
@@ -18,7 +18,7 @@ export default function useCustomQuery<type>({
 
   const apiUrl = `${server}${path}?${params}`;
 
-  const { data, error, mutate } = useSWR<type>(apiUrl, {
+  const { data, error, mutate } = useSWR<T>(apiUrl, {
     refreshInterval: intervalTime,
   });
 

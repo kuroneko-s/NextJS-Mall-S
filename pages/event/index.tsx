@@ -10,8 +10,6 @@ export default function Event() {
   const { queryResult: eventListQueryResult, isLoading: eventListIsLoading } =
     mySqlUtil.getEventList();
 
-  console.log(eventListQueryResult);
-
   return (
     <>
       {eventListIsLoading ? (

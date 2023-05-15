@@ -40,8 +40,6 @@ export default function Verigying() {
       }
     ).then((res) => res.json());
 
-    console.log(json);
-
     router.replace(json.url ?? "/");
   };
 

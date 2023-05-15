@@ -30,7 +30,7 @@ export const getCookie = (name: string) => {
 
 export function appendCookie({ cookieName, value }: CookieProps) {
   let cookie = getCookie(cookieName);
-  console.log("appendCookie - ", cookie);
+
   if (cookie == undefined) {
     cookie = [];
   }
@@ -50,7 +50,7 @@ export function appendCookie({ cookieName, value }: CookieProps) {
 
 export function removeCookieValue({ cookieName, value }: CookieProps) {
   let cookie = getCookie(cookieName);
-  console.log("removeCookieValue - ", cookie);
+
   if (cookie == undefined) {
     cookie = [];
   }

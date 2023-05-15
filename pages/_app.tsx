@@ -83,19 +83,12 @@ MyApp.getInitialProps = async (appContext: any) => {
 
 // Session 값 가져오기. (SSR)
 /* export async function getServerSideProps({ req, res }: any) {
-  console.log(
-    "🚀 ~ file: _app.tsx:45 ~ getServerSideProps ~ req, res:",
-    req,
-    res
-  );
   const cookieOptions = {
     cookieName: "shop-user-info",
     password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long
   };
 
   const result = await getIronSession(req, res, cookieOptions);
-  console.log("🚀 ~ file: _app.tsx:56 ~ getServerSideProps ~ result:", result);
-
   let loginUser = {};
   console.log("RUN");
 

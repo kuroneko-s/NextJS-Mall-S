@@ -8,7 +8,6 @@ import Head from "next/head";
 
 export default function Profile() {
   const { userInfo } = useContext(GlobalContext);
-  console.log(userInfo);
 
   const id =
     (userInfo?.id + "").slice(0, 6) +

@@ -29,8 +29,6 @@ export default function ImageSlider() {
   const { queryResult: eventListQueryResult, isLoading } =
     mySqlUtil.getEventList();
 
-  console.log(eventListQueryResult);
-
   // TODO: useState & event 간의 충돌로 인해서 정삭작동하지 않음. 추후 적용.
   /* const resizeHandler = () => {
     if (TIMEOUT_KEY.current === null) {

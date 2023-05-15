@@ -303,5 +303,5 @@ async function initBookAndBookSeries() {
 }
 
 main()
-  .catch((e) => console.log(e))
+  .catch((e) => console.error(e))
   .finally(() => prismaClient.$disconnect());

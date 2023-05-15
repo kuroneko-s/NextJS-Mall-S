@@ -52,7 +52,6 @@ const Home: NextPage = () => {
 export default Home;
 
 /* export default function Page({ defaultUser }: any) {
-  console.log("🚀 ~ file: index.tsx:56 ~ Page ~ defaultUser:", defaultUser);
   console.log("SWR");
 
   return (
@@ -85,8 +84,6 @@ export default Home;
   };
 
   const result = await getIronSession(req, res, cookieOptions);
-  console.log("🚀 ~ file: index.tsx:84 ~ getServerSideProps ~ result:", result);
-
   let defaultUser = {};
 
   if (!objectIsEmpty(result)) {

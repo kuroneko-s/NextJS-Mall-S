@@ -22,7 +22,7 @@ export async function executeQuery({ query, values }: ExecuteQueryProps) {
       result: resultArr,
     };
   } catch (error: any) {
-    console.log("🚀 ~ file: db.ts:30 ~ executeQuery ~ error:", error);
+    console.log("error: ", error);
     return {
       error: error,
     };

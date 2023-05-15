@@ -3,7 +3,6 @@ import { withIronSession } from "@lib/server/session";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user = req.session?.user;
-  console.log("session - ", req.session);
 
   if (!user) {
     return res.json({ ok: false, error: "not foudn user info" });

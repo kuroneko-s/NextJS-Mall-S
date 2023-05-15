@@ -46,7 +46,7 @@ export default function Cart() {
 
     window.location.href = result;
   };
-  console.log(queryResult?.data);
+
   return (
     <>
       {isLoading ? (

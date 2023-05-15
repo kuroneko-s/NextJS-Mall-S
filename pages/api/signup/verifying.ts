@@ -3,7 +3,6 @@ import { withIronSession } from "@lib/server/session";
 import prismaClient from "@lib/server/prismaClient";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body);
   const { verifying, email } = req.body;
 
   const user = await prismaClient.user.findUnique({

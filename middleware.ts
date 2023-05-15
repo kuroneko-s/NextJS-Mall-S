@@ -4,7 +4,7 @@ import { getIronSession } from "iron-session/edge";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
-  console.log("middleware run");
+  console.info("middleware run");
 
   const res = NextResponse.next();
   const session = await getIronSession(req, res, {

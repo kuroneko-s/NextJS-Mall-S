@@ -18,10 +18,6 @@ export default async function handler(
       translatorId: +id,
     },
   });
-  console.log(
-    "🚀 ~ file: getBookListForTranslator.ts:21 ~ bookList:",
-    bookList
-  );
 
   return res.json({
     ok: true,

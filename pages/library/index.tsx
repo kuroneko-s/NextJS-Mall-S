@@ -3,12 +3,17 @@ import React, { useContext } from "react";
 import { Container, ContentsContainer } from "styles/common";
 import empty from "@images/empty.jpg";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Library() {
   const { userInfo } = useContext(GlobalContext);
 
   return (
     <Container>
+      <Head>
+        <title>구매이력 | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
       <ContentsContainer>
         <div className="w-full bg-slate-200 grid grid-cols-2">
           <div className="bg-red-300 p-2 w-full flex flex-row">

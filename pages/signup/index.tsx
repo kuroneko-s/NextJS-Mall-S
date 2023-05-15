@@ -4,6 +4,7 @@ import { Container, ContentsContainer } from "styles/common";
 import { ErrorMessage, Input, Label } from "./index.style";
 import { server } from "lib/common";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 type Inputs = {
   email: string;
@@ -54,6 +55,10 @@ export default function Signup() {
 
   return (
     <Container>
+      <Head>
+        <title>회원가입 | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
       <ContentsContainer className="min-h-[71vh] flex flex-col items-center">
         <h1 className="font-semibold text-2xl my-4">회원가입</h1>
         <form

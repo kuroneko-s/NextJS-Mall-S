@@ -1,11 +1,16 @@
 import CartSvg from "@svg/Cart";
 import HomeSvg from "@svg/Home";
+import Head from "next/head";
 import Link from "next/link";
 import { Container, ContentsContainer } from "styles/common";
 
 export default function PaySuccess() {
   return (
     <Container>
+      <Head>
+        <title>취소 | 흑우냥이</title>
+        {/* <meta /> */}
+      </Head>
       <ContentsContainer className="min-h-[57vh] mt-12 flex items-start justify-center">
         <div className="flex flex-col items-center bg-slate-100 py-20 w-full rounded-md shadow-sm">
           <h1 className="font-extrabold text-gray-700 text-2xl mb-12">

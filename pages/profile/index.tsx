@@ -16,7 +16,7 @@ export default function Profile() {
   return (
     <Container>
       <Head>
-        <title>Profile | 흑우냥이</title>
+        <title>개인정보 | 흑우냥이</title>
         {/* <meta /> */}
       </Head>
       <ContentsContainer className="h-[71vh]">

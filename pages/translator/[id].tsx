@@ -1,6 +1,7 @@
 import IsLoading from "@components/common/IsLoading";
 import SliderOfSix from "@components/common/SliderOfSix";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { Container, ContentsContainer } from "styles/common";
@@ -20,6 +21,10 @@ export default function Writer() {
         <IsLoading />
       ) : (
         <Container>
+          <Head>
+            <title>{result?.data.name} | 흑우냥이</title>
+            {/* <meta /> */}
+          </Head>
           <ContentsContainer>
             <div className="border-2 border-dashed border-blue-300 mb-6 py-4 px-1">
               <p>이름: {result?.data.name}</p>

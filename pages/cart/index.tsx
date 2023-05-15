@@ -9,6 +9,7 @@ import BookItem from "@components/cart/BookItem";
 import { Container, ContentsContainer } from "styles/common";
 import kakaoPayImg from "@images/kakao_pay.png";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Cart() {
   const {
@@ -53,6 +54,10 @@ export default function Cart() {
         <IsLoading />
       ) : (
         <Container>
+          <Head>
+            <title>장바구니 | 흑우냥이</title>
+            {/* <meta /> */}
+          </Head>
           <ContentsContainer className="space-y-2">
             <h1 className="font-extrabold text-gray-700 text-2xl">장바구니</h1>
             <div className="flex space-x-4">

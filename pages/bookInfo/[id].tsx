@@ -12,6 +12,7 @@ import Description from "@components/bookinfo/description";
 import Information from "@components/bookinfo/information";
 import Review from "@components/bookinfo/Review";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);
@@ -82,6 +83,9 @@ export default function BookInfoIndex() {
         <IsLoading />
       ) : (
         <Container>
+          <Head>
+            <title>{bookInfoResult.data.title} | 흑우냥이</title>
+          </Head>
           <InnerContainer className="space-x-4">
             <LeftContainer className="space-y-6">
               <Information

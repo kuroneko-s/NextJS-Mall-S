@@ -14,8 +14,6 @@ export default function Writer() {
   const { queryResult: bookResult, isLoading: bookIsLoading } =
     mySqlUtil.getBookListForTranslator(id?.toString() ?? "");
 
-  console.log(bookResult);
-
   return (
     <>
       {bookIsLoading || writerIsLoading || bookResult?.data === undefined ? (

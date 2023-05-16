@@ -9,8 +9,3 @@ body,
 body * {
   font-family: "Noto Sans KR", sans-serif !important;
 }
-
-.footer p,
-.footer span {
-  cursor: pointer;
-}

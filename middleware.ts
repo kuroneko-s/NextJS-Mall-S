@@ -6,6 +6,9 @@ import { getIronSession } from "iron-session/edge";
 export async function middleware(req: NextRequest) {
   console.info("middleware run");
 
+  // return new Response("rwqrqrwq", {status: 403});
+
+  // 로그인 유무 검증
   const res = NextResponse.next();
   const session = await getIronSession(req, res, {
     cookieName: "shop-user-info",
@@ -13,8 +16,6 @@ export async function middleware(req: NextRequest) {
   });
 
   const { user } = session;
-
-  // 로그인 유무 검증
   if (user?.role == undefined) {
     return NextResponse.redirect(new URL("/login", req.url));
   }

@@ -4,8 +4,34 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
+:root {
+  --primary: white;
+  --secondary: gray;
+}
+
 *,
 body,
 body * {
   font-family: "Noto Sans KR", sans-serif !important;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 11px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 5px;
+  border: 2px solid var(--primary);
 }

@@ -25,6 +25,7 @@ interface QueryResultList<type> {
   error?: any | undefined;
 }
 
+// 모든 요청은 POST로 진행.
 class MySqlUtil {
   getCategoryInfo(id: string) {
     return customUseQuery<QueryResult<Category>>({

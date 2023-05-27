@@ -24,6 +24,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   }, []);
 
+  const postFetcher = (url: string) =>
+    fetch(url, { method: "POST" }).then((res) => res.json());
+
+  // SWR get 요청 sample
+  /* const getFetcher = (url: string) =>
+    fetch(url, { method: "GET" }).then((res) => res.json()); */
+
+  /* const { data } = useSWR(
+    "https://jsonplaceholder.typicode.com/todos/1",
+    getFetcher
+  ); */
+
   return (
     <GlobalContext.Provider
       value={{
@@ -37,8 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SWRConfig
         value={{
           refreshInterval: 15000,
-          fetcher: (url: any) =>
-            fetch(url, { method: "POST" }).then((response) => response.json()),
+          fetcher: postFetcher,
         }}
       >
         <Layout>

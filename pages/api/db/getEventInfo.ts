@@ -7,6 +7,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (req.method !== "POST") {
+    return res.json({
+      ok: false,
+    });
+  }
+
   const id = req.query?.id ?? "";
   const idNum = Number(id.toString());
 

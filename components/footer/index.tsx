@@ -71,10 +71,6 @@ export default function Footer() {
             <Link href={"/tou"}>
               <a target="_blank">청소년보호정책</a>
             </Link>
-            <p>|</p>
-            <Link href={"/tou"}>
-              <a target="_blank">사업자정보확인</a>
-            </Link>
           </div>
           <div className="text-xs pt-3">© RIDI Corp.</div>
         </div>

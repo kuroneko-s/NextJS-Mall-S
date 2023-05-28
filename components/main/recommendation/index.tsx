@@ -14,7 +14,8 @@ import {
 import StarSvg from "@svg/Star";
 import Image from "next/image";
 import emptyImg from "@images/empty.jpg";
-import SliderOfSix from "@components/common/SliderOfSix";
+import ImageSliderSix from "../imageSliderSix";
+import ImageSliderNine from "../imageSliderNine";
 
 export default function Recommendation() {
   const { queryResult: bookListQueryResult, isLoading: bookListIsLoading } =
@@ -37,81 +38,12 @@ export default function Recommendation() {
           </div>
 
           {bookListQueryResult?.data !== undefined ? (
-            <SliderOfSix bookList={bookListQueryResult?.data} />
+            <ImageSliderSix bookList={bookListQueryResult?.data} />
           ) : null}
 
-          <Container className="mb-6">
-            <div>
-              <p className="font-bold text-2xl mb-4">
-                지금 많이 읽고 있는 작품
-              </p>
-            </div>
-            <Contents>
-              {[1, 2, 3].map((_, idx) => {
-                idx *= 3;
-                return (
-                  <Items key={idx} className="space-y-2">
-                    {[idx, idx + 1, idx + 2].map((v, idx) => {
-                      return (
-                        <Item key={idx}>
-                          <Link
-                            href={`/bookInfo/${bookListQueryResult?.data[v].isbn}`}
-                          >
-                            <a>
-                              <Image
-                                src={
-                                  bookListQueryResult?.data[v].imagePath ??
-                                  emptyImg
-                                }
-                                alt={bookListQueryResult?.data[v].title}
-                                width={110}
-                                height={140}
-                              />
-                            </a>
-                          </Link>
-
-                          <p className="flex-grow-[0.5] text-center">{v + 1}</p>
-                          <div className="flex-grow text-start">
-                            <Link
-                              href={`/bookInfo/${bookListQueryResult?.data[v].isbn}`}
-                            >
-                              <a className="text-gray-800 font-bold">
-                                <p>{bookListQueryResult?.data[v].title}</p>
-                              </a>
-                            </Link>
-                            <Link
-                              href={`/writer/${bookListQueryResult?.data[v].writerId}`}
-                            >
-                              <a className="text-gray-500 hover:text-gray-400">
-                                <p>
-                                  {bookListQueryResult?.data[v].writer.name}
-                                </p>
-                              </a>
-                            </Link>
-                            <div className="flex items-center space-x-1 text-gray-500 text-xs">
-                              <StarSvg
-                                fill={
-                                  bookListQueryResult?.data[v].score !== "0"
-                                    ? "red"
-                                    : "none"
-                                }
-                                stroke={
-                                  bookListQueryResult?.data[v].score !== "0"
-                                    ? "red"
-                                    : "gray"
-                                }
-                              />
-                              <p>{bookListQueryResult?.data[v].score}</p>
-                            </div>
-                          </div>
-                        </Item>
-                      );
-                    })}
-                  </Items>
-                );
-              })}
-            </Contents>
-          </Container>
+          {bookListQueryResult?.data !== undefined ? (
+            <ImageSliderNine list={bookListQueryResult.data} />
+          ) : null}
         </div>
       )}
     </>

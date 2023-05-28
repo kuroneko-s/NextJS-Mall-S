@@ -25,7 +25,7 @@ export default async function kakaoPay(props: KakaoPayProps) {
   formBody.push(`partner_order_id=${partnerOrderId}`);
   formBody.push(`partner_user_id=${partnerUserId}`);
   formBody.push(
-    `approval_url=http://localhost:3000/api/kakao/success?params=${redirectParams}`
+    `approval_url=${server}/api/kakao/success?params=${redirectParams}`
   );
   formBody.push("cancel_url=http://localhost:3000/kakao/cancel");
   formBody.push("fail_url=http://localhost:3000/kakao/fail");
@@ -45,6 +45,8 @@ export default async function kakaoPay(props: KakaoPayProps) {
       body: formBody.join("&"),
     })
   ).json();
+
+  // 결제 관련 정보 DB에서 관리
 
   // 이부분 DB로 동작해야하는데 지금은 DB 안쓰고 있어서 session에다가 저장함.
   // 확장할떈 반드시 DB로 tid값 유니크 잡아줘서 저장해서 써야함 ...

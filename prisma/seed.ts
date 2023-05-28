@@ -195,7 +195,7 @@ async function initBook() {
               ? publisherList[i % publisherLen].id
               : publisherList[publisherLen].id,
           title: `book title ${i}`,
-          price: (i + 1000) * 10000,
+          price: (i + 1000) * 100,
           bookDescription: `sample book description ${i}`,
           listeningYn: i % 2 === 0 ? "Y" : "N",
           macYn: i % 2 === 0 ? "Y" : "N",

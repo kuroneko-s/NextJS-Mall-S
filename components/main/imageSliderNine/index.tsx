@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowButton } from "./index.style";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,8 @@ interface ImageSliderNineProps {
 }
 
 export default function ImageSliderNine({ list }: ImageSliderNineProps) {
-  console.log("🚀 ~ file: index.tsx:16 ~ ImageSLiderNine ~ list:", list);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [isFirst, setIsFirst] = useState<boolean>(true);
   const leftArrowHandler = () => {
     setIsFirst((cur) => !cur);
@@ -23,8 +24,17 @@ export default function ImageSliderNine({ list }: ImageSliderNineProps) {
     setIsFirst((cur) => !cur);
   };
 
+  useEffect(() => {
+    if (containerRef.current !== null) {
+      console.log(containerRef.current.offsetWidth);
+    }
+  }, []);
+
   return (
-    <div className="relative w-full mb-6 overflow-hidden">
+    <div
+      className="relative w-full mb-6 overflow-hidden min-w-[1280px]"
+      ref={containerRef}
+    >
       <div>
         <p className="font-bold text-2xl mb-4">지금 많이 읽고 있는 작품</p>
       </div>

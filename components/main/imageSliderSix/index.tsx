@@ -26,7 +26,7 @@ export default function ImageSliderSix({
   };
 
   return (
-    <div className="mb-6 relative overflow-hidden">
+    <div className="mb-6 relative overflow-hidden min-w-[1280px]">
       <div className="flex justify-between ">
         <p className="font-bold text-2xl mb-4">{title}</p>
       </div>

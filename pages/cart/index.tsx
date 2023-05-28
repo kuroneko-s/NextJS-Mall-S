@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@lib/common";
 import { getCookie } from "@lib/cookies";
 import kakaoPay from "@lib/server/kakaoPay";
 import { GlobalContext } from "pages/_app";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import IsLoading from "@components/common/IsLoading";
 import BookItem from "@components/cart/BookItem";
@@ -10,6 +10,7 @@ import { Container, ContentsContainer } from "styles/common";
 import kakaoPayImg from "@images/kakao_pay.png";
 import Image from "next/image";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function Cart() {
   const {
@@ -18,14 +19,17 @@ export default function Cart() {
     removeAll,
   } = useContext(GlobalContext);
 
+  const router = useRouter();
+  const isbn = router.query?.isbn;
+
   const { queryResult, isLoading } = mySqlUtil.getBookListForIds(
-    bookIds?.join(",") ?? ""
+    isbn !== undefined ? isbn.toString() : bookIds?.join(",") ?? ""
   );
 
   // cookie 적용
   useEffect(() => {
     const cookie = getCookie(COOKIE_NAME);
-    if (bookIds === undefined || (bookIds && bookIds.length <= 0)) {
+    if (bookIds && bookIds.length <= 0) {
       if (cookie && cookie.length >= 1) {
         appendBooks && appendBooks(...cookie);
       }
@@ -56,7 +60,6 @@ export default function Cart() {
         <Container>
           <Head>
             <title>장바구니 | 흑우냥이</title>
-            {/* <meta /> */}
           </Head>
           <ContentsContainer className="space-y-2">
             <h1 className="font-extrabold text-gray-700 text-2xl">장바구니</h1>
@@ -70,9 +73,26 @@ export default function Cart() {
                       </p>
                     </div>
                   ) : (
-                    queryResult?.data.map((book) => (
-                      <BookItem key={book.isbn} book={book} />
-                    ))
+                    <>
+                      {isbn !== undefined ? null : (
+                        <div
+                          className="group w-fit rounded-md shadow-sm py-2 px-2 mt-2 bg-slate-50 group-hover:bg-slate-200 cursor-pointer"
+                          onClick={() => removeAll && removeAll()}
+                        >
+                          <p className="text-lg font-semibold text-gray-700 right-0 group-hover:text-gray-500">
+                            전체 삭제
+                          </p>
+                        </div>
+                      )}
+
+                      {queryResult?.data.map((book) => (
+                        <BookItem
+                          key={book.isbn}
+                          book={book}
+                          buyDirect={isbn}
+                        />
+                      ))}
+                    </>
                   )}
                 </div>
               </div>

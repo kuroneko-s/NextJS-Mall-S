@@ -7,9 +7,10 @@ import TranshCanSvg from "@svg/TranshCan";
 
 interface BookProps {
   book: Book;
+  buyDirect: string | string[] | undefined;
 }
 
-export default function BookItem({ book }: BookProps) {
+export default function BookItem({ book, buyDirect }: BookProps) {
   const { removeBook } = useContext(GlobalContext);
 
   const removeButtonHandler = () => {
@@ -43,13 +44,15 @@ export default function BookItem({ book }: BookProps) {
         </a>
       </Link>
 
-      <button
-        type="button"
-        onClick={removeButtonHandler}
-        className="right-0 px-9 hover:bg-slate-200 rounded-md"
-      >
-        <TranshCanSvg />
-      </button>
+      {buyDirect !== undefined ? null : (
+        <button
+          type="button"
+          onClick={removeButtonHandler}
+          className="right-0 px-9 hover:bg-slate-200 rounded-md"
+        >
+          <TranshCanSvg />
+        </button>
+      )}
     </div>
   );
 }

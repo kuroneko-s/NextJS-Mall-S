@@ -31,15 +31,17 @@ import {
 import LinkedText from "@components/common/LinkedText";
 import RightArrow from "@svg/RightArrow";
 import Modal from "@components/common/Modal";
+import { useRouter } from "next/router";
+import { server } from "@lib/common";
 
 export interface InformationProps {
-  bookInfo?: Book | undefined;
+  bookInfo?: Book;
   seriesInfo?: BookSeries | undefined;
-  writerInfo?: Writer | undefined;
-  artistInfo?: Artist | undefined;
-  publisherInfo?: Publisher | undefined;
-  translatorInfo?: Translator | undefined;
-  categoryInfo?: Category | undefined;
+  writerInfo?: Writer;
+  artistInfo?: Artist;
+  publisherInfo?: Publisher;
+  translatorInfo?: Translator;
+  categoryInfo?: Category;
 }
 
 export default function Information({
@@ -51,6 +53,7 @@ export default function Information({
   publisherInfo,
   categoryInfo,
 }: InformationProps) {
+  const router = useRouter();
   const { appendBooks } = useContext(GlobalContext);
   const [modalTitle, setModalTitle] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -70,6 +73,10 @@ export default function Information({
     appendBooks && appendBooks(bookInfo?.isbn + "");
     setModalTitle(bookInfo?.title ?? "");
     openModal();
+  };
+
+  const buyClickHandler = () => {
+    router.push(`${server}/cart?isbn=${bookInfo?.isbn}`);
   };
 
   return (
@@ -184,7 +191,7 @@ export default function Information({
 
             <div
               className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 py-3 px-8 rounded-md shadow-md font-bold"
-              onClick={() => appendBooks && appendBooks(bookInfo?.isbn + "")}
+              onClick={buyClickHandler}
             >
               구매버튼(바로 결제화면으로 이동)
             </div>

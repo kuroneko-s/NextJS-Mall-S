@@ -32,11 +32,11 @@ export default function Description({
       <div>
         <ContentsTitle>저자 프로필</ContentsTitle>
         <div className="flex space-x-2 text-sm text-gray-700 border-b-[1px]">
-          <p className="pb-2">
-            저자{" "}
+          <p className="flex items-center space-x-2 pb-2">
+            <span className="font-bold text-lg">저자</span>{" "}
             <span
               className={cls(
-                "font text-gray-600 pb-2 hover:text-gray-400 cursor-pointer",
+                "font text-gray-600 pt-1 pb-1 hover:text-gray-400 cursor-pointer",
                 profileSelect ? "border-gray-800 border-b-[1px]" : ""
               )}
               onClick={profileClickHandler}
@@ -45,14 +45,14 @@ export default function Description({
               글쓴사람이름
             </span>
           </p>
-          <span className="font text-gray-600 hover:text-gray-400 cursor-pointer">
+          <span className="font text-lg text-gray-600 hover:text-gray-400 cursor-pointer">
             |
           </span>
-          <p>
-            번역{" "}
+          <p className="flex items-center space-x-2 pb-2">
+            <span className="font-bold text-lg">번역</span>{" "}
             <span
               className={cls(
-                "font text-gray-600 pb-2 hover:text-gray-400 cursor-pointer",
+                "font text-gray-600 pt-1 pb-1 hover:text-gray-400 cursor-pointer",
                 !profileSelect ? "border-gray-800 border-b-[1px]" : ""
               )}
               onClick={profileClickHandler}

@@ -13,9 +13,23 @@ export default async function handler(
 
   const id = req.query?.id ?? "";
 
+  if (id === "") {
+    return res.json({
+      ok: false,
+    });
+  }
+
+  // 모든 데이터 첨부해서 가져오기
   const book = await prismaClient.book.findUnique({
     where: {
       isbn: Number(id.toString()),
+    },
+    include: {
+      Artist: true,
+      Category: true,
+      Publisher: true,
+      Translator: true,
+      writer: true,
     },
   });
 

@@ -78,7 +78,17 @@ class MySqlUtil {
   }
 
   getBookInfo(id: string) {
-    return customUseQuery<QueryResult<Book>>({
+    return customUseQuery<
+      QueryResult<
+        Book & {
+          Artist: Artist;
+          Category: Category;
+          Publisher: Publisher;
+          Translator: Translator;
+          writer: Writer;
+        }
+      >
+    >({
       path: `${COMMON_URL.getBookInfo}`,
       args: { id },
       intervalTime: 10000000,

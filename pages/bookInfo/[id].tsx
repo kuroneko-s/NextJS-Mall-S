@@ -33,25 +33,6 @@ export default function BookInfoIndex() {
   const { queryResult: seriesInfoResult, isLoading: seriesInfoIsLoading } =
     mySqlUtil.getBookSeries(id!.toString());
 
-  const { queryResult: writerInfoResult, isLoading: writerInfoIsLoading } =
-    mySqlUtil.getWriterInfo((bookInfoResult?.data?.writerId ?? "") + "");
-
-  const { queryResult: categoryInfoResult, isLoading: categoryInfoIsLoading } =
-    mySqlUtil.getCategoryInfo((bookInfoResult?.data?.categoryId ?? "") + "");
-
-  const {
-    queryResult: translatorInfoResult,
-    isLoading: translatorInfoIsLoading,
-  } = mySqlUtil.getWriterInfo((bookInfoResult?.data?.translatorId ?? "") + "");
-
-  const { queryResult: artistInfoResult, isLoading: artistInfoIsLoading } =
-    mySqlUtil.getArtistInfo((bookInfoResult?.data.artistId ?? "") + "");
-
-  const {
-    queryResult: publisherInfoResult,
-    isLoading: publisherInfoIsLoading,
-  } = mySqlUtil.getArtistInfo((bookInfoResult?.data.publisherId ?? "") + "");
-
   const profileClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     const index = e.currentTarget.dataset?.index;
 
@@ -73,12 +54,7 @@ export default function BookInfoIndex() {
     <>
       {bookInfoIsLoading ||
       seriesInfoIsLoading ||
-      writerInfoIsLoading ||
-      translatorInfoIsLoading ||
       newBookResultIsLoading ||
-      categoryInfoIsLoading ||
-      artistInfoIsLoading ||
-      publisherInfoIsLoading ||
       bookInfoResult?.data == undefined ? (
         <IsLoading />
       ) : (
@@ -89,21 +65,21 @@ export default function BookInfoIndex() {
           <InnerContainer className="space-x-4">
             <LeftContainer className="space-y-6">
               <Information
-                bookInfo={bookInfoResult?.data!}
+                bookInfo={bookInfoResult.data}
                 seriesInfo={seriesInfoResult?.data}
-                categoryInfo={categoryInfoResult?.data}
-                artistInfo={artistInfoResult?.data}
-                publisherInfo={publisherInfoResult?.data}
-                translatorInfo={translatorInfoResult?.data}
-                writerInfo={writerInfoResult?.data}
+                categoryInfo={bookInfoResult.data.Category}
+                artistInfo={bookInfoResult.data.Artist}
+                publisherInfo={bookInfoResult.data.Publisher}
+                translatorInfo={bookInfoResult.data.Translator}
+                writerInfo={bookInfoResult.data.writer}
               />
 
               <Description
                 bookInfoProps={{
-                  bookInfo: bookInfoResult?.data,
+                  bookInfo: bookInfoResult.data,
                   seriesInfo: seriesInfoResult?.data,
-                  writerInfo: writerInfoResult?.data,
-                  translatorInfo: translatorInfoResult?.data,
+                  writerInfo: bookInfoResult.data.writer,
+                  translatorInfo: bookInfoResult.data.Translator,
                 }}
                 profileClickHandler={profileClickHandler}
                 profileSelect={profileSelect}

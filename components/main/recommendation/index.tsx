@@ -3,17 +3,7 @@ import { mySqlUtil } from "@lib/client/MySqlUtil";
 import IsLoading from "@components/common/IsLoading";
 import ImageSlider from "../imageSlider";
 import Link from "next/link";
-import {
-  Button,
-  ButtonText,
-  Container,
-  Contents,
-  Item,
-  Items,
-} from "./index.style";
-import StarSvg from "@svg/Star";
-import Image from "next/image";
-import emptyImg from "@images/empty.jpg";
+import { Button, ButtonText } from "./index.style";
 import ImageSliderSix from "../imageSliderSix";
 import ImageSliderNine from "../imageSliderNine";
 

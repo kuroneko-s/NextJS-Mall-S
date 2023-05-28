@@ -24,12 +24,6 @@ export default function ImageSliderNine({ list }: ImageSliderNineProps) {
     setIsFirst((cur) => !cur);
   };
 
-  useEffect(() => {
-    if (containerRef.current !== null) {
-      console.log(containerRef.current.offsetWidth);
-    }
-  }, []);
-
   return (
     <div
       className="relative w-full mb-6 overflow-hidden min-w-[1280px]"

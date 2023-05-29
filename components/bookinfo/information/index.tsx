@@ -151,7 +151,7 @@ export default function Information({
           <p>{publisherInfo?.name}</p>
           {seriesInfo ? (
             <p className="space-x-2">
-              <span>시리즈명: {seriesInfo.id}</span>
+              <span>시리즈명: {seriesInfo.name}</span>
               <span>총{seriesInfo.count}권</span>
             </p>
           ) : null}

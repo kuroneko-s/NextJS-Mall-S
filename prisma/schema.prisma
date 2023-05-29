@@ -79,6 +79,7 @@ model BookAndBookSeries {
 
 model BookSeries {
   id Int @id @default(autoincrement())
+  name String
   finishYn String
   count Int
   createUser String
@@ -203,7 +204,7 @@ model BuyHistory {
   redirectPc String?
   success Boolean @default(false)
   errorCode String?
-  errorMsg String?
+  errorMsg String
   paymentCreated String?
   paymentApproved String?
   expirationPeriod String?

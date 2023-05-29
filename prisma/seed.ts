@@ -221,6 +221,7 @@ function initBookSeries() {
     setTimeout(async () => {
       await prismaClient.bookSeries.create({
         data: {
+          name: "Sample Series " + i,
           finishYn: "N",
           count: 1,
           createUser: "1000000",

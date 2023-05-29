@@ -26,7 +26,6 @@ interface EmailLoginResult {
   url?: string;
 }
 
-// TODO : kakao 로그인시 다른 페이지에서 로그인 여부 확인 불가능
 const Login: NextPage = () => {
   const router = useRouter();
   const { userInfo } = useContext(GlobalContext);

@@ -14,3 +14,9 @@ export type BookWithWriter = Book & {
     name: string;
   };
 };
+
+export interface SessionUser {
+  id: string;
+  name: string;
+  role: "ADMIN" | "USER";
+}

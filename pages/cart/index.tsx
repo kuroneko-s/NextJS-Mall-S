@@ -1,6 +1,6 @@
-import { COOKIE_NAME } from "@lib/common";
+import { COOKIE_NAME, server } from "@lib/common";
 import { getCookie } from "@lib/cookies";
-import kakaoPay from "@lib/server/kakaoPay";
+import kakaoPay from "@lib/client/kakaoPay";
 import { GlobalContext } from "pages/_app";
 import React, { useEffect, useContext, useRef } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
@@ -21,10 +21,10 @@ export default function Cart() {
 
   const router = useRouter();
   const isbn = router.query?.isbn;
+  const itemIds =
+    isbn !== undefined ? isbn.toString() : bookIds?.join(",") ?? "";
 
-  const { queryResult, isLoading } = mySqlUtil.getBookListForIds(
-    isbn !== undefined ? isbn.toString() : bookIds?.join(",") ?? ""
-  );
+  const { queryResult, isLoading } = mySqlUtil.getBookListForIds(itemIds);
 
   // cookie 적용
   useEffect(() => {
@@ -39,10 +39,16 @@ export default function Cart() {
   const kakaoPayHandler = async () => {
     if (queryResult?.data === undefined) return false;
 
+    const itemName =
+      queryResult?.data.length === 1
+        ? `${queryResult?.data[0].title}`
+        : `${queryResult?.data[0].title} 외 ${
+            (queryResult?.data.length ?? 0) - 1
+          }개`;
+
     const result = await kakaoPay({
-      item_name: `${queryResult?.data[0].title} 외 ${
-        (queryResult?.data.length ?? 0) - 1
-      }개`,
+      item_name: itemName,
+      item_code: itemIds.replaceAll(",", "_"),
       quantity: queryResult.data.length ?? 1,
       tax_free_amount: 0,
       total_amount:

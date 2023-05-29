@@ -184,23 +184,29 @@ model Review {
   id Int @id @default(autoincrement())
 }
 
-model PaymentHistory {
-  tid String @id
-  bookId String
-
-  success Boolean @default(false)
-
-  createUser String
-  createDt DateTime @default(now())
-  updateUser String
-  updateDt DateTime @updatedAt
-}
-
 model BuyHistory {
   id Int @id @default(autoincrement())
-  userId Int
-  bookId Int
+  userId String
+  aid String?
+  cid String
+  tid String?
+  paymentType PaymentType?
+  partnerOrderId String
+  partnerUserId String
+  itemName String
+  itemCode String
+  quantity Int
+  totalAmount Int
+  vatAmount Int?
+  redirectMobile String?
+  redirectApp String?
+  redirectPc String?
   success Boolean @default(false)
+  errorCode String?
+  errorMsg String?
+  paymentCreated String?
+  paymentApproved String?
+  expirationPeriod String?
   createUser String
   createDt DateTime @default(now())
   updateUser String
@@ -220,6 +226,11 @@ model User {
   createDt DateTime @default(now())
   updateUser String
   updateDt DateTime @updatedAt
+}
+
+enum PaymentType {
+  CARD
+  MONEY
 }
 
 enum Role {

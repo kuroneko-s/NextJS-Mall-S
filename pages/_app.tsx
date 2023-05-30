@@ -10,6 +10,7 @@ import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
 import App from "next/app";
 import { User } from "@prisma/client";
+import SocketIOClient from "socket.io-client";
 
 export const GlobalContext = createContext<ContextApiProps>({});
 
@@ -22,6 +23,32 @@ function MyApp({ Component, pageProps }: AppProps) {
       // @ts-ignore
       pageProps?.loginUser !== undefined ? pageProps?.loginUser : cur
     );
+
+    // @ts-ignore
+    const socket = SocketIOClient.connect("ws://localhost:3000", {
+      path: "/api/chat",
+    });
+
+    // 연결
+    socket.on("connect", () => {
+      console.log("SOCKET CONNECTED!", socket.id);
+    });
+
+    // 구독
+    socket.on("with-binary", (message: any) => {
+      console.log("receive - ", message);
+    });
+
+    setTimeout(() => {
+      fetch("http://localhost:3000/api/socketio", {
+        method: "POST",
+        body: JSON.stringify({ message: "rwqrwqr" }),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+        });
+    }, 3000);
   }, []);
 
   const postFetcher = (url: string) =>

@@ -6,17 +6,16 @@ import { useEffect, useContext } from "react";
 import { Container, ContentsContainer } from "styles/common";
 
 export default function PaySuccess() {
-  const { removeAll } = useContext(GlobalContext);
+  const { removeItemsAll } = useContext(GlobalContext);
 
   useEffect(() => {
-    removeAll && removeAll();
-  }, []);
+    removeItemsAll && removeItemsAll();
+  }, [removeItemsAll]);
 
   return (
     <Container>
       <Head>
         <title>성공 | 흑우냥이</title>
-        {/* <meta /> */}
       </Head>
       <ContentsContainer className="min-h-[57vh] mt-12 flex items-start justify-center">
         <div className="flex flex-col items-center bg-slate-100 space-y-12 py-20 w-full rounded-md shadow-sm">
@@ -25,7 +24,7 @@ export default function PaySuccess() {
             <a
               className="flex items-center text-2lg hover:bg-blue-400 hover:text-white hover:fill-white rounded-md py-4 px-9"
               onClick={() => {
-                removeAll && removeAll();
+                removeItemsAll && removeItemsAll();
               }}
             >
               <HomeSvg />

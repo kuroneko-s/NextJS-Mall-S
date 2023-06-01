@@ -28,7 +28,7 @@ interface EmailLoginResult {
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { userInfo } = useContext(GlobalContext);
+  const { user } = useContext(GlobalContext);
   const [modalTitle, _] = useState("로그인 알림");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [url, setUrl] = useState("");
@@ -101,7 +101,7 @@ const Login: NextPage = () => {
         <title>로그인 | 흑우냥이</title>
       </Head>
       <ContentsContainer className="min-h-[71vh] flex justify-center">
-        {userInfo?.name !== undefined ? (
+        {user?.name !== undefined ? (
           <div>
             <p className="font-extrabold text-[50px] text-center">
               이미 로그인되어 있음

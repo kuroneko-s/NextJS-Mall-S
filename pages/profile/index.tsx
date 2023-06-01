@@ -7,11 +7,10 @@ import { GlobalContext } from "pages/_app";
 import Head from "next/head";
 
 export default function Profile() {
-  const { userInfo } = useContext(GlobalContext);
+  const { user } = useContext(GlobalContext);
 
   const id =
-    (userInfo?.id + "").slice(0, 6) +
-    "*".repeat((userInfo?.id + "").length - 6);
+    (user?.id + "").slice(0, 6) + "*".repeat((user?.id + "").length - 6);
 
   return (
     <Container>
@@ -34,7 +33,7 @@ export default function Profile() {
             </div>
             <div className="flex flex-col justify-center flex-1">
               <p>ID: {id}</p>
-              <p>이름: {userInfo?.name}</p>
+              <p>이름: {user?.name}</p>
               <p>이메일: email@email.com</p>
             </div>
           </div>

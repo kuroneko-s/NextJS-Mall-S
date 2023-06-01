@@ -1,23 +1,28 @@
+import { NextApiResponseServerIO } from "./socket.d";
 import { NextApiRequest } from "next";
-import { NextApiResponseServerIO } from "./chat.d";
+import { Server as ServerIO } from "socket.io";
+import { Server as NetServer } from "http";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponseServerIO
 ) {
-  if (req.method === "POST") {
-    console.log("listen");
-    const message = {
-      user: "server user",
-      message: "test msg",
-    };
+  if (!res.socket.server.io) {
+    console.log("New Socket.io server connected... ✅");
 
-    // 브로드캐스트
-    if (res.socket.server.io) {
-      console.log("broadcase");
-      res.socket.server.io.emit("with-binary", message);
-    }
+    const httpServer: NetServer = res.socket.server as any;
+    const io = new ServerIO(httpServer, {
+      path: "/api/socketio",
+    });
 
-    res.status(201).json(message);
+    res.socket.server.io = io;
   }
+
+  res.end();
 }

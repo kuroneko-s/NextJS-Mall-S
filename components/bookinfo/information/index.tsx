@@ -54,7 +54,7 @@ export default function Information({
   categoryInfo,
 }: InformationProps) {
   const router = useRouter();
-  const { appendBooks } = useContext(GlobalContext);
+  const { appendItems } = useContext(GlobalContext);
   const [modalTitle, setModalTitle] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -70,7 +70,7 @@ export default function Information({
   };
 
   const cartClickHandler = () => {
-    appendBooks && appendBooks(bookInfo?.isbn + "");
+    appendItems && appendItems(bookInfo?.isbn + "");
     setModalTitle(bookInfo?.title ?? "");
     openModal();
   };

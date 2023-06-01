@@ -11,10 +11,10 @@ interface BookProps {
 }
 
 export default function BookItem({ book, buyDirect }: BookProps) {
-  const { removeBook } = useContext(GlobalContext);
+  const { removeItem } = useContext(GlobalContext);
 
   const removeButtonHandler = () => {
-    removeBook && removeBook(book.isbn + "");
+    removeItem && removeItem(book.isbn + "");
   };
 
   return (

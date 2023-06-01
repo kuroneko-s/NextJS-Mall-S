@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { createContext, useEffect, useState } from "react";
-import useBaskets, { ContextApiProps } from "@lib/contextApi";
+import useGlobalStore from "@lib/contextApi";
 import Layout from "@components/layout";
 import Header from "@components/header";
 import Footer from "@components/footer";
@@ -10,13 +10,26 @@ import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
 import App from "next/app";
 import { User } from "@prisma/client";
-import SocketIOClient from "socket.io-client";
+import useSocket from "@lib/hooks/useSocket";
+import { ContextApiProps } from "@lib/interface/store";
 
+// contextAPI Store
 export const GlobalContext = createContext<ContextApiProps>({});
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [baskets, appendItems, removeItem, removeAll] = useBaskets();
+  // contextAPI Fn File
+  const [
+    baskets,
+    appendItems,
+    removeItem,
+    removeItemsAll,
+    websocket,
+    setWebSocket,
+  ] = useGlobalStore();
   const [userInfo, setUserInfo] = useState<User>();
+
+  // connect socket
+  useSocket();
 
   useEffect(() => {
     setUserInfo((cur) =>
@@ -24,23 +37,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       pageProps?.loginUser !== undefined ? pageProps?.loginUser : cur
     );
 
-    // @ts-ignore
-    const socket = SocketIOClient.connect("ws://localhost:3000", {
-      path: "/api/chat",
-    });
-
-    // 연결
-    socket.on("connect", () => {
-      console.log("SOCKET CONNECTED!", socket.id);
-    });
-
     // 구독
-    socket.on("with-binary", (message: any) => {
+    /* socket.on("with-binary", (message: any) => {
       console.log("receive - ", message);
     });
 
     setTimeout(() => {
-      fetch("http://localhost:3000/api/socketio", {
+      fetch("http://localhost:3000/api/chat", {
         method: "POST",
         body: JSON.stringify({ message: "rwqrwqr" }),
       })
@@ -48,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         .then((json) => {
           console.log(json);
         });
-    }, 3000);
+    }, 3000); */
   }, []);
 
   const postFetcher = (url: string) =>
@@ -66,11 +69,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GlobalContext.Provider
       value={{
-        baskets,
-        appendBooks: appendItems,
-        removeBook: removeItem,
-        removeAll,
-        userInfo,
+        items: baskets,
+        appendItems,
+        removeItem,
+        removeItemsAll,
+        user: userInfo,
+        websocket,
+        setWebSocket,
       }}
     >
       <SWRConfig

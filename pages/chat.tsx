@@ -1,3 +1,4 @@
+import { server } from "@lib/common";
 import React, { useState, useEffect, useRef } from "react";
 
 // * Socket.io
@@ -67,7 +68,7 @@ const Chatting: React.FC = () => {
         message: sendMessage,
       };
 
-      const response = await fetch("http://localhost:3000/api/socketio", {
+      const response = await fetch(`${server}/api/socketio`, {
         method: "POST",
         body: JSON.stringify({ message }),
       }).then((res) => res.json());

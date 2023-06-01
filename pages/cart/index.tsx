@@ -13,28 +13,23 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 export default function Cart() {
-  const {
-    baskets: bookIds,
-    appendBooks,
-    removeAll,
-  } = useContext(GlobalContext);
+  const { items, appendItems, removeItemsAll } = useContext(GlobalContext);
 
   const router = useRouter();
   const isbn = router.query?.isbn;
-  const itemIds =
-    isbn !== undefined ? isbn.toString() : bookIds?.join(",") ?? "";
+  const itemIds = isbn !== undefined ? isbn.toString() : items?.join(",") ?? "";
 
   const { queryResult, isLoading } = mySqlUtil.getBookListForIds(itemIds);
 
   // cookie 적용
   useEffect(() => {
     const cookie = getCookie(COOKIE_NAME);
-    if (bookIds && bookIds.length <= 0) {
+    if (items && items.length <= 0) {
       if (cookie && cookie.length >= 1) {
-        appendBooks && appendBooks(...cookie);
+        appendItems && appendItems(...cookie);
       }
     }
-  }, [bookIds, appendBooks]);
+  }, [items, appendItems]);
 
   const kakaoPayHandler = async () => {
     if (queryResult?.data === undefined) return false;
@@ -83,7 +78,7 @@ export default function Cart() {
                       {isbn !== undefined ? null : (
                         <div
                           className="group w-fit rounded-md shadow-sm py-2 px-2 mt-2 bg-slate-50 group-hover:bg-slate-200 cursor-pointer"
-                          onClick={() => removeAll && removeAll()}
+                          onClick={() => removeItemsAll && removeItemsAll()}
                         >
                           <p className="text-lg font-semibold text-gray-700 right-0 group-hover:text-gray-500">
                             전체 삭제

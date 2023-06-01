@@ -1,28 +1,24 @@
-import { NextApiResponseServerIO } from "./chat.d";
 import { NextApiRequest } from "next";
-import { Server as ServerIO } from "socket.io";
-import { Server as NetServer } from "http";
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+import { NextApiResponseServerIO } from "./socket.d";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponseServerIO
 ) {
-  if (!res.socket.server.io) {
-    console.log("New Socket.io server...✅");
+  if (req.method === "POST") {
+    console.log("listen");
 
-    const httpServer: NetServer = res.socket.server as any;
-    const io = new ServerIO(httpServer, {
-      path: "/api/chat",
-    });
+    const message = {
+      user: "server user",
+      message: "test msg",
+    };
 
-    res.socket.server.io = io;
+    // 브로드캐스트
+    if (res.socket.server.io) {
+      console.log("broadcase");
+      res.socket.server.io.emit("with-binary", message);
+    }
+
+    res.status(201).json(message);
   }
-
-  res.end();
 }

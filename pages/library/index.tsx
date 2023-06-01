@@ -1,13 +1,10 @@
-import { GlobalContext } from "pages/_app";
-import React, { useContext } from "react";
+import React from "react";
 import { Container, ContentsContainer } from "styles/common";
 import empty from "@images/empty.jpg";
 import Image from "next/image";
 import Head from "next/head";
 
 export default function Library() {
-  const { userInfo } = useContext(GlobalContext);
-
   return (
     <Container>
       <Head>

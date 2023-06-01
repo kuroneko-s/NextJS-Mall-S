@@ -5,21 +5,21 @@ import { GlobalContext } from "pages/_app";
 import LinkedText from "@components/common/LinkedText";
 
 const Header = () => {
-  const { userInfo } = useContext(GlobalContext);
+  const { user } = useContext(GlobalContext);
 
   return (
     <>
       <Container className="font-extrabold border-b-2">
         <ContentsContainer className="flex justify-end">
           <div className="space-x-2">
-            {userInfo?.id ? null : (
+            {user?.id ? null : (
               <>
                 <LinkedText url="/signup" context="회원가입" size="sm" />
                 <span className="text-gray-300">|</span>
               </>
             )}
 
-            {userInfo?.id ? (
+            {user?.id ? (
               <LinkedText
                 url="/api/login/logout"
                 context="로그아웃"

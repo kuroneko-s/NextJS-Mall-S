@@ -1,30 +1,19 @@
 import { useState } from "react";
 import { appendCookie, removeCookieValue, removeCookieAll } from "./cookies";
 import { COOKIE_NAME } from "@lib/common";
-import { UserInfo } from "./interface/tables";
-
-export interface ContextApiProps {
-  baskets?: string[];
-  appendBooks?: appendItemFn;
-  removeBook?: removeItemFn;
-  removeAll?: removeAllFn;
-  userInfo?: UserInfo;
-}
-
-type appendItemFn = (...books: string[]) => void;
-type removeItemFn = (item: string) => void;
-type removeAllFn = () => void;
-
-export default function useBaskets(): [
-  string[],
+import { Socket } from "net";
+import {
   appendItemFn,
   removeItemFn,
-  removeAllFn
-] {
-  const [baskets, setBaskets] = useState<string[]>([]);
+  useGlobalStoreResult,
+} from "./interface/store";
+
+export default function useGlobalStore(): useGlobalStoreResult {
+  const [items, setItems] = useState<string[]>([]);
+  const [websocket, setWebsocket] = useState<Socket[]>([]);
 
   const appendBooks: appendItemFn = (...books: string[]) => {
-    setBaskets([...baskets, ...books]);
+    setItems((cur) => [...cur, ...books]);
 
     for (const target of books) {
       appendCookie({ cookieName: COOKIE_NAME, value: target });
@@ -32,17 +21,28 @@ export default function useBaskets(): [
   };
 
   const removeBook: removeItemFn = (item: string) => {
-    const index = baskets.indexOf(item);
+    const index = items.indexOf(item);
     if (index < 0) return;
 
-    setBaskets([...baskets.slice(0, index), ...baskets.slice(index + 1)]);
+    setItems((cur) => [...cur.slice(0, index), ...cur.slice(index + 1)]);
     removeCookieValue({ cookieName: COOKIE_NAME, value: item });
   };
 
-  const removeAll = () => {
-    setBaskets([]);
+  const removeItemsAll = () => {
+    setItems([]);
     removeCookieAll(COOKIE_NAME);
   };
 
-  return [baskets, appendBooks, removeBook, removeAll];
+  const setWebSocket = (websocket: Socket): void => {
+    setWebsocket((cur) => [...cur, websocket]);
+  };
+
+  return [
+    items,
+    appendBooks,
+    removeBook,
+    removeItemsAll,
+    websocket,
+    setWebSocket,
+  ];
 }

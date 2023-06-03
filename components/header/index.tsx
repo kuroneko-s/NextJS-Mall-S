@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Menu from "@components/menu";
 import { Container, ContentsContainer } from "styles/common";
 import { GlobalContext } from "pages/_app";
-import LinkedText from "@components/common/LinkedText";
+import LinkedText from "@components/atoms/LinkedText";
 
 const Header = () => {
   const { user } = useContext(GlobalContext);

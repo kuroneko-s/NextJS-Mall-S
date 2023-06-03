@@ -10,7 +10,6 @@ export default function NotificationSvg() {
       stroke="currentColor"
       width={36}
       height={36}
-      className="w-8 h-8 cursor-pointer"
     >
       <path
         strokeLinecap="round"

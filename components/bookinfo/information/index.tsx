@@ -28,7 +28,7 @@ import {
   Translator,
   Writer,
 } from "@prisma/client";
-import LinkedText from "@components/common/LinkedText";
+import LinkedText from "@components/atoms/LinkedText";
 import RightArrow from "@svg/RightArrow";
 import Modal from "@components/common/Modal";
 import { useRouter } from "next/router";

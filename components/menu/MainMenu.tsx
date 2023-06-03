@@ -7,38 +7,31 @@ import React from "react";
 import Logo from "@components/common/Logo";
 import { Container, ContentsContainer } from "styles/common";
 import Search from "./Search";
+import LinkedText from "@components/atoms/LinkedText";
 
 export default function MainMenu() {
   return (
     <Container>
       <ContentsContainer className="flex justify-between items-center">
         <Logo />
-        <div className="flex space-x-5 items-center">
+        <div className="flex space-x-2 items-center">
           <Search />
 
-          <Link href={"/notification"}>
-            <a>
-              <NotificationSvg />
-            </a>
-          </Link>
+          <LinkedText url="/notification" size="md">
+            <NotificationSvg />
+          </LinkedText>
 
-          <Link href={"/cart"}>
-            <a>
-              <CartSvg />
-            </a>
-          </Link>
+          <LinkedText url="/cart" size="md">
+            <CartSvg />
+          </LinkedText>
 
-          <Link href={"/library"}>
-            <a>
-              <LibrarySvg />
-            </a>
-          </Link>
+          <LinkedText url="/library" size="md">
+            <LibrarySvg />
+          </LinkedText>
 
-          <Link href={"/profile"}>
-            <a>
-              <ProfileSvg />
-            </a>
-          </Link>
+          <LinkedText url="/profile" size="md">
+            <ProfileSvg />
+          </LinkedText>
         </div>
       </ContentsContainer>
     </Container>

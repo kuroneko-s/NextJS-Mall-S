@@ -8,7 +8,8 @@ export default function NorticeSvg() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      width={26}
+      height={26}
     >
       <path
         strokeLinecap="round"

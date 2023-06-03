@@ -13,7 +13,6 @@ export default function CartSvg({ width = 36, height = 36 }: CartSvg) {
       stroke="currentColor"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      className="cursor-pointer"
       width={width}
       height={height}
     >

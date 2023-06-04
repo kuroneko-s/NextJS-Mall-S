@@ -4,8 +4,8 @@ import IsLoading from "@components/common/IsLoading";
 import ImageSlider from "../imageSlider";
 import Link from "next/link";
 import { Button, ButtonText } from "./index.style";
-import ImageSliderSix from "../imageSliderSix";
-import ImageSliderNine from "../imageSliderNine";
+import ImageSliderSix from "../../organisms/imageSliderSix";
+import ImageSliderNine from "../../organisms/imageSliderNine";
 
 export default function Recommendation() {
   const { queryResult: bookListQueryResult, isLoading: bookListIsLoading } =
@@ -28,11 +28,17 @@ export default function Recommendation() {
           </div>
 
           {bookListQueryResult?.data !== undefined ? (
-            <ImageSliderSix bookList={bookListQueryResult?.data} />
+            <ImageSliderSix
+              bookList={bookListQueryResult?.data}
+              title="신간 서적"
+            />
           ) : null}
 
           {bookListQueryResult?.data !== undefined ? (
-            <ImageSliderNine list={bookListQueryResult.data} />
+            <ImageSliderNine
+              list={bookListQueryResult.data}
+              title={"지금 많이 읽고있는 책"}
+            />
           ) : null}
         </div>
       )}

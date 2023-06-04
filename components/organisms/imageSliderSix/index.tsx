@@ -6,16 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { ArrowButton } from "./index.style";
+import { SliderOfSixProps } from "./interface";
 
-interface SliderOfSixProps {
-  bookList: BookWithWriter[];
-  title?: string;
-}
-
-export default function ImageSliderSix({
-  bookList,
-  title = "신간 서적",
-}: SliderOfSixProps) {
+export default function ImageSliderSix({ bookList, title }: SliderOfSixProps) {
   const [isFirst, setIsFirst] = useState<boolean>(true);
   const leftArrowHandler = () => {
     setIsFirst((cur) => !cur);
@@ -30,7 +23,7 @@ export default function ImageSliderSix({
       <div className="flex justify-between ">
         <p className="font-bold text-2xl mb-4">{title}</p>
       </div>
-      <div className="relative w-full h-[350px]">
+      <div className="relative w-full h-[330px]">
         <div
           className="absolute top-0 flex space-x-4 w-[200%] h-full transition-all duration-500 ease-in-out"
           style={{
@@ -39,35 +32,31 @@ export default function ImageSliderSix({
         >
           {bookList.slice(0, 12).map((bookInfo, idx) => {
             return (
-              <div key={idx}>
-                <Link href={`/bookInfo/${bookInfo.isbn}`}>
-                  <a>
+              <Link key={idx} href={`/bookInfo/${bookInfo.isbn}`}>
+                <a className="hover:bg-slate-100 rounded-md">
+                  <div className="h-[260px] w-[200px] overflow-hidden rounded-md">
                     <Image
                       src={bookInfo.imagePath}
                       alt={bookInfo.title}
                       height={260}
                       width={200}
                     />
-                  </a>
-                </Link>
-                <Link href={`/bookInfo/${bookInfo.isbn}`}>
-                  <a className="text-gray-800 font-bold">
-                    <p>{bookInfo.title}</p>
-                  </a>
-                </Link>
-                <Link href={`/writer/${bookInfo.writerId}`}>
-                  <a className="text-gray-500 hover:text-gray-400">
-                    <p>{bookInfo.writer.name}</p>
-                  </a>
-                </Link>
-                <div className="flex items-center space-x-1 text-gray-500 text-xs">
-                  <StarSvg
-                    fill={bookInfo.score !== "0" ? "red" : "none"}
-                    stroke={bookInfo.score !== "0" ? "red" : "gray"}
-                  />
-                  <p>{bookInfo.score}</p>
-                </div>
-              </div>
+                  </div>
+                  <p className="text-gray-800 font-bold">{bookInfo.title}</p>
+                  <Link href={`/writer/${bookInfo.writerId}`}>
+                    <a className="text-gray-600 hover:text-gray-400">
+                      <p>{bookInfo.writer.name}</p>
+                    </a>
+                  </Link>
+                  <div className="flex items-center space-x-1 text-gray-500 text-xs">
+                    <StarSvg
+                      fill={bookInfo.score !== "0" ? "red" : "none"}
+                      stroke={bookInfo.score !== "0" ? "red" : "gray"}
+                    />
+                    <p>{bookInfo.score}</p>
+                  </div>
+                </a>
+              </Link>
             );
           })}
         </div>

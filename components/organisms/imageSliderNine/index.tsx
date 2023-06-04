@@ -3,16 +3,12 @@ import { ArrowButton } from "./index.style";
 import Image from "next/image";
 import Link from "next/link";
 import StarSvg from "@svg/Star";
-import { BookWithWriter } from "@lib/interface/db";
 import emptyImg from "@images/empty.jpg";
 import RightCaretArrowSvg from "@svg/RightCaretArrow";
 import LeftCaretArrowSvg from "@svg/LeftCaretArrow";
+import { ImageSliderNineProps } from "./interface";
 
-interface ImageSliderNineProps {
-  list: BookWithWriter[];
-}
-
-export default function ImageSliderNine({ list }: ImageSliderNineProps) {
+export default function ImageSliderNine({ list, title }: ImageSliderNineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [isFirst, setIsFirst] = useState<boolean>(true);
@@ -30,7 +26,7 @@ export default function ImageSliderNine({ list }: ImageSliderNineProps) {
       ref={containerRef}
     >
       <div>
-        <p className="font-bold text-2xl mb-4">지금 많이 읽고 있는 작품</p>
+        <p className="font-bold text-2xl mb-4">{title}</p>
       </div>
       <div className="relative h-[480px]">
         <div
@@ -45,42 +41,41 @@ export default function ImageSliderNine({ list }: ImageSliderNineProps) {
               <div key={idx} className="space-y-2 w-full">
                 {[idx, idx + 1, idx + 2].map((v, idx) => {
                   return (
-                    <div
-                      key={idx}
-                      className="flex justify-between items-center"
-                    >
-                      <Link href={`/bookInfo/${list[v].isbn}`}>
-                        <a>
+                    <Link key={idx} href={`/bookInfo/${list[v].isbn}`}>
+                      <a className="flex justify-between items-center hover:bg-slate-100 mr-2 rounded-md">
+                        <div className="rounded-md overflow-hidden h-[160px] w-[120px]">
                           <Image
                             src={list[v].imagePath ?? emptyImg}
                             alt={list[v].title}
-                            width={110}
-                            height={140}
+                            width={120}
+                            height={160}
                           />
-                        </a>
-                      </Link>
-
-                      <p className="flex-grow-[0.5] text-center">{v + 1}</p>
-                      <div className="flex-grow text-start">
-                        <Link href={`/bookInfo/${list[v].isbn}`}>
-                          <a className="text-gray-800 font-bold">
-                            <p>{list[v].title}</p>
-                          </a>
-                        </Link>
-                        <Link href={`/writer/${list[v].writerId}`}>
-                          <a className="text-gray-500 hover:text-gray-400">
-                            <p>{list[v].writer.name}</p>
-                          </a>
-                        </Link>
-                        <div className="flex items-center space-x-1 text-gray-500 text-xs">
-                          <StarSvg
-                            fill={list[v].score !== "0" ? "red" : "none"}
-                            stroke={list[v].score !== "0" ? "red" : "gray"}
-                          />
-                          <p>{list[v].score}</p>
                         </div>
-                      </div>
-                    </div>
+
+                        <p className="flex-grow-[0.5] text-center font-bold">
+                          {v + 1}
+                        </p>
+                        <div className="flex-grow text-start">
+                          <Link href={`/bookInfo/${list[v].isbn}`}>
+                            <a className="text-gray-800 font-bold">
+                              <p>{list[v].title}</p>
+                            </a>
+                          </Link>
+                          <Link href={`/writer/${list[v].writerId}`}>
+                            <a className="text-gray-600 hover:text-gray-400">
+                              <p>{list[v].writer.name}</p>
+                            </a>
+                          </Link>
+                          <div className="flex items-center space-x-1 text-gray-500 text-xs">
+                            <StarSvg
+                              fill={list[v].score !== "0" ? "red" : "none"}
+                              stroke={list[v].score !== "0" ? "red" : "gray"}
+                            />
+                            <p>{list[v].score}</p>
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
                   );
                 })}
               </div>

@@ -1,4 +1,4 @@
-import React, { ForwardedRef } from "react";
+import React from "react";
 import { SearchResultListProps } from "./interface";
 import Link from "next/link";
 import Image from "next/image";

@@ -7,12 +7,12 @@ import {
   Container,
   LeftContainer,
 } from "./bookInfo.style";
-import IsLoading from "@components/common/IsLoading";
-import Description from "@components/bookinfo/description";
-import Information from "@components/bookinfo/information";
-import Review from "@components/bookinfo/Review";
 import Link from "next/link";
 import Head from "next/head";
+import IsLoading from "@components/molecules/IsLoading";
+import Information from "@components/organisms/bookinfo/information";
+import Description from "@components/organisms/bookinfo/description";
+import Review from "@components/organisms/bookinfo/Review";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);

@@ -1,4 +1,4 @@
-import HomeSvg from "@svg/Home";
+import HomeSvg from "@components/atoms/svg/Home";
 import Head from "next/head";
 import Link from "next/link";
 import { GlobalContext } from "pages/_app";

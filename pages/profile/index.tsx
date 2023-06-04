@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { Container, ContentsContainer } from "styles/common";
 import empty from "@images/empty.jpg";
-import Book from "@svg/Book";
+import Book from "@components/atoms/svg/Book";
 import { GlobalContext } from "pages/_app";
 import Head from "next/head";
 

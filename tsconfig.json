@@ -18,7 +18,7 @@
     "paths": {
       "@lib/*": ["lib/*"],
       "@components/*": ["components/*"],
-      "@svg/*": ["svg/*"],
+      "@svg/*": ["components/atoms/svg/*"],
       "@images/*": ["images/*"]
     }
   },

@@ -1,5 +1,5 @@
-import CartSvg from "@svg/Cart";
-import HomeSvg from "@svg/Home";
+import CartSvg from "@components/atoms/svg/Cart";
+import HomeSvg from "@components/atoms/svg/Home";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";

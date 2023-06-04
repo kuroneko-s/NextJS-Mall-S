@@ -2,8 +2,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Container, ContentsContainer } from "styles/common";
 import Head from "next/head";
 import { cls } from "@lib/client/common";
-import Recommendation from "@components/main/recommendation";
-import Event from "@components/main/event";
+import Recommendation from "@components/organisms/main/recommendation";
+import Event from "@components/organisms/main/event";
 
 interface IndexProps {
   setSwapping: Dispatch<SetStateAction<"recommendation" | "event">>;

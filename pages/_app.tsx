@@ -3,15 +3,15 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { createContext, useEffect, useState } from "react";
 import useGlobalStore from "@lib/contextApi";
-import Layout from "@components/layout";
-import Header from "@components/header";
-import Footer from "@components/footer";
 import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
 import App from "next/app";
 import { User } from "@prisma/client";
 import useSocket from "@lib/hooks/useSocket";
 import { ContextApiProps } from "@lib/interface/store";
+import Layout from "@components/organisms/layout";
+import Header from "@components/organisms/header";
+import Footer from "@components/organisms/footer";
 
 // contextAPI Store
 export const GlobalContext = createContext<ContextApiProps>({});

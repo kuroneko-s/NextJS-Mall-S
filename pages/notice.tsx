@@ -1,5 +1,5 @@
-import CartSvg from "@svg/Cart";
-import HomeSvg from "@svg/Home";
+import CartSvg from "@components/atoms/svg/Cart";
+import HomeSvg from "@components/atoms/svg/Home";
 import Link from "next/link";
 import React from "react";
 import { Container, ContentsContainer } from "styles/common";

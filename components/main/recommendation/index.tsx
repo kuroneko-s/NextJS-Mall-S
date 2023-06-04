@@ -4,8 +4,8 @@ import IsLoading from "@components/common/IsLoading";
 import ImageSlider from "../imageSlider";
 import Link from "next/link";
 import { Button, ButtonText } from "./index.style";
-import ImageSliderSix from "../../organisms/imageSliderSix";
-import ImageSliderNine from "../../organisms/imageSliderNine";
+import ImageSliderSix from "@components/_organisms/imageSliderSix";
+import ImageSliderNine from "@components/_organisms/imageSliderNine";
 
 export default function Recommendation() {
   const { queryResult: bookListQueryResult, isLoading: bookListIsLoading } =

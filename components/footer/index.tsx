@@ -4,7 +4,7 @@ import NorticeSvg from "@svg/Nortice";
 import { Container, ContentsContainer } from "styles/common";
 import Link from "next/link";
 import GitHub from "@svg/GItHub";
-import LinkedText from "@components/atoms/LinkedText";
+import LinkedText from "@components/_atoms/LinkedText";
 
 export default function Footer() {
   return (

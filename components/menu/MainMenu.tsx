@@ -7,7 +7,7 @@ import React from "react";
 import Logo from "@components/common/Logo";
 import { Container, ContentsContainer } from "styles/common";
 import Search from "./Search";
-import LinkedText from "@components/atoms/LinkedText";
+import LinkedText from "@components/_atoms/LinkedText";
 
 export default function MainMenu() {
   return (

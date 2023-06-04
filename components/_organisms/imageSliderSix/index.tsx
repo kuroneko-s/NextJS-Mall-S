@@ -1,4 +1,3 @@
-import { BookWithWriter } from "@lib/interface/db";
 import LeftCaretArrowSvg from "@svg/LeftCaretArrow";
 import RightCaretArrowSvg from "@svg/RightCaretArrow";
 import StarSvg from "@svg/Star";

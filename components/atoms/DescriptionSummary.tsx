@@ -1,13 +1,15 @@
-import { cls } from "@lib/client/common";
 import React, { useState } from "react";
-import { ContentsTitle } from "../index.style";
+import { cls } from "@lib/client/common";
 
-interface DescriptionProps {
+interface DescriptionSummaryProps {
   title: string;
   description: string;
 }
 
-export default function Contents({ title, description }: DescriptionProps) {
+export default function DescriptionSummary({
+  title,
+  description,
+}: DescriptionSummaryProps) {
   const [show, setShow] = useState<boolean>(false);
 
   const clickHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -16,12 +18,12 @@ export default function Contents({ title, description }: DescriptionProps) {
 
   return (
     <div className="cursor-pointer" onClick={clickHandler}>
-      <ContentsTitle>{title}</ContentsTitle>
+      <p className="text-xl font-bold text-gray-800 pb-2 border-b-2 mb-2 border-gray-500">
+        {title}
+      </p>
       <div className={cls("overflow-hidden", show ? "h-auto" : "h-[150px]")}>
         <div className="bg-slate-200 h-[800px]">Image~</div>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((v) => (
-          <p key={v}>description: {description}</p>
-        ))}
+        <p>{description}</p>
       </div>
       <div>
         <p className="text-right">접기</p>

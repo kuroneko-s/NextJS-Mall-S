@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  ContentsTitle,
-  EmptyScoreBox,
-  EmptyStar,
-  ScoreBox,
-  Star,
-  StarBox,
-  StarScoreBox,
-} from "./index.style";
+import { ContentsTitle, EmptyStar, Star, StarBox } from "./index.style";
 import StarSvg from "@components/atoms/svg/Star";
 import { Book } from "@prisma/client";
+import ReviewScore from "@components/molecules/reviewScore";
 
 interface ReviewProps {
   setClickedScore: React.Dispatch<React.SetStateAction<number>>;
@@ -104,15 +97,11 @@ export default function Review({
 
           {reviewScoreSampleArr.map((score, index) => {
             return (
-              <div className="flex items-center space-x-1 text-sm" key={index}>
-                <StarSvg fill="gray" stroke="gray" />
-                <span>{5 - index}</span>
-                <StarScoreBox className="space-x-1">
-                  <EmptyScoreBox>
-                    <ScoreBox w={(+score / reviewTotalCntSample) * 100} />
-                  </EmptyScoreBox>
-                </StarScoreBox>
-              </div>
+              <ReviewScore
+                key={index}
+                index={5 - index}
+                width={(+score / reviewTotalCntSample) * 100}
+              />
             );
           })}
         </div>

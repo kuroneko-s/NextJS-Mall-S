@@ -25,14 +25,6 @@ export const LeftContainer = styled.div`
   flex: 1 1 0%;
 `;
 
-export const BookTopInfoBox = styled.div`
-  display: flex;
-`;
-
-export const ImageBox = styled.div`
-  min-width: 200px;
-`;
-
 export const BookInfoBox = styled.div`
   display: flex;
   flex-direction: column;

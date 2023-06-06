@@ -10,9 +10,9 @@ import {
 import Link from "next/link";
 import Head from "next/head";
 import IsLoading from "@components/molecules/IsLoading";
-import Information from "@components/organisms/bookinfo/information";
-import Description from "@components/organisms/bookinfo/description";
-import Review from "@components/organisms/bookinfo/Review";
+import Information from "@components/templates/bookinfo/information";
+import Description from "@components/templates/bookinfo/description";
+import Review from "@components/templates/bookinfo/Review";
 
 export default function BookInfoIndex() {
   const [profileSelect, setProfileSelect] = useState<boolean>(true);

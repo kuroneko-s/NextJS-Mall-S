@@ -11,7 +11,7 @@ import { Input, Label, ErrorMessage } from "./index.style";
 import Head from "next/head";
 import { server } from "@lib/common";
 import { useRouter } from "next/router";
-import Modal from "@components/common/Modal";
+import Modal from "@components/molecules/Modal";
 
 interface EmailLoginProps {
   email: string;

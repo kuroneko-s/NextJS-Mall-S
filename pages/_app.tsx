@@ -9,9 +9,9 @@ import App from "next/app";
 import { User } from "@prisma/client";
 import useSocket from "@lib/hooks/useSocket";
 import { ContextApiProps } from "@lib/interface/store";
-import Layout from "@components/organisms/layout";
-import Header from "@components/organisms/header";
-import Footer from "@components/organisms/footer";
+import Layout from "@components/templates/layout";
+import Header from "@components/templates/header";
+import Footer from "@components/templates/footer";
 
 // contextAPI Store
 export const GlobalContext = createContext<ContextApiProps>({});

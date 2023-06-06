@@ -1,8 +1,6 @@
 import Image from "next/image";
 import {
   BookInfoBox,
-  BookTopInfoBox,
-  ImageBox,
   BookTitle,
   ScoreText,
   WrtierInfoBox,
@@ -33,6 +31,7 @@ import { server } from "@lib/common";
 import LinkedText from "@components/atoms/LinkedText";
 import RightArrow from "@components/atoms/svg/RightArrow";
 import Modal from "@components/molecules/Modal";
+import emptyImg from "@images/empty.jpg";
 
 export interface InformationProps {
   bookInfo?: Book;
@@ -81,18 +80,21 @@ export default function Information({
 
   return (
     <>
-      <BookTopInfoBox>
-        <ImageBox>
-          <Image
-            src={"/book_1.jpg"}
-            alt={bookInfo?.title ?? ""}
-            quality="100"
-            height={280}
-            width={200}
-          />
-        </ImageBox>
+      <div className="flex">
+        <div>
+          <div className="w-[200px] h-[280px] rounded-md overflow-hidden">
+            <Image
+              src={bookInfo?.imagePath ?? emptyImg}
+              alt={bookInfo?.title ?? ""}
+              quality="100"
+              height={280}
+              width={200}
+            />
+          </div>
+        </div>
 
-        <BookInfoBox>
+        {/* TODO : 카테고리 관련 페이지 작성 필요 */}
+        <div className="flex flex-col items-start flex-1 pl-12">
           <div>
             {categoryParentName !== "#" ? (
               <div className="flex justify-center items-center space-x-1">
@@ -117,7 +119,7 @@ export default function Information({
             )}
           </div>
 
-          <BookTitle>{bookInfo?.title}</BookTitle>
+          <div className="font-extrabold text-3xl">{bookInfo?.title}</div>
           <StarBox className="space-x-1">
             <EmptyStar>
               <Star w={+(bookInfo?.score ?? 0) * 20} />
@@ -183,21 +185,21 @@ export default function Information({
 
           <div className="flex flex-row w-full mt-3 space-x-4 justify-end">
             <div
-              className="flex justify-center items-center cursor-pointer border-[1px] text-gray-900 p-3 rounded-md shadow-md font-bold"
+              className="flex justify-center items-center cursor-pointer border-[1px] text-gray-900 p-3 rounded-md shadow-md font-bold hover:bg-slate-100"
               onClick={cartClickHandler}
             >
               <CartSvg width={24} height={24} />
             </div>
 
             <div
-              className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 py-3 px-8 rounded-md shadow-md font-bold"
+              className="flex items-center justify-center cursor-pointer bg-blue-500 text-gray-50 py-3 px-8 rounded-md shadow-md font-bold hover:bg-blue-600"
               onClick={buyClickHandler}
             >
-              구매버튼(바로 결제화면으로 이동)
+              구매
             </div>
           </div>
-        </BookInfoBox>
-      </BookTopInfoBox>
+        </div>
+      </div>
       <div className="border-gray-150 border-4 py-4 px-10 flex space-x-8 text-sm text-gray-800">
         <div className="flex flex-col">
           <p>

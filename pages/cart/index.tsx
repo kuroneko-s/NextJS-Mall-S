@@ -4,13 +4,13 @@ import kakaoPay from "@lib/client/kakaoPay";
 import { GlobalContext } from "pages/_app";
 import React, { useEffect, useContext, useRef } from "react";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
-import IsLoading from "@components/common/IsLoading";
-import BookItem from "@components/cart/BookItem";
 import { Container, ContentsContainer } from "styles/common";
 import kakaoPayImg from "@images/kakao_pay.png";
 import Image from "next/image";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import IsLoading from "@components/molecules/IsLoading";
+import BookItem from "@components/templates/cart/BookItem";
 
 export default function Cart() {
   const { items, appendItems, removeItemsAll } = useContext(GlobalContext);

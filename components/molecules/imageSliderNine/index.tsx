@@ -1,9 +1,5 @@
 import React, { useRef, useState } from "react";
 import { ArrowButton } from "./index.style";
-import Image from "next/image";
-import Link from "next/link";
-import StarSvg from "@components/atoms/svg/Star";
-import emptyImg from "@images/empty.jpg";
 import RightCaretArrowSvg from "@components/atoms/svg/RightCaretArrow";
 import LeftCaretArrowSvg from "@components/atoms/svg/LeftCaretArrow";
 import { ImageSliderNineProps } from "./interface";

@@ -1,4 +1,3 @@
-import SliderOfSix from "@components/common/SliderOfSix";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -6,6 +5,7 @@ import React from "react";
 import { Container, ContentsContainer } from "styles/common";
 import Image from "next/image";
 import Link from "next/link";
+import ImageSliderSix from "@components/molecules/imageSliderSix";
 
 export default function Event() {
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function Event() {
         </div>
         <div>
           {bookListQueryResult?.data !== undefined ? (
-            <SliderOfSix
+            <ImageSliderSix
               bookList={bookListQueryResult.data.Books}
               title="이벤트 추천작!"
             />

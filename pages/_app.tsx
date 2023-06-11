@@ -5,13 +5,13 @@ import { createContext, useEffect, useState } from "react";
 import useGlobalStore from "@lib/contextApi";
 import { getIronSession } from "iron-session";
 import { objectIsEmpty } from "@lib/common";
-import App from "next/app";
 import { User } from "@prisma/client";
 import useSocket from "@lib/hooks/useSocket";
 import { ContextApiProps } from "@lib/interface/store";
 import Layout from "@components/templates/layout";
 import Header from "@components/templates/header";
 import Footer from "@components/templates/footer";
+import { NextPageContext } from "next";
 
 // contextAPI Store
 export const GlobalContext = createContext<ContextApiProps>({});
@@ -94,14 +94,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-// life cycle (제일 먼저 실행됨.)
-MyApp.getInitialProps = async (appContext: any) => {
-  const appProps = await App.getInitialProps(appContext);
-
-  const {
-    ctx: { req, res },
-  } = appContext;
-
+/**
+ * _app.tsx에서 getInitialProps를 사용하면 전역 SSR로 동작된다.
+ * 그렇게되면 Automatic Static Optimization이 동작하지 않게된다. (SSR이 없으면 nestJS에서 자동으로 최적화해서 페이지를 HTML로 만들어주는 기능)
+ * 그래서 nestJS 9.3버전 이후에는 getInitialProps가 아닌 getStaticProps / getServerSideProps를 사용하도록 SSR/SSG를 분리해줬다.
+ * 그래서 전역적인 데이터 패치 기능을 지원하지 않게 됬다.
+ * NestJS 9.3버전 이후로는 추천하지 않는 방법
+ */
+// @ts-ignore
+MyApp.getInitialProps = async ({ ctx: { req, res } }: NextPageContext) => {
   // Session 값 가져오기. (SSR)
   const cookieOptions = {
     cookieName: "shop-user-info",
@@ -122,7 +123,7 @@ MyApp.getInitialProps = async (appContext: any) => {
     }
   }
 
-  return { ...appProps, pageProps: { ...appProps.pageProps, loginUser } };
+  return { pageProps: loginUser };
 };
 
 // Session 값 가져오기. (SSR)

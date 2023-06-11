@@ -5,6 +5,7 @@ import {
   Artist,
   Book,
   BookSeries,
+  BuyHistory,
   Category,
   Event,
   Publisher,
@@ -157,6 +158,13 @@ class MySqlUtil {
     return customUseQuery<QueryResult<EventInfo>>({
       path: `${COMMON_URL.getEventInfo}`,
       args: { id },
+    });
+  }
+
+  getBuyHistory(startDt: string, endDt: string) {
+    return customUseQuery<QueryResult<BuyHistory>>({
+      path: `${COMMON_URL.getBuyHistory}`,
+      args: { startDt, endDt },
     });
   }
 }

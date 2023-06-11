@@ -4,7 +4,7 @@ import { Container, ContentsContainer } from "styles/common";
 import Image from "next/image";
 import Link from "next/link";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
-import IsLoading from "@components/common/IsLoading";
+import IsLoading from "@components/molecules/IsLoading";
 
 export default function Event() {
   const { queryResult: eventListQueryResult, isLoading: eventListIsLoading } =

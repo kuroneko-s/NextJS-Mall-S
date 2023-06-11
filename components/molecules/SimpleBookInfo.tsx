@@ -31,7 +31,7 @@ export default function SimpleBookInfo({
   isRotate,
 }: SimpleBookInfoProps) {
   return (
-    <Link href={`/bookInfo/${isbn}`}>
+    <Link href={`/bookInfo/${isbn}`} passHref={true}>
       <a
         className={cls(
           "hover:bg-slate-100 rounded-md",
@@ -58,7 +58,7 @@ export default function SimpleBookInfo({
             <p className="flex-grow-[0.5] text-center font-bold">{index}</p>
             <div className="flex-grow text-start">
               <p className="text-gray-800 font-bold">{title}</p>
-              <Link href={`/writer/${writerId}`}>
+              <Link href={`/writer/${writerId}`} passHref={true}>
                 <a className="text-gray-600 hover:text-gray-400">
                   <p>{writerName}</p>
                 </a>
@@ -75,7 +75,7 @@ export default function SimpleBookInfo({
         ) : (
           <>
             <p className="text-gray-800 font-bold">{title}</p>
-            <Link href={`/writer/${writerId}`}>
+            <Link href={`/writer/${writerId}`} passHref={true}>
               <a className="text-gray-600 hover:text-gray-400">
                 <p>{writerName}</p>
               </a>

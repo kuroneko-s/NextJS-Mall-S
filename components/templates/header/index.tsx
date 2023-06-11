@@ -19,6 +19,13 @@ const Header = () => {
               </>
             )}
 
+            {user?.role === "ADMIN" ? (
+              <>
+                <LinkedText url="/admin" context="관리자 페이지" size="sm" />
+                <span className="text-gray-300">|</span>
+              </>
+            ) : null}
+
             {user?.id ? (
               <LinkedText
                 url="/api/login/logout"

@@ -5,6 +5,7 @@ import { getIronSession } from "iron-session/edge";
 // This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
   console.info("middleware run");
+  const reqPathName = req.nextUrl.pathname;
 
   // return new Response("rwqrqrwq", {status: 403});
 
@@ -16,8 +17,14 @@ export async function middleware(req: NextRequest) {
   });
 
   const { user } = session;
-  if (user?.role == undefined) {
+
+  if (user?.role === undefined || user.role === null) {
     return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // TODO : query로 접근 불가 메시지 띄워줄까 ?
+  if (reqPathName.startsWith("/admin") && user.role === "USER") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 }
 

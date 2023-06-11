@@ -117,7 +117,7 @@ MyApp.getInitialProps = async (appContext: any) => {
       loginUser = {
         id: result?.user?.id,
         name: result?.user?.name,
-        rule: result?.user?.role,
+        role: result?.user?.role,
       };
     }
   }

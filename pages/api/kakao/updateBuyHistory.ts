@@ -17,7 +17,7 @@ export default async function handler(
   try {
     buyHistory = await prismaClient.buyHistory.update({
       where: {
-        id: body.id,
+        id: Number(body.id),
       },
       data: body.data,
     });

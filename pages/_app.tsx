@@ -123,7 +123,11 @@ MyApp.getInitialProps = async ({ ctx: { req, res } }: NextPageContext) => {
     }
   }
 
-  return { pageProps: loginUser };
+  return {
+    pageProps: {
+      loginUser,
+    },
+  };
 };
 
 // Session 값 가져오기. (SSR)

@@ -3,11 +3,8 @@ import { Container, ContentsContainer } from "styles/common";
 import { GlobalContext } from "pages/_app";
 import LinkedText from "@components/atoms/LinkedText";
 import Menu from "../menu";
-import { getIronSession } from "iron-session";
-import { objectIsEmpty } from "@lib/common";
 
-const Header = (props: any) => {
-  console.log("🚀 ~ file: index.tsx:10 ~ Header ~ prosp:", props);
+const Header = () => {
   const { user } = useContext(GlobalContext);
 
   return (
@@ -45,30 +42,5 @@ const Header = (props: any) => {
     </>
   );
 };
-
-export async function getServerSideProps({ req, res }: any) {
-  const cookieOptions = {
-    cookieName: "shop-user-info",
-    password: process.env.IRON_PASSWORD!, // complex_password_at_least_32_characters_long
-  };
-
-  const result = await getIronSession(req, res, cookieOptions);
-  let loginUser = {};
-  console.log("RUN");
-
-  if (!objectIsEmpty(result)) {
-    console.log("RUN");
-    loginUser = {
-      id: result?.user?.id,
-      name: result?.user?.name,
-    };
-  }
-
-  return {
-    props: {
-      loginUser,
-    },
-  };
-}
 
 export default Header;

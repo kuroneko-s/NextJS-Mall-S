@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: true, // 코드 압축 암호화
   env: {
     KAKAO_REDIRECT_URL: process.env.KAKAO_REDIRECT_URL,
     KAKAO_API_KEY: process.env.KAKAO_API_KEY,

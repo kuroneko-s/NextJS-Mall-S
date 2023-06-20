@@ -10,25 +10,23 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { Container, ContentsContainer } from "styles/common";
-import { CalendarWrapper, Wrapper } from "./index.style";
+import { Wrapper } from "./index.style";
 import { GlobalContext } from "pages/_app";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
-import Calendar from "react-calendar";
+import Calendar from "@components/atoms/Calendar";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const Dashboard: NextPage = () => {
-  const [startDt, setStartDt] = useState<string>("");
-  const [endDt, setEndDt] = useState<string>("");
+  const [startDt, setStartDt] = useState<string>(""); // yyyy-mm-dd
+  const [endDt, setEndDt] = useState<string>(""); // yyyy-mm-dd
 
   // Get 구매 이력 List (일, 주, 월, 연 각각 조회.)
-  const { queryResult: buyHistoryResult, isLoading } = mySqlUtil.getBuyHistory(
-    startDt,
-    endDt
-  );
-  console.log("🚀 ~ file: index.tsx:30 ~ buyHistoryResult:", buyHistoryResult);
+  const { queryResult: buyHistoryResult, isLoading } =
+    mySqlUtil.getBuyHistoryList(startDt, endDt);
+
   /* new Date().getFullYear()
   new Date().getMonth() + 1
   new Date().getDate() */
@@ -76,41 +74,6 @@ const Dashboard: NextPage = () => {
     ],
   };
 
-  [
-    {
-      id: 2,
-      userId: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
-      aid: "A48516010dc40ec99af6",
-      cid: "TC0ONETIME",
-      tid: "T48515f20dc40ec99af5",
-      paymentType: "MONEY",
-      partnerOrderId: "RIDI0CLONEITEMS4",
-      partnerUserId:
-        "RIDI0CLONEUSERvRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
-      itemName: "book title 9",
-      itemCode: "4",
-      quantity: 1,
-      totalAmount: 100900,
-      vatAmount: 9173,
-      redirectMobile:
-        "https://online-pay.kakao.com/mockup/v1/22f6eda08bf4ee2616610e8d784030e1bcb04fed912938c5fe0f362c3572adf8/mInfo",
-      redirectApp:
-        "https://online-pay.kakao.com/mockup/v1/22f6eda08bf4ee2616610e8d784030e1bcb04fed912938c5fe0f362c3572adf8/aInfo",
-      redirectPc:
-        "https://online-pay.kakao.com/mockup/v1/22f6eda08bf4ee2616610e8d784030e1bcb04fed912938c5fe0f362c3572adf8/info",
-      success: true,
-      errorCode: null,
-      errorMsg: null,
-      paymentCreated: "2023-06-11T09:31:46",
-      paymentApproved: "2023-06-11T09:32:05",
-      expirationPeriod: "2023-06-11T09:31:46",
-      createUser: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
-      createDt: "2023-06-11T00:31:47.491Z",
-      updateUser: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
-      updateDt: "2023-06-11T00:32:06.915Z",
-    },
-  ];
-
   const series = [
     {
       name: "Website Blog",
@@ -157,24 +120,19 @@ const Dashboard: NextPage = () => {
     console.log("x changed to", latest);
   }); */
 
-  const [value, onChange] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [startDateShow, setStartDateShow] = useState<boolean>(false);
 
   const { user } = useContext(GlobalContext);
 
   return (
     <Container>
-      <ContentsContainer className="max-h-[75vh]">
+      <ContentsContainer className="">
         <h1>관리자 ID : {user?.id}</h1>
         <h1>관리자: {user?.name}</h1>
         <hr className="mt-2 pb-4" />
 
-        <CalendarWrapper className="shadow-lg">
-          <Calendar
-            locale="KR"
-            onChange={(value, event) => console.log(value)}
-            value={value}
-          />
-        </CalendarWrapper>
+        <Calendar value={startDate} setter={setStartDate} />
 
         <Wrapper className="shadow-lg">
           <h1>그래프</h1>

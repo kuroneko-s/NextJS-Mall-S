@@ -16,5 +16,5 @@ export const COMMON_URL = {
   getPublisherInfo: "/api/db/getPublisherInfo",
   getEventList: "/api/db/getEventList",
   getEventInfo: "/api/db/getEventInfo",
-  getBuyHistory: "/api/db/getBuyHistory",
+  getBuyHistoryList: "/api/db/getBuyHistoryList",
 };

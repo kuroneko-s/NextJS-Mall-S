@@ -14,6 +14,9 @@ export const Wrapper = styled.div`
 
 export const CalendarWrapper = styled.div`
   width: 340px;
+  background-color: white;
+  position: fixed;
+  z-index: 99;
 
   .react-calendar__month-view__weekdays {
     text-align: center;

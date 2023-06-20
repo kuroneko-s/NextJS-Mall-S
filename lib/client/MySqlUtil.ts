@@ -161,9 +161,9 @@ class MySqlUtil {
     });
   }
 
-  getBuyHistory(startDt: string, endDt: string) {
+  getBuyHistoryList(startDt: string, endDt: string) {
     return customUseQuery<QueryResult<BuyHistory>>({
-      path: `${COMMON_URL.getBuyHistory}`,
+      path: `${COMMON_URL.getBuyHistoryList}`,
       args: { startDt, endDt },
     });
   }

@@ -14,7 +14,7 @@ export default function useCustomQuery<T>({
 }: QueryProps) {
   const params = Object.keys(args)
     .map((key) => `${key}=${args[key]}`)
-    .join("");
+    .join("&");
 
   const apiUrl = `${server}${path}?${params}`;
 

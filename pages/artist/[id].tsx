@@ -1,5 +1,5 @@
-import IsLoading from "@components/common/IsLoading";
-import SliderOfSix from "@components/common/SliderOfSix";
+import IsLoading from "@components/molecules/IsLoading";
+import ImageSliderSix from "@components/molecules/imageSliderSix";
 import { mySqlUtil } from "@lib/client/MySqlUtil";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -38,7 +38,7 @@ export default function Writer() {
                 소개: <br /> {result?.data.description}
               </p>
             </div>
-            <SliderOfSix
+            <ImageSliderSix
               title="해당 작가가 쓴 글이에요!"
               bookList={bookResult?.data!.map((book) => {
                 return {

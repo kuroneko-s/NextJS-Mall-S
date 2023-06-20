@@ -13,9 +13,10 @@ export default async function handler(
     });
   }
 
-  const body = JSON.parse(req.body);
+  const startDt = req.query?.startDt?.toString() || "";
+  const endDt = req.query?.endDt?.toString() || "";
 
-  if (!body || body.hasOwnProperty("startDt") || body.hasOwnProperty("endDt")) {
+  if (startDt === "" || endDt === "") {
     return res.json({
       ok: false,
     });
@@ -26,8 +27,12 @@ export default async function handler(
       success: true,
       AND: {
         updateDt: {
-          lte: body.startDt /* new Date("2022-01-30").toISOString() */,
-          gte: body.endDt /* new Date("2022-01-31").toISOString() */,
+          gte: new Date(
+            startDt
+          ).toISOString() /* new Date(startDt).toISOString() */,
+          lte: new Date(
+            endDt
+          ).toISOString() /* new Date(endDt).toISOString() */,
         },
       },
     },

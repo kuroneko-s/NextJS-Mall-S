@@ -14,12 +14,10 @@
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
-    "@wojtekmaj/react-daterange-picker": "^5.2.0",
     "apexcharts": "^3.36.0",
     "bcrypt": "^5.1.0",
     "framer-motion": "^10.12.16",
     "iron-session": "^6.2.1",
-    "mysql2": "^3.2.3",
     "net": "^1.0.2",
     "next": "12.3.1",
     "nodemailer": "^6.9.1",

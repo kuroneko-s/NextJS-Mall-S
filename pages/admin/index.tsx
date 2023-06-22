@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import {
   motion,
   useAnimate,
@@ -12,81 +11,21 @@ import {
 } from "framer-motion";
 import { useContext, useState } from "react";
 import { Container, ContentsContainer } from "styles/common";
-import { Wrapper } from "./index.style";
+import {
+  AdminInfoWrapper,
+  Button,
+  MenuTabWrapper,
+  Wrapper,
+} from "./index.style";
 import { GlobalContext } from "pages/_app";
-import { mySqlUtil } from "@lib/client/MySqlUtil";
-import Calendar from "@components/atoms/Calendar";
+import Chart from "@components/templates/admin/Chart";
+import Book from "@components/templates/admin/Book";
+import Event from "@components/templates/admin/Event";
+import History from "@components/templates/admin/History";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+type TabType = "CHART" | "BOOK" | "EVENT" | "HISTORY";
 
 const Dashboard: NextPage = () => {
-  const [startDt, setStartDt] = useState<string>(""); // yyyy-mm-dd
-  const [endDt, setEndDt] = useState<string>(""); // yyyy-mm-dd
-
-  // Get 구매 이력 List (일, 주, 월, 연 각각 조회.)
-  const { queryResult: buyHistoryResult, isLoading } =
-    mySqlUtil.getBuyHistoryList(startDt, endDt);
-
-  /* new Date().getFullYear()
-  new Date().getMonth() + 1
-  new Date().getDate() */
-
-  const options = {
-    stroke: {
-      width: [0, 4],
-    },
-    title: {
-      text: "Traffic Sources",
-    },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1],
-    },
-    labels: [
-      "01 Jan 2001",
-      "02 Jan 2001",
-      "03 Jan 2001",
-      "04 Jan 2001",
-      "05 Jan 2001",
-      "06 Jan 2001",
-      "07 Jan 2001",
-      "08 Jan 2001",
-      "09 Jan 2001",
-      "10 Jan 2001",
-      "11 Jan 2001",
-      "12 Jan 2001",
-    ],
-    /* xaxis: {
-      type: "datetime",
-    }, */
-    yaxis: [
-      {
-        title: {
-          text: "Website Blog",
-        },
-      },
-      {
-        opposite: true,
-        title: {
-          text: "Social Media",
-        },
-      },
-    ],
-  };
-
-  const series = [
-    {
-      name: "Website Blog",
-      type: "column",
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
-    },
-    {
-      name: "Social Media",
-      type: "line",
-      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16],
-    },
-  ];
-
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
@@ -120,33 +59,53 @@ const Dashboard: NextPage = () => {
     console.log("x changed to", latest);
   }); */
 
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [startDateShow, setStartDateShow] = useState<boolean>(false);
-
+  const [selectedTab, setSelectedTab] = useState<TabType>("CHART");
   const { user } = useContext(GlobalContext);
 
   return (
-    <Container>
-      <ContentsContainer className="">
-        <h1>관리자 ID : {user?.id}</h1>
-        <h1>관리자: {user?.name}</h1>
+    <Container className="h-[74vh] max-h-[74vh]">
+      <ContentsContainer className="flex flex-col">
+        <AdminInfoWrapper className="w-fit self-end flex flex-col items-end">
+          <h1 className="select-none">관리자: {user?.name}</h1>
+          <h1 className="select-none">
+            관리자 ID : {user?.id.substring(0, 10) + "*".repeat(5)}
+          </h1>
+        </AdminInfoWrapper>
+
         <hr className="mt-2 pb-4" />
 
-        <Calendar value={startDate} setter={setStartDate} />
+        <Wrapper className="shadow-md space-y-2">
+          <MenuTabWrapper className="grid grid-cols-4 gap-2 h-14">
+            <Button
+              className={selectedTab === "CHART" ? "active" : ""}
+              onClick={() => setSelectedTab("CHART")}
+            >
+              <span>Chart</span>
+            </Button>
+            <Button
+              className={selectedTab === "BOOK" ? "active" : ""}
+              onClick={() => setSelectedTab("BOOK")}
+            >
+              <span>Book</span>
+            </Button>
+            <Button
+              className={selectedTab === "EVENT" ? "active" : ""}
+              onClick={() => setSelectedTab("EVENT")}
+            >
+              <span>Event</span>
+            </Button>
+            <Button
+              className={selectedTab === "HISTORY" ? "active" : ""}
+              onClick={() => setSelectedTab("HISTORY")}
+            >
+              <span>History</span>
+            </Button>
+          </MenuTabWrapper>
 
-        <Wrapper className="shadow-lg">
-          <h1>그래프</h1>
-          {isLoading ? (
-            <h1>데이터 조회중...</h1>
-          ) : (
-            <Chart
-              options={options}
-              series={series}
-              type="line"
-              width={"100%"}
-              height={600}
-            />
-          )}
+          {selectedTab === "CHART" ? <Chart /> : null}
+          {selectedTab === "BOOK" ? <Book /> : null}
+          {selectedTab === "EVENT" ? <Event /> : null}
+          {selectedTab === "HISTORY" ? <History /> : null}
         </Wrapper>
         {/* <SimpleBox style={{}}>
         {!center ? <Circle layoutId="1" /> : null}
@@ -234,23 +193,6 @@ const Dashboard: NextPage = () => {
       <SimpleBox drag /> */}
       </ContentsContainer>
     </Container>
-  );
-};
-
-const Child = () => {
-  const [open, setOpen] = useState(false);
-  return (
-    <motion.div
-      layout
-      onClick={() => setOpen((cur) => !cur)}
-      style={{
-        height: "300px",
-        width: open ? "200px" : "500px",
-        backgroundColor: "blue",
-        left: "300px",
-        position: "relative",
-      }}
-    ></motion.div>
   );
 };
 

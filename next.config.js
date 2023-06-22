@@ -1,3 +1,4 @@
+// https://han-py.tistory.com/503 설정 설명
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

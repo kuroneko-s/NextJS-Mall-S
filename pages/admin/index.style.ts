@@ -22,3 +22,31 @@ export const CalendarWrapper = styled.div`
     text-align: center;
   }
 `;
+
+export const AdminInfoWrapper = styled.div``;
+
+export const MenuTabWrapper = styled.div``;
+
+export const Button = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 7px;
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  &:hover {
+    background-color: rgba(223, 230, 233, 0.6);
+    color: gray;
+  }
+
+  &.active {
+    span {
+      padding: 6px 12px;
+      color: rgb(59, 130, 246);
+      border-bottom: 2px solid rgb(59, 130, 246);
+    }
+  }
+`;

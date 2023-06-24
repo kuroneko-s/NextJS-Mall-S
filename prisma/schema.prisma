@@ -229,6 +229,12 @@ model User {
   updateDt DateTime @updatedAt
 }
 
+model Date_v {
+  date DateTime @id
+  yyyymmdd String
+  yyyymm String
+}
+
 enum PaymentType {
   CARD
   MONEY

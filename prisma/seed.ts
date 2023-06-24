@@ -3,7 +3,8 @@ import { Category, PrismaClient } from "@prisma/client";
 const prismaClient = new PrismaClient();
 
 async function main() {
-  new Promise((resolve) => {
+  dateViewer();
+  /* new Promise((resolve) => {
     initArtist();
     initCategory();
     initPublisher();
@@ -27,7 +28,7 @@ async function main() {
       initEventAndBook();
       initEventAndCategory();
     });
-  });
+  }); */
 }
 
 function initArtist() {
@@ -300,6 +301,54 @@ async function initBookAndBookSeries() {
         },
       });
     }, 1000);
+  }
+}
+
+async function dateViewer() {
+  const cnt = 365 * 3 + 366;
+  const flagDate = new Date("2023-01-01");
+
+  for (let i = 0; i < cnt; i++) {
+    flagDate.setDate(flagDate.getDate() + i);
+
+    await prismaClient.date_v.upsert({
+      where: {
+        date: flagDate,
+      },
+      update: {
+        yyyymm: `${flagDate.getFullYear()}${
+          flagDate.getMonth() + 1 < 10
+            ? "0" + (flagDate.getMonth() + 1)
+            : flagDate.getMonth()
+        }`,
+        yyyymmdd: `${flagDate.getFullYear()}${
+          flagDate.getMonth() + 1 < 10
+            ? "0" + (flagDate.getMonth() + 1)
+            : flagDate.getMonth()
+        }${
+          flagDate.getDate() < 10
+            ? "0" + flagDate.getDate()
+            : flagDate.getDate()
+        }`,
+      },
+      create: {
+        date: flagDate,
+        yyyymmdd: `${flagDate.getFullYear()}${
+          flagDate.getMonth() + 1 < 10
+            ? "0" + (flagDate.getMonth() + 1)
+            : flagDate.getMonth()
+        }${
+          flagDate.getDate() < 10
+            ? "0" + flagDate.getDate()
+            : flagDate.getDate()
+        }`,
+        yyyymm: `${flagDate.getFullYear()}${
+          flagDate.getMonth() + 1 < 10
+            ? "0" + (flagDate.getMonth() + 1)
+            : flagDate.getMonth()
+        }`,
+      },
+    });
   }
 }
 

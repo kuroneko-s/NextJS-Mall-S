@@ -20,8 +20,24 @@ const CalendarWrapper = styled.div`
     z-index: 99;
   }
 
+  .react-calendar__navigation {
+    text-align: center;
+
+    button:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+
   .react-date-picker__calendar .react-calendar {
     background-color: white;
+  }
+
+  .react-calendar__month-view__weekdays__weekday {
+    text-align: center;
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: gray;
   }
 `;
 

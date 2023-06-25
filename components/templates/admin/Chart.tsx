@@ -72,7 +72,13 @@ export default function Chart() {
       endDate ? dateFormatYYYMMDD(endDate) : ""
     );
   if (buyHistoryAggregationResult?.ok) {
-    const dtList = buyHistoryAggregationResult?.data.map((result) => result.DT);
+    const dtList = buyHistoryAggregationResult?.data.map(
+      (result) =>
+        `${result.DT.substring(0, 4)}년 ${result.DT.substring(
+          4,
+          6
+        )}월 ${result.DT.substring(6)}일`
+    );
     const totalAmountList = buyHistoryAggregationResult?.data.map(
       (result) => result.TOTAL_AMOUNT
     );

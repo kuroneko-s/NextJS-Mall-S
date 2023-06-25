@@ -1,9 +1,16 @@
-import { Category, PrismaClient } from "@prisma/client";
+import { BuyHistory, Category, PrismaClient } from "@prisma/client";
 
 const prismaClient = new PrismaClient();
 
 async function main() {
-  dateViewer();
+  // 날짜 삭제
+  // await prismaClient.date_v.deleteMany({});
+
+  // 날짜 더미 생성
+  // dateViewer();
+
+  buyHistory();
+
   /* new Promise((resolve) => {
     initArtist();
     initCategory();
@@ -306,47 +313,91 @@ async function initBookAndBookSeries() {
 
 async function dateViewer() {
   const cnt = 365 * 3 + 366;
-  const flagDate = new Date("2023-01-01");
 
   for (let i = 0; i < cnt; i++) {
+    const flagDate = new Date("2023-01-01");
     flagDate.setDate(flagDate.getDate() + i);
+
+    const year = flagDate.getFullYear();
+    const month =
+      flagDate.getMonth() + 1 < 10
+        ? "0" + (flagDate.getMonth() + 1)
+        : flagDate.getMonth() + 1;
+    const date =
+      flagDate.getDate() < 10 ? "0" + flagDate.getDate() : flagDate.getDate();
 
     await prismaClient.date_v.upsert({
       where: {
         date: flagDate,
       },
       update: {
-        yyyymm: `${flagDate.getFullYear()}${
-          flagDate.getMonth() + 1 < 10
-            ? "0" + (flagDate.getMonth() + 1)
-            : flagDate.getMonth()
-        }`,
-        yyyymmdd: `${flagDate.getFullYear()}${
-          flagDate.getMonth() + 1 < 10
-            ? "0" + (flagDate.getMonth() + 1)
-            : flagDate.getMonth()
-        }${
-          flagDate.getDate() < 10
-            ? "0" + flagDate.getDate()
-            : flagDate.getDate()
-        }`,
+        yyyymm: `${year}${month}`,
+        yyyymmdd: `${year}${month}${date}`,
       },
       create: {
         date: flagDate,
-        yyyymmdd: `${flagDate.getFullYear()}${
-          flagDate.getMonth() + 1 < 10
-            ? "0" + (flagDate.getMonth() + 1)
-            : flagDate.getMonth()
-        }${
-          flagDate.getDate() < 10
-            ? "0" + flagDate.getDate()
-            : flagDate.getDate()
-        }`,
-        yyyymm: `${flagDate.getFullYear()}${
-          flagDate.getMonth() + 1 < 10
-            ? "0" + (flagDate.getMonth() + 1)
-            : flagDate.getMonth()
-        }`,
+        yyyymmdd: `${year}${month}${date}`,
+        yyyymm: `${year}${month}`,
+      },
+    });
+  }
+}
+
+async function buyHistory() {
+  let user = {
+    userId: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
+    aid: "",
+    cid: "TC0ONETIME",
+    tid: "",
+    paymentType: "MONEY",
+    partnerOrderId: "RIDI0CLONEITEMS5",
+    partnerUserId: "RIDI0CLONEUSERvRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
+    itemName: "",
+    itemCode: "",
+    quantity: 1,
+    totalAmount: 101900,
+    vatAmount: 0,
+    redirectMobile:
+      "https://online-pay.kakao.com/mockup/v1/3624a5bbce9b6eeda60a20e1115b8bfc74f645edc98209d64cdd6780a6f28ed8/mInfo",
+    redirectApp:
+      "https://online-pay.kakao.com/mockup/v1/3624a5bbce9b6eeda60a20e1115b8bfc74f645edc98209d64cdd6780a6f28ed8/aInfo",
+    redirectPc:
+      "https://online-pay.kakao.com/mockup/v1/3624a5bbce9b6eeda60a20e1115b8bfc74f645edc98209d64cdd6780a6f28ed8/info",
+    success: true,
+    errorCode: null,
+    errorMsg: null,
+    paymentCreated: "2023-06-25T11:19:22",
+    paymentApproved: "2023-06-25T11:19:43",
+    expirationPeriod: "2023-06-25T11:19:21",
+    createUser: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
+    updateUser: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
+  };
+
+  let targetDate = new Date("2022-06-01");
+  let cnt = 0;
+
+  for (let i = 0; i < 100; i++) {
+    user.aid = Math.random().toString(16).substring(2);
+    user.tid = Math.random().toString(16).substring(2);
+    user.itemName = "buyHistory sample data " + i;
+    user.itemCode = i + "";
+    user.totalAmount = 1000 * i + 10000;
+
+    if (cnt === 5) {
+      targetDate.setDate(targetDate.getDate() + 1);
+      cnt = 0;
+    }
+
+    user.paymentCreated = targetDate.toISOString().substring(0, 19);
+    user.paymentApproved = targetDate.toISOString().substring(0, 19);
+    user.expirationPeriod = targetDate.toISOString().substring(0, 19);
+
+    cnt++;
+
+    await prismaClient.buyHistory.create({
+      // @ts-ignore
+      data: {
+        ...user,
       },
     });
   }

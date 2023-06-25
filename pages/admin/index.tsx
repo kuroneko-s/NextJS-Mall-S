@@ -63,7 +63,7 @@ const Dashboard: NextPage = () => {
   const { user } = useContext(GlobalContext);
 
   return (
-    <Container className="h-[74vh] max-h-[74vh]">
+    <Container className="min-h-[74vh]">
       <ContentsContainer className="flex flex-col">
         <AdminInfoWrapper className="w-fit self-end flex flex-col items-end">
           <h1 className="select-none">관리자: {user?.name}</h1>
@@ -107,6 +107,7 @@ const Dashboard: NextPage = () => {
           {selectedTab === "EVENT" ? <Event /> : null}
           {selectedTab === "HISTORY" ? <History /> : null}
         </Wrapper>
+
         {/* <SimpleBox style={{}}>
         {!center ? <Circle layoutId="1" /> : null}
       </SimpleBox>

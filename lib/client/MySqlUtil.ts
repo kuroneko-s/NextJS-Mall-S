@@ -1,11 +1,10 @@
 import { COMMON_URL } from "@lib/client/appConstant";
 import customUseQuery from "@lib/hooks/useCustomQuery";
-import { BookWithWriter } from "@lib/interface/db";
+import { BookWithWriter, BuyHistoryAggregation } from "@lib/interface/db";
 import {
   Artist,
   Book,
   BookSeries,
-  BuyHistory,
   Category,
   Event,
   Publisher,
@@ -162,7 +161,7 @@ class MySqlUtil {
   }
 
   getBuyHistoryList(startDt: string, endDt: string) {
-    return customUseQuery<QueryResult<BuyHistory>>({
+    return customUseQuery<QueryResult<BuyHistoryAggregation[]>>({
       path: `${COMMON_URL.getBuyHistoryList}`,
       args: { startDt, endDt },
     });

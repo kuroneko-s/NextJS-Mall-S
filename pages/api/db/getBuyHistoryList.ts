@@ -1,7 +1,6 @@
+import { BuyHistoryAggregation } from "@lib/interface/db";
 import prismaClient from "@lib/server/prismaClient";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type QueryType = "TODAY" | "MONTH" | "YEAR";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,31 +14,49 @@ export default async function handler(
 
   const startDt = req.query?.startDt?.toString() || "";
   const endDt = req.query?.endDt?.toString() || "";
-
   if (startDt === "" || endDt === "") {
     return res.json({
       ok: false,
     });
   }
 
-  const buyHistory = await prismaClient.buyHistory.findMany({
-    where: {
-      success: true,
-      AND: {
-        updateDt: {
-          gte: new Date(
-            startDt
-          ).toISOString() /* new Date(startDt).toISOString() */,
-          lte: new Date(
-            endDt
-          ).toISOString() /* new Date(endDt).toISOString() */,
-        },
-      },
-    },
+  const buyHistoryList: BuyHistoryAggregation[] =
+    await prismaClient.$queryRawUnsafe(`
+        SELECT 
+          yyyymmdd AS DT
+          , (
+            SELECT SUM(totalAmount)
+            FROM BuyHistory
+            WHERE 1=1 
+            AND success = true
+            AND DATE_FORMAT(paymentApproved, '%Y%m%d') = A.yyyymmdd
+          ) AS TOTAL_AMOUNT
+          , (
+            SELECT SUM(1)
+            FROM BuyHistory
+            WHERE 1=1 
+            AND success = true
+            AND DATE_FORMAT(paymentApproved, '%Y%m%d') = A.yyyymmdd
+          ) AS TOTAL
+        FROM Date_v AS A
+        WHERE yyyymmdd BETWEEN ${startDt.replaceAll("-", "")} 
+        AND ${endDt.replaceAll("-", "")}
+    `);
+
+  const result = buyHistoryList.map((buyHistory: BuyHistoryAggregation) => {
+    if (buyHistory.TOTAL === null) {
+      buyHistory.TOTAL = 0;
+    }
+
+    if (buyHistory.TOTAL_AMOUNT === null) {
+      buyHistory.TOTAL_AMOUNT = 0;
+    }
+
+    return buyHistory;
   });
 
   return res.json({
     ok: true,
-    data: buyHistory,
+    data: result,
   });
 }

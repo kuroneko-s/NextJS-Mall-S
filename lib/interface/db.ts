@@ -20,3 +20,9 @@ export interface SessionUser {
   name: string;
   role: "ADMIN" | "USER";
 }
+
+export interface BuyHistoryAggregation {
+  DT: string;
+  TOTAL: number;
+  TOTAL_AMOUNT: number;
+}

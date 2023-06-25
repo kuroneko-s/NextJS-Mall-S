@@ -5,12 +5,10 @@ const prismaClient = new PrismaClient();
 async function main() {
   // 날짜 삭제
   // await prismaClient.date_v.deleteMany({});
-
   // 날짜 더미 생성
   // dateViewer();
-
-  buyHistory();
-
+  // await prismaClient.buyHistory.deleteMany({});
+  // buyHistory();
   /* new Promise((resolve) => {
     initArtist();
     initCategory();
@@ -373,7 +371,7 @@ async function buyHistory() {
     updateUser: "vRIATCo6bqCB9YHugY7IyGYXh0yV1Xxa3Aw6tg1fqFU",
   };
 
-  let targetDate = new Date("2022-06-01");
+  let targetDate = new Date("2023-06-01");
   let cnt = 0;
 
   for (let i = 0; i < 100; i++) {

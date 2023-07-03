@@ -22,6 +22,6 @@
       "@images/*": ["images/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "test/common.test.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "test/common.test.tsx"],
   "exclude": ["node_modules"]
 }

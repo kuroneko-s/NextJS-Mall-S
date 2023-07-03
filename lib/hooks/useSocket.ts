@@ -22,6 +22,4 @@ export default function useSocket() {
       });
     }
   }, [setWebSocket, websocket]);
-
-  useContext;
 }
